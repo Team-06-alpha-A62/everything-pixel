@@ -1,4 +1,4 @@
-import { get, set, push, ref, update } from 'firebase/database';
+import { get, push, ref, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllPosts = async (search = '') => {
@@ -28,11 +28,19 @@ export const getPostByHandle = async handle => {
     ...snapshot.val(),
     tags: Object.keys(snapshot.val().tags ?? {}),
     comments: Object.keys(snapshot.val().comments ?? {}),
+<<<<<<< HEAD
     upVotedBy: Object.keys(
       snapshot.val().votes.filter(vote => vote.id === 'upVoted') ?? {}
     ).filter(vote => vote.id === 'upVoted'),
     downVotedBy: Object.keys(snapshot.val().votes ?? {}).filter(
       vote => vote.id === 'downVoted'
+=======
+    upVotedBy: Object.values(snapshot.val().votes ?? {}).filter(
+      vote => vote === 'upVoted'
+    ),
+    downVotedBy: Object.values(snapshot.val().votes ?? {}).filter(
+      vote => vote === 'downVoted'
+>>>>>>> 315c4aea770d6af2335d8df36495a00a262260f5
     ),
   };
 };
@@ -45,4 +53,12 @@ export const createPost = async (author, title, content, tags) => {
   await update(ref(db), {
     [`posts/${id}/id`]: id,
   });
+};
+
+export const updatePostDetails = (handle, target, value) => {
+  const updateObject = {
+    [`posts/${handle}/${target}`]: value,
+  };
+
+  return update(ref(db, updateObject));
 };
