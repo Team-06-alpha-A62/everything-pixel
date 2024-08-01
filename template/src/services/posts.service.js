@@ -1,4 +1,4 @@
-import { get, set, push, ref, update } from 'firebase/database';
+import { get, push, ref, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllPosts = async (search = '') => {
@@ -45,4 +45,12 @@ export const createPost = async (author, title, content, tags) => {
   await update(ref(db), {
     [`posts/${id}/id`]: id,
   });
+};
+
+export const updatePostDetails = (handle, target, value) => {
+  const updateObject = {
+    [`posts/${handle}/${target}`]: value,
+  };
+
+  return update(ref(db, updateObject));
 };
