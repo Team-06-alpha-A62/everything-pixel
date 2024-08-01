@@ -5,6 +5,7 @@ import {
   update,
   orderByChild,
   equalTo,
+  query,
 } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
@@ -68,12 +69,21 @@ export const changeUserDetails = (handle, target, value) => {
 };
 
 export const getUserData = async uid => {
-  const snapshot = await get(
-    ref(db, `users`),
-    orderByChild('uid'),
-    equalTo(uid)
-  );
-  const data = snapshot.val();
-  const userData = data[Object.keys(data)[0]];
-  return userData;
+  try {
+    const userQuery = query(
+      ref(db, 'users'),
+      orderByChild('uid'),
+      equalTo(uid)
+    );
+    const snapshot = await get(userQuery);
+    if (!snapshot.exists()) {
+      console.warn(`No data found for UID: ${uid}`);
+      return null;
+    }
+    const data = snapshot.val();
+    const userData = data[Object.keys(data)[0]];
+    return userData;
+  } catch (error) {
+    console.error(`Error fetching user data ${error}`);
+  }
 };
