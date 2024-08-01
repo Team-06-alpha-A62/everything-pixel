@@ -1,4 +1,4 @@
-import { get, set, ref, query, equalTo, orderByChild } from 'firebase/database';
+import { get, set, ref, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllUsers = async (search = '') => {
@@ -49,7 +49,7 @@ export const createrUser = async (
   };
   await set(ref(db, `users/${username}`, user));
   await update(ref(db), {
-    [`users/${handle}/username`]: username,
+    [`users/${username}/username`]: username,
   });
 };
 
