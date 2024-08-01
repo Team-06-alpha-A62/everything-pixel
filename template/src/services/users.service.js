@@ -9,7 +9,7 @@ export const getAllUsers = async (search = '') => {
 
   if (search) {
     return users.filter(user =>
-      user.username.toLowerCase().includes(search.toLocaleLowerCase())
+      user.username.toLowerCase().includes(search.toLowerCase())
     );
   }
 
@@ -22,14 +22,14 @@ export const getUserByHandle = async handle => {
     return new Error('User not found!');
   }
   return {
-    ...Object.values(snapshot.val()),
+    ...snapshot.val(),
     posts: Object.keys(snapshot.val().posts ?? {}),
     comments: Object.keys(snapshot.val().comments ?? {}),
     likedPosts: Object.keys(snapshot.val().likedPosts ?? {}),
   };
 };
 
-export const createrUser = async (
+export const createUser = async (
   username,
   firstName,
   lastName,
