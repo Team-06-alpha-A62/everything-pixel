@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -44,10 +45,15 @@ const Register = () => {
         {step === 1 ? (
           <button onClick={() => navigate(-1)}>&times; Cancel</button>
         ) : (
-          <button onClick={handlePrevClick}>&larr; Prev</button>
+          <button onClick={handlePrevClick}>&larr; Back</button>
         )}
-        <button onClick={handleNextClick}>Next &rarr;</button>
+        {step === 3 ? (
+          <button onClick={handleNextClick}>Register &#x2713;</button>
+        ) : (
+          <button onClick={handleNextClick}>Next &rarr;</button>
+        )}
       </div>
+      <p>Already have an account? <Link to='/login'>Login</Link> Instead</p>
     </>
   );
 };
