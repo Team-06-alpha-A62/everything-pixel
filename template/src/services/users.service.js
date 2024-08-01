@@ -1,4 +1,11 @@
-import { get, set, ref, update } from 'firebase/database';
+import {
+  get,
+  set,
+  ref,
+  update,
+  orderByChild,
+  equalTo,
+} from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllUsers = async (search = '') => {
@@ -31,19 +38,19 @@ export const getUserByHandle = async handle => {
 
 export const createUser = async (
   username,
+  uid,
+  email,
   firstName,
   lastName,
-  email,
-  password,
   role = 'user',
   isBLocked = false
 ) => {
   const user = {
     username,
+    uid,
     firstName,
     lastName,
     email,
-    password,
     role,
     isBLocked,
   };
@@ -58,4 +65,15 @@ export const changeUserDetails = (handle, target, value) => {
     [`users/${handle}/${target}`]: value,
   };
   return update(ref(db, updateObject));
+};
+
+export const getUserData = async uid => {
+  const snapshot = await get(
+    ref(db, `users`),
+    orderByChild('uid'),
+    equalTo(uid)
+  );
+  const data = snapshot.val();
+  const userData = data[Object.keys(data)[0]];
+  return userData;
 };

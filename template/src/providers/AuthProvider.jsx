@@ -1,7 +1,13 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { auth } from '../config/firebase.config';
 import { onAuthStateChanged } from 'firebase/auth';
-import { loginUser, logoutUser, registerUser } from '../services/auth.service.js';
+import {
+  loginUser,
+  logoutUser,
+  registerUser,
+} from '../services/auth.service.js';
+import { createUser, getUserData } from '../services/users.service.js';
+import { PropTypes } from 'prop-types';
 
 const initialState = {
   user: null,
@@ -22,13 +28,14 @@ export function AuthProvider({ children }) {
     return onAuthStateChanged(auth, async user => {
       try {
         if (user) {
-          const data = await getUserData(user.uid);
-          const userData = data[Object.keys(data)[0]] || null;
-          setCurrentUser({ user, userData });
+          const userData = await getUserData(user.uid);
+          setCurrentUser({ user, userData: userData || null });
         } else {
           setCurrentUser(initialState);
         }
-      } catch (error) {}
+      } catch (error) {
+        throw new Error('Auth state change went wrong');
+      }
     });
   }, []);
 
@@ -36,13 +43,16 @@ export function AuthProvider({ children }) {
     try {
       const credentials = await loginUser(email, password);
       setCurrentUser({ user: credentials.user, userData: null });
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(`Something went wrong logging in: ${error.message}`);
+    }
   };
 
-  register = async (email, password) => {
+  const register = async (username, firstName, lastName, email, password) => {
     try {
-      const userCredentials = await registerUser(email, password);
-      const user = userCredentials.user;
+      const { user } = await registerUser(email, password);
+      const { uid } = user;
+      await createUser(username, uid, email, firstName, lastName);
       setCurrentUser({ user, userData: null });
     } catch (error) {
       throw new Error(`Registration error: ${error.message}`);
@@ -52,24 +62,26 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await logoutUser();
-      setCurrentUser(credentials.user);
+      setCurrentUser(initialState);
     } catch (error) {
       throw new Error(`Logout error: ${error.message}`);
     }
   };
 
-  values = {
+  const values = {
     currentUser,
     login,
     logout,
     register,
   };
 
-  return (
-    <AuthContext.Provider values={values}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
   return useContext(AuthContext);
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.any,
+};

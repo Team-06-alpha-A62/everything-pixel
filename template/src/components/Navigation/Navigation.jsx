@@ -1,23 +1,15 @@
-import { NavLink } from 'react-router-dom';
-import Logo from '../Logo/Logo';
-import Search from '../Search/Search';
-import Button from '../../hoc/Button/Button';
-import ToggleTheme from '../ToggleTheme/ToggleTheme';
-import UserMenu from '../UserMenu/UserMenu';
+import { useAuth } from '../../providers/AuthProvider';
+import AppNavigation from '../AppNavigation/AppNavigation';
+import PublicNavigation from '../PublicNavigation/PublicNavigation';
+import styles from './Navigation.module.scss';
 
 const Navigation = () => {
+  const { currentUser } = useAuth();
+  const { user } = currentUser;
   return (
-    <nav>
-      <Logo />
-      <Search />
-      <Button style={'none'}>
-        <button type="button">publish</button>
-      </Button>
-      <ToggleTheme />
-      <UserMenu />
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/register">Get started</NavLink>
-      <NavLink to="/login">Login</NavLink>
+    <nav className={styles.nav}>
+      {user && <AppNavigation />}
+      {<PublicNavigation />}
     </nav>
   );
 };
