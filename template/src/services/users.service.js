@@ -77,13 +77,12 @@ export const getUserData = async uid => {
     );
     const snapshot = await get(userQuery);
     if (!snapshot.exists()) {
-      console.warn(`No data found for UID: ${uid}`);
-      return null;
+      throw new Error(`No data found for UID: ${uid}`);
     }
     const data = snapshot.val();
     const userData = data[Object.keys(data)[0]];
     return userData;
   } catch (error) {
-    console.error(`Error fetching user data ${error}`);
+    throw new Error(`Error fetching user data ${error}`);
   }
 };
