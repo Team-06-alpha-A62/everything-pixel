@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './views/Home.jsx';
-import Navigation from './components/Navigation.jsx';
+import Navigation from './components/Navigation/Navigation.jsx';
 import Register from './views/Register.jsx';
 import Login from './views/Login.jsx';
 
