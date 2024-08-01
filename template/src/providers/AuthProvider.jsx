@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
           setCurrentUser(initialState);
         }
       } catch (error) {
-        throw new Error('Auth state change went wrong');
+        throw new Error(error.message);
       }
     });
   }, []);
@@ -50,10 +50,9 @@ export function AuthProvider({ children }) {
 
   const register = async (username, firstName, lastName, email, password) => {
     try {
-      const { user } = await registerUser(email, password);
-      const { uid } = user;
-      await createUser(username, uid, email, firstName, lastName);
-      setCurrentUser({ user, userData: null });
+      const credential = await registerUser(email, password);
+      await createUser(username, credential.user.uid, email, firstName, lastName);
+      setCurrentUser({ user: credential.user, userData: null });
     } catch (error) {
       throw new Error(`Registration error: ${error.message}`);
     }
@@ -78,7 +77,7 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
 
-export const useAuth = () => {
+export function useAuth() {
   return useContext(AuthContext);
 }
 

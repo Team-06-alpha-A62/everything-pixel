@@ -54,7 +54,7 @@ export const createUser = async (
     role,
     isBLocked,
   };
-  await set(ref(db, `users/${username}`, user));
+  await set(ref(db, `users/${username}`), user);
   await update(ref(db), {
     [`users/${username}/username`]: username,
   });

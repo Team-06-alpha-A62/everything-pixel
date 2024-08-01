@@ -28,19 +28,11 @@ export const getPostByHandle = async handle => {
     ...snapshot.val(),
     tags: Object.keys(snapshot.val().tags ?? {}),
     comments: Object.keys(snapshot.val().comments ?? {}),
-<<<<<<< HEAD
-    upVotedBy: Object.keys(
-      snapshot.val().votes.filter(vote => vote.id === 'upVoted') ?? {}
-    ).filter(vote => vote.id === 'upVoted'),
-    downVotedBy: Object.keys(snapshot.val().votes ?? {}).filter(
-      vote => vote.id === 'downVoted'
-=======
     upVotedBy: Object.values(snapshot.val().votes ?? {}).filter(
       vote => vote === 'upVoted'
     ),
     downVotedBy: Object.values(snapshot.val().votes ?? {}).filter(
       vote => vote === 'downVoted'
->>>>>>> 315c4aea770d6af2335d8df36495a00a262260f5
     ),
   };
 };
