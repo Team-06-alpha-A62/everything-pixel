@@ -65,7 +65,7 @@ export const changeUserDetails = (handle, target, value) => {
   const updateObject = {
     [`users/${handle}/${target}`]: value,
   };
-  return update(ref(db, updateObject));
+  return update(ref(db), updateObject);
 };
 
 export const getUserData = async uid => {

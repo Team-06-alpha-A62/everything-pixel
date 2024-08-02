@@ -19,16 +19,17 @@ const Login = () => {
     });
   };
 
+  //validations will be in helper finctions in future
   const handleLogin = async () => {
-    if (!loginData.email || !loginData.password) {
-      return alert('No credentials provided!');
-    }
-
     try {
+      if (!loginData.email || !loginData.password) {
+        throw new Error('No credentials provided!');
+      }
+
       await login(loginData.email, loginData.password);
       navigate('/app');
     } catch (error) {
-      alert(error.message);
+      alert(`login error: ${error.message}`);
     }
   };
 

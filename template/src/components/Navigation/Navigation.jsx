@@ -8,8 +8,7 @@ const Navigation = () => {
   const { user } = currentUser;
   return (
     <nav className={styles.nav}>
-      {user && <AppNavigation />}
-      {<PublicNavigation />}
+      {user ? <AppNavigation /> : <PublicNavigation />}
     </nav>
   );
 };

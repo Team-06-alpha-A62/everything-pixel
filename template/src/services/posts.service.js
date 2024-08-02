@@ -37,6 +37,7 @@ export const getPostByHandle = async handle => {
   };
 };
 
+//we will have an image property as well in the future
 export const createPost = async (author, title, content, tags) => {
   const post = { author, title, content, tags, createdOn: Date.now() };
   const result = await push(ref(db, 'posts'), post);

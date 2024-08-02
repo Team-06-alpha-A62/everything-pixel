@@ -16,9 +16,9 @@ const initialState = {
 
 const AuthContext = createContext({
   currentUser: initialState,
-  login: () => {},
-  register: () => {},
-  logout: () => {},
+  login: async () => {},
+  register: async () => {},
+  logout: async () => {},
 });
 
 export function AuthProvider({ children }) {
@@ -51,7 +51,13 @@ export function AuthProvider({ children }) {
   const register = async (username, firstName, lastName, email, password) => {
     try {
       const credential = await registerUser(email, password);
-      await createUser(username, credential.user.uid, email, firstName, lastName);
+      await createUser(
+        username,
+        credential.user.uid,
+        email,
+        firstName,
+        lastName
+      );
       setCurrentUser({ user: credential.user, userData: null });
     } catch (error) {
       throw new Error(`Registration error: ${error.message}`);

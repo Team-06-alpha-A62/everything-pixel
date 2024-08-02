@@ -9,6 +9,7 @@ const registerInitialData = {
   lastName: '',
   email: '',
   password: '',
+  //usericon
 };
 
 const Register = () => {
@@ -16,8 +17,8 @@ const Register = () => {
   const [registrationData, setRegistrationData] = useState(registerInitialData);
 
   const { register } = useAuth();
-
   const navigate = useNavigate();
+
   const { username, firstName, lastName, email, password } = registrationData;
 
   const handlePrevClick = () => {
@@ -37,9 +38,25 @@ const Register = () => {
     });
   };
 
+  //validations will be in helper finctions in future
   const handleRegister = async () => {
-    await register(username, firstName, lastName, email, password);
+    try {
+      if (
+        !registrationData.email ||
+        !registrationData.password ||
+        !registrationData.username ||
+        !registrationData.firstName ||
+        !registrationData.lastName
+      ) {
+        throw new Error('No credentials provided!');
+      }
+      await register(username, firstName, lastName, email, password);
+      navigate('/feed');
+    } catch (error) {
+      alert(`registration error ${error.message}`);
+    }
   };
+
   return (
     <>
       <h1>Welcome to ∀ PXL</h1>
@@ -106,7 +123,7 @@ const Register = () => {
       <p>Step {step} / 4</p>
       <div className="controllers">
         {step === 1 ? (
-          <button onClick={() => navigate(-1)}>&times; Cancel</button>
+          <button onClick={() => navigate('/')}>&times; Cancel</button>
         ) : (
           <button onClick={handlePrevClick}>&larr; Back</button>
         )}
