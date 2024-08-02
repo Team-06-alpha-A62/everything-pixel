@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from '../../hoc/Button/Button';
 import { useAuth } from '../../providers/AuthProvider.jsx';
 import Logo from '../Logo/Logo';
@@ -19,6 +19,7 @@ function AppNavigation() {
     <div>
       <Logo />
       <Search />
+      <NavLink to='/feed'>Feed</NavLink>
       <Button style={'none'}>
         <button type="button">publish</button>
       </Button>
