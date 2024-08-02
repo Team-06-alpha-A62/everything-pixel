@@ -1,10 +1,10 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Home from './views/Home/Home.jsx';
 import Navigation from './components/Navigation/Navigation.jsx';
 import Register from './views/Register/Register.jsx';
 import Login from './views/Login/Login.jsx';
-import { AuthProvider } from './providers/AuthProvider.jsx';
+import { AuthProvider, useAuth } from './providers/AuthProvider.jsx';
 import NotFound from './views/NotFound/NotFound.jsx';
 import Feed from './views/Feed/Feed.jsx';
 

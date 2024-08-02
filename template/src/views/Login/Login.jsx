@@ -3,6 +3,8 @@ import { useAuth } from '../../providers/AuthProvider.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const { currentUser } = useAuth();
+
   const initialLoginData = {
     email: '',
     password: '',
@@ -11,6 +13,10 @@ const Login = () => {
   const [loginData, setLoginData] = useState(initialLoginData);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  if (currentUser.user) {
+    navigate('/feed');
+  }
 
   const handleInputChange = key => e => {
     setLoginData({
@@ -27,7 +33,7 @@ const Login = () => {
       }
 
       await login(loginData.email, loginData.password);
-      navigate('/app');
+      navigate('/feed');
     } catch (error) {
       alert(`login error: ${error.message}`);
     }
