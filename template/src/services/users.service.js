@@ -1,40 +1,47 @@
 import {
   get,
-  set,
   ref,
   update,
   orderByChild,
   equalTo,
   query,
+  push,
 } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllUsers = async (search = '') => {
-  const snapshot = await get(ref(db, `users`));
-  if (!snapshot.exists()) return [];
+  try {
+    const snapshot = await get(ref(db, `users`));
+    if (!snapshot.exists()) return [];
 
-  const users = Object.values(snapshot.val());
+    const users = Object.values(snapshot.val());
 
-  if (search) {
-    return users.filter(user =>
-      user.username.toLowerCase().includes(search.toLowerCase())
-    );
+    if (search) {
+      return users.filter(user =>
+        user.username.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    return users;
+  } catch (error) {
+    throw new Error(`${error.message}`);
   }
-
-  return users;
 };
 
 export const getUserByHandle = async handle => {
-  const snapshot = await get(ref(db, `users/${handle}`));
-  if (!snapshot.exists()) {
-    return new Error('User not found!');
+  try {
+    const snapshot = await get(ref(db, `users/${handle}`));
+    if (!snapshot.exists()) {
+      return new Error('User not found!');
+    }
+    return {
+      ...snapshot.val(),
+      posts: Object.keys(snapshot.val().posts ?? {}),
+      comments: Object.keys(snapshot.val().comments ?? {}),
+      likedPosts: Object.keys(snapshot.val().likedPosts ?? {}),
+    };
+  } catch (error) {
+    throw new Error(`${error.message}`);
   }
-  return {
-    ...snapshot.val(),
-    posts: Object.keys(snapshot.val().posts ?? {}),
-    comments: Object.keys(snapshot.val().comments ?? {}),
-    likedPosts: Object.keys(snapshot.val().likedPosts ?? {}),
-  };
 };
 
 export const createUser = async (
@@ -55,17 +62,39 @@ export const createUser = async (
     role,
     isBLocked,
   };
-  await set(ref(db, `users/${username}`), user);
-  await update(ref(db), {
-    [`users/${username}/username`]: username,
-  });
+  try {
+    const result = await push(ref(db, `users/${username}`, user));
+    await update(ref(db), {
+      [`users/${username}/username`]: username,
+    });
+    return result;
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
 };
 
-export const changeUserDetails = (handle, target, value) => {
-  const updateObject = {
-    [`users/${handle}/${target}`]: value,
-  };
-  return update(ref(db), updateObject);
+export const changeUserDetails = async (handle, target, value) => {
+  try {
+    const updateObject = {
+      [`users/${handle}/${target}`]: value,
+    };
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+};
+
+export const addUserPost = async (handle, postId) => {
+  try {
+    const updateObject = {
+      [`users/${handle}/posts/${postId}`]: true,
+    };
+
+    await update(ref(db), updateObject);
+    return true;
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
 };
 
 export const getUserData = async uid => {
@@ -81,8 +110,9 @@ export const getUserData = async uid => {
     }
     const data = snapshot.val();
     const userData = data[Object.keys(data)[0]];
+
     return userData;
   } catch (error) {
-    throw new Error(`Error fetching user data ${error}`);
+    throw new Error(`${error.message}`);
   }
 };

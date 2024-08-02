@@ -39,13 +39,19 @@ export const getPostByHandle = async handle => {
 
 //we will have an image property as well in the future
 export const createPost = async (author, title, content, tags) => {
-  const post = { author, title, content, tags, createdOn: Date.now() };
-  const result = await push(ref(db, 'posts'), post);
-  const id = result.key;
+  try {
+    const post = { author, title, content, tags, createdOn: Date.now() };
+    const result = await push(ref(db, 'posts'), post);
+    const id = result.key;
 
-  await update(ref(db), {
-    [`posts/${id}/id`]: id,
-  });
+    await update(ref(db), {
+      [`posts/${id}/id`]: id,
+    });
+
+    return result;
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
 };
 
 export const updatePostDetails = (handle, target, value) => {
@@ -54,4 +60,23 @@ export const updatePostDetails = (handle, target, value) => {
   };
 
   return update(ref(db, updateObject));
+};
+
+export const deletePost = async (userHandle, postId) => {
+  const postSnapshot = await get(db, ref(`posts/${postId}`));
+
+  const tags = Object.keys(postSnapshot.val().tags ?? {});
+
+  const tagsUpdateObject = tags.reduce((acc, tag) => {
+    acc[`tags/${tag}/posts/${postId}`] = null;
+    return acc;
+  }, {});
+
+  const updateObject = {
+    [`users/${userHandle}/posts/${postId}`]: null,
+    [`posts/${postId}`]: null,
+    ...tagsUpdateObject,
+  };
+
+  return update(ref(db), updateObject);
 };

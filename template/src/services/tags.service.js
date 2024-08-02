@@ -1,9 +1,9 @@
-import { get, set, ref, update } from 'firebase/database';
+import { get, ref, update, push } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllTags = async () => {
   const snapshot = await get(ref(db, 'tags'));
-  if (!snapshot.exists) return [];
+  if (!snapshot.exists()) return [];
 
   const tags = Object.values(snapshot.val());
 
@@ -23,11 +23,34 @@ export const getTagByHandle = async handle => {
   };
 };
 
-export const createTag = async (name, postId) => {
-  const tag = { name };
-  await set(ref(db, `tags/${name}`), tag);
-  await update(ref(db), {
-    [`tags/${name}/name`]: name,
+export const createTag = async name => {
+  try {
+    const tag = { name };
+    const result = await push(ref(db, `tags/${name}`), tag);
+    await update(ref(db), {
+      [`tags/${name}/name`]: name,
+    });
+    console.log(result);
+    return result;
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+};
+
+export const addPostToTag = async (name, postId) => {
+  const updateObject = {
     [`tags/${name}/posts/${postId}`]: true,
-  });
+  };
+
+  try {
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+};
+
+export const tagExists = async name => {
+  const snapshot = await get(ref(db, `tags/${name}`));
+  if (snapshot.exists()) return true;
+  return false;
 };
