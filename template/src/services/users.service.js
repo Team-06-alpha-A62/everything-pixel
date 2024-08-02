@@ -5,7 +5,7 @@ import {
   orderByChild,
   equalTo,
   query,
-  push,
+  set,
 } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
@@ -63,7 +63,7 @@ export const createUser = async (
     isBLocked,
   };
   try {
-    const result = await push(ref(db, `users/${username}`, user));
+    const result = await set(ref(db, `users/${username}`), user);
     await update(ref(db), {
       [`users/${username}/username`]: username,
     });

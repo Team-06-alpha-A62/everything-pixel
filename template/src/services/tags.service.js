@@ -1,4 +1,4 @@
-import { get, ref, update, push } from 'firebase/database';
+import { get, ref, update, push, set } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllTags = async () => {
@@ -26,7 +26,7 @@ export const getTagByHandle = async handle => {
 export const createTag = async name => {
   try {
     const tag = { name };
-    const result = await push(ref(db, `tags/${name}`), tag);
+    const result = await set(ref(db, `tags/${name}`), tag);
     await update(ref(db), {
       [`tags/${name}/name`]: name,
     });
