@@ -2,17 +2,25 @@ import { useEffect, useState } from 'react';
 import { getUserByHandle } from '../../services/users.service';
 import PropTypes from 'prop-types';
 function Post({ post }) {
-  const [postUser, setPostUser] = useState(null);
-  const { authorUsername, title, content, tagsArray } = post;
+  const [postAuthor, setPostAuthor] = useState({});
+  const { author, title, content, tagsArray } = post;
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await getUserByHandle();
-      setPostUser(user);
+      const user = await getUserByHandle(author);
+      setPostAuthor(user);
     };
     fetchUser();
-  });
-  return <div>{title}</div>;
+  }, [author]);
+
+  return (
+    <div>
+      {title}
+      <button type="button" onClick={() => alert(postAuthor.email)}>
+        click
+      </button>
+    </div>
+  );
 }
 
 Post.propTypes = {

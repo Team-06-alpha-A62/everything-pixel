@@ -1,6 +1,6 @@
 import SortBy from '../SortBy/SortBy';
 import PropTypes from 'prop-types';
-function SortPostsMenu({ onSortByClick }) {
+function SortPostsMenu({ handleSortBy }) {
   return (
     <div>
       <h1>SortBy</h1>
@@ -8,23 +8,23 @@ function SortPostsMenu({ onSortByClick }) {
         <SortBy
           sort={'date'}
           values={['newest', 'oldest']}
-          handleSort={onSortByClick}
+          handleSortBy={handleSortBy}
         />
         <SortBy
           sort={'popularity'}
           values={['most', 'least']}
-          handleSort={onSortByClick}
+          handleSortBy={handleSortBy}
         />
         <SortBy
           sort={'title'}
           values={['A-Z', 'Z-A']}
-          handleSort={onSortByClick}
+          handleSortBy={handleSortBy}
         />
       </div>
     </div>
   );
 }
 SortPostsMenu.propTypes = {
-  onSortByClick: PropTypes.func,
+  handleSortBy: PropTypes.func,
 };
 export default SortPostsMenu;

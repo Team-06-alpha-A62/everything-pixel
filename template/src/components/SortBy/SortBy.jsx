@@ -2,7 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-function SortBy({ sort, values, handleSort }) {
+
+function SortBy({ sort, values, handleSortBy }) {
   const [showMore, setShowMore] = useState(false);
   const [checkedValues, setCheckedValues] = useState({});
 
@@ -24,13 +25,23 @@ function SortBy({ sort, values, handleSort }) {
       {showMore && (
         <div>
           {values.map(value => (
-            <div key={value} onClick={() => handleSort(value)}>
-              <p>{value}</p>
-              <input
-                type="checkbox"
-                checked={checkedValues[value] || false}
-                onChange={() => handleToggle(value)}
-              />
+            <div
+              key={value}
+              onClickCapture={() => {
+                handleSortBy(value);
+                handleToggle(value);
+              }}
+            >
+              <label htmlFor={value}>
+                {value}
+                <input
+                  name={value}
+                  id={value}
+                  type="checkbox"
+                  checked={checkedValues[value] || false}
+                  onChange={() => handleToggle(value)}
+                />
+              </label>
             </div>
           ))}
         </div>
@@ -40,7 +51,7 @@ function SortBy({ sort, values, handleSort }) {
 }
 SortBy.propTypes = {
   sort: PropTypes.string.isRequired,
-  values: PropTypes.array[PropTypes.string].isRequired,
-  handleSort: PropTypes.func,
+  values: PropTypes.array,
+  handleSortBy: PropTypes.func,
 };
 export default SortBy;
