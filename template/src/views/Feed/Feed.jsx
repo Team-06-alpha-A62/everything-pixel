@@ -19,7 +19,25 @@ const Feed = () => {
   }, [searchQuery]);
 
   const handleSortBy = value => {
-    console.log(value);
+    let sorted = [];
+    switch (value) {
+      case 'newest':
+        sorted = [...posts].sort((a, b) => b.createdOn - a.createdOn);
+        break;
+      case 'oldest':
+        sorted = [...posts].sort((a, b) => a.createdOn - b.createdOn);
+        break;
+      case 'A-Z':
+        sorted = [...posts].sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'Z-A':
+        sorted = [...posts].sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      default:
+        sorted = posts;
+        break;
+    }
+    setPosts(sorted);
   };
 
   const handleFilterBy = () => {

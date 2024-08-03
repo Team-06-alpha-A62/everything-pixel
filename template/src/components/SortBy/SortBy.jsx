@@ -5,43 +5,32 @@ import PropTypes from 'prop-types';
 
 function SortBy({ sort, values, handleSortBy }) {
   const [showMore, setShowMore] = useState(false);
-  const [checkedValues, setCheckedValues] = useState({});
+  const [clickedValue, setClickedValue] = useState('');
 
   const toggleShowMore = () => {
     setShowMore(prevShowMore => !prevShowMore);
   };
 
-  const handleToggle = value => {
-    setCheckedValues(prevCheckedValues => ({
-      ...prevCheckedValues,
-      [value]: !prevCheckedValues[value],
-    }));
+  const handleClickedValueChange = value => {
+    value === clickedValue ? setClickedValue(null) : setClickedValue(value);
   };
 
   return (
     <div>
-      <p>{sort}</p>
+      <span>{sort}</span>
       <FontAwesomeIcon onClick={toggleShowMore} icon={faSortDown} />
       {showMore && (
         <div>
           {values.map(value => (
             <div
+              className={clickedValue === value ? 'active' : ''}
               key={value}
               onClickCapture={() => {
                 handleSortBy(value);
-                handleToggle(value);
+                handleClickedValueChange(value);
               }}
             >
-              <label htmlFor={value}>
-                {value}
-                <input
-                  name={value}
-                  id={value}
-                  type="checkbox"
-                  checked={checkedValues[value] || false}
-                  onChange={() => handleToggle(value)}
-                />
-              </label>
+              {value}
             </div>
           ))}
         </div>
