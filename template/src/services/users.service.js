@@ -63,11 +63,10 @@ export const createUser = async (
     isBLocked,
   };
   try {
-    const result = await set(ref(db, `users/${username}`), user);
+    await set(ref(db, `users/${username}`), user);
     await update(ref(db), {
       [`users/${username}/username`]: username,
     });
-    return result;
   } catch (error) {
     throw new Error(`${error.message}`);
   }
@@ -98,21 +97,8 @@ export const addUserPost = async (handle, postId) => {
 };
 
 export const getUserData = async uid => {
-  try {
-    const userQuery = query(
-      ref(db, 'users'),
-      orderByChild('uid'),
-      equalTo(uid)
-    );
-    const snapshot = await get(userQuery);
-    if (!snapshot.exists()) {
-      throw new Error(`No data found for UID: ${uid}`);
-    }
-    const data = snapshot.val();
-    const userData = data[Object.keys(data)[0]];
-
-    return userData;
-  } catch (error) {
-    throw new Error(`${error.message}`);
-  }
+  const snapshot = await get(
+    query(ref(db, 'users'), orderByChild('uid'), equalTo(uid))
+  );
+  return snapshot.val();
 };

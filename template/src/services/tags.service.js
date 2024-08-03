@@ -26,11 +26,10 @@ export const getTagByHandle = async handle => {
 export const createTag = async name => {
   try {
     const tag = { name };
-    const result = await set(ref(db, `tags/${name}`), tag);
+    await set(ref(db, `tags/${name}`), tag);
     await update(ref(db), {
       [`tags/${name}/name`]: name,
     });
-    console.log(result);
     return result;
   } catch (error) {
     throw new Error(`${error.message}`);

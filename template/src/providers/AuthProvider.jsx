@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { auth } from '../config/firebase.config';
-import { onAuthStateChanged } from 'firebase/auth';
+// import { onAuthStateChanged } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import {
   loginUser,
   logoutUser,
@@ -24,20 +25,35 @@ const AuthContext = createContext({
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(initialState);
 
+  // useEffect(() => {
+  //   return onAuthStateChanged(auth, async user => {
+  //     try {
+  //       if (user) {
+  //         const userData = await getUserData(user.uid);
+  //         setCurrentUser({ user, userData: userData || null });
+  //       } else {
+  //         setCurrentUser(initialState);
+  //       }
+  //     } catch (error) {
+  //       throw new Error(error.message);
+  //     }
+  //   });
+  // }, []);
+  const [user] = useAuthState(auth);
+
+  if (currentUser.user !== user) {
+    setCurrentUser({ ...currentUser, user });
+  }
+
   useEffect(() => {
-    return onAuthStateChanged(auth, async user => {
-      try {
-        if (user) {
-          const userData = await getUserData(user.uid);
-          setCurrentUser({ user, userData: userData || null });
-        } else {
-          setCurrentUser(initialState);
-        }
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    });
-  }, []);
+    if (!user) return;
+    setTimeout(() => {
+      getUserData(currentUser.user.uid).then(data => {
+        const userData = data[Object.keys(data)[0]];
+        setCurrentUser({ ...currentUser, userData });
+      });
+    }, 100);
+  }, [user]);
 
   const login = async (email, password) => {
     try {

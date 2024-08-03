@@ -13,16 +13,12 @@ const registerInitialData = {
 };
 
 const Register = () => {
-  const { currentUser } = useAuth();
+  //const { currentUser } = useAuth();
   const [step, setStep] = useState(1);
   const [registrationData, setRegistrationData] = useState(registerInitialData);
 
   const { register } = useAuth();
   const navigate = useNavigate();
-
-  if (currentUser.user) {
-    navigate('/feed');
-  }
 
   const { username, firstName, lastName, email, password } = registrationData;
 
