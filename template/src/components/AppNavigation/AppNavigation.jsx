@@ -13,7 +13,7 @@ function AppNavigation() {
       <Search />
       <NavLink to="/feed">Feed</NavLink>
       <Button style={'none'}>
-        <Link to='/publish'>Publish</Link>
+        <Link to="/publish">Publish</Link>
       </Button>
       <ToggleTheme />
       <UserMenu />
