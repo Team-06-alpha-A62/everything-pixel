@@ -7,6 +7,7 @@ import styles from './Feed.module.scss';
 import { useSearchParams } from 'react-router-dom';
 const Feed = () => {
   const [posts, setPosts] = useState([]);
+  const [updatedPosts, setUpdatedPosts] = useState([]);
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
 
@@ -14,6 +15,7 @@ const Feed = () => {
     const fetchPosts = async () => {
       const postsData = await getAllPosts(searchQuery);
       setPosts(postsData);
+      setUpdatedPosts(postsData);
     };
     fetchPosts();
   }, [searchQuery]);
@@ -37,7 +39,7 @@ const Feed = () => {
         sorted = posts;
         break;
     }
-    setPosts(sorted);
+    setUpdatedPosts(sorted);
   };
 
   const handleFilterBy = (criteria, value) => {
@@ -56,7 +58,7 @@ const Feed = () => {
         filteredPosts = posts;
         break;
     }
-    setPosts(filteredPosts);
+    setUpdatedPosts(filteredPosts);
   };
 
   const handleTrendingTags = () => {
@@ -71,7 +73,7 @@ const Feed = () => {
         handleFilterBy={handleFilterBy}
       />
 
-      <Posts posts={posts} />
+      <Posts posts={updatedPosts} />
       <RightSideBar onTrendingTagsClick={handleTrendingTags} />
     </div>
   );
