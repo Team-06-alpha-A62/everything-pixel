@@ -3,7 +3,7 @@ import { getUserByHandle } from '../../services/users.service';
 import PropTypes from 'prop-types';
 function Post({ post }) {
   const [postAuthor, setPostAuthor] = useState({});
-  const { author, title, content, tagsArray } = post;
+  const { author, title, content, tagsArray, createdOn } = post;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -16,6 +16,9 @@ function Post({ post }) {
   return (
     <div>
       {title}
+      <br />
+      {new Date(createdOn).toLocaleDateString()}
+      <br />
       <button type="button" onClick={() => alert(postAuthor.email)}>
         click
       </button>

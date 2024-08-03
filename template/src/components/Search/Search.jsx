@@ -1,7 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import styles from './Search.module.scss';
-import PropTypes from 'prop-types';
-function Search() {
+const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') ?? '';
 
@@ -16,10 +15,5 @@ function Search() {
     </div>
   );
 }
-
-Search.propTypes = {
-  searchQuery: PropTypes.string.isRequired,
-  onSearchQueryChange: PropTypes.func,
-};
 
 export default Search;

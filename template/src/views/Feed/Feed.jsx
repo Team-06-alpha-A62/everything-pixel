@@ -40,9 +40,23 @@ const Feed = () => {
     setPosts(sorted);
   };
 
-  const handleFilterBy = () => {
-    setPosts();
-    return;
+  const handleFilterBy = (criteria, value) => {
+    let filteredPosts = [...posts];
+    switch (criteria) {
+      case 'date':
+        filteredPosts = filteredPosts.filter(post => post.createdOn >= value);
+        break;
+      case 'tags':
+        filteredPosts = filteredPosts.filter(post => {
+          const postTags = post.tags ? Object.keys(post.tags) : [];
+          return value.every(tag => postTags.includes(tag));
+        });
+        break;
+      default:
+        filteredPosts = posts;
+        break;
+    }
+    setPosts(filteredPosts);
   };
 
   const handleTrendingTags = () => {
@@ -54,7 +68,7 @@ const Feed = () => {
     <div className={styles.feed}>
       <LeftSideBar
         handleSortBy={handleSortBy}
-        onFilterByClick={handleFilterBy}
+        handleFilterBy={handleFilterBy}
       />
 
       <Posts posts={posts} />
