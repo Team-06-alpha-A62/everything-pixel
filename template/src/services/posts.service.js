@@ -71,11 +71,24 @@ export const getPostByHandle = async handle => {
  * @returns {Promise<Object>} A promise that resolves to the newly created post's database reference.
  * @throws {Error} If there is an error creating the post in the database.
  */
-export const createPost = async (author, title, content, tags, imageFile = '') => {
+export const createPost = async (
+  author,
+  title,
+  content,
+  tags,
+  imageFile = ''
+) => {
   try {
     const imageUrl = await uploadImage(imageFile);
 
-    const post = { author, title, content, tags, createdOn: Date.now(), image: imageUrl };
+    const post = {
+      author,
+      title,
+      content,
+      tags,
+      createdOn: Date.now(),
+      image: imageUrl,
+    };
     const result = await push(ref(db, 'posts'), post);
     const id = result.key;
 
@@ -152,9 +165,9 @@ export const deletePost = async (userHandle, postId) => {
  * @returns {Promise<Object|null>} A promise that resolves to the user's vote data, or null if no vote exists.
  * @throws {Error} If there is an error checking the vote in the database.
  */
-export const hasUserVotedPost = async userHandler => {
+export const hasUserVotedPost = async (userHandler, postId) => {
   try {
-    const snapshot = await get(ref(db, `posts/votes/${userHandler}`));
+    const snapshot = await get(ref(db, `posts/${postId}/votes/${userHandler}`));
     if (!snapshot.exists()) return null;
 
     return snapshot.val();
