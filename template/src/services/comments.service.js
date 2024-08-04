@@ -72,7 +72,10 @@ export const createComment = async (
     const result = await push(ref(db, 'comments'), comment);
     const commentId = result.key;
 
-    await update(ref(db), { [`comments/${commentId}/id`]: commentId });
+    await update(ref(db), {
+      [`comments/${commentId}/id`]: commentId,
+      [`posts/${postId}/comments/${commentId}`]: true,
+    });
     return result;
   } catch (error) {
     throw new Error(`Error creating comment: ${error.message}`);
