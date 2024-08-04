@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
         const userData = data[Object.keys(data)[0]];
         setCurrentUser({ ...currentUser, userData });
       });
-    }, 500);
+    }, 2000);
   }, [user]);
 
   const login = async (email, password) => {

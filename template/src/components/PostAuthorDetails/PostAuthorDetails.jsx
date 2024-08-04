@@ -6,7 +6,7 @@ import Avatar from 'react-avatar';
 const PostAuthorDetails = ({ author }) => {
   return (
     <div className={styles.authorDetails}>
-      <Avatar name={`${author.firstName} ${author.lastName}`} round={true} size='40' src={author.avatarUrl}/>
+      <Avatar name={`${author.firstName} ${author.lastName}`} round={true} size='50' src={author.avatarUrl}/>
       <span>{author.username}</span>
     </div>
   );
