@@ -21,3 +21,13 @@ export const uploadImage = async file => {
 
   return url;
 };
+
+export const uploadAvatar = async file => {
+  if (!file) return null;
+
+  const fileRef = storageRef(storage, `avatars/${uuidv4()}-${file.name}`);
+  await uploadBytes(fileRef, file);
+  const url = await getDownloadURL(fileRef);
+
+  return url;
+};
