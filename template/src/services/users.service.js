@@ -9,6 +9,13 @@ import {
 } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
+/**
+ * Retrieves all users from the database. Optionally filters users by a search term.
+ *
+ * @param {string} [search=''] - The search term to filter users by username.
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of user objects.
+ * @throws {Error} If there is an error fetching users from the database.
+ */
 export const getAllUsers = async (search = '') => {
   try {
     const snapshot = await get(ref(db, `users`));
@@ -27,6 +34,13 @@ export const getAllUsers = async (search = '') => {
   }
 };
 
+/**
+ * Retrieves a user from the database by their handle.
+ *
+ * @param {string} handle - The handle of the user to retrieve.
+ * @returns {Promise<Object>} A promise that resolves to the user object including posts, comments, and likedPosts keys.
+ * @throws {Error} If there is an error fetching the user from the database or if the user is not found.
+ */
 export const getUserByHandle = async handle => {
   try {
     const snapshot = await get(ref(db, `users/${handle}`));
@@ -44,6 +58,19 @@ export const getUserByHandle = async handle => {
   }
 };
 
+/**
+ * Creates a new user in the database.
+ *
+ * @param {string} username - The username of the new user.
+ * @param {string} uid - The unique identifier for the new user.
+ * @param {string} email - The email address of the new user.
+ * @param {string} firstName - The first name of the new user.
+ * @param {string} lastName - The last name of the new user.
+ * @param {string} [role='user'] - The role of the new user, defaults to 'user'.
+ * @param {boolean} [isBLocked=false] - The blocked status of the new user, defaults to false.
+ * @returns {Promise<void>} A promise that resolves when the user is created.
+ * @throws {Error} If there is an error creating the user in the database.
+ */
 export const createUser = async (
   username,
   uid,
@@ -72,6 +99,15 @@ export const createUser = async (
   }
 };
 
+/**
+ * Updates a specific detail of a user in the database.
+ *
+ * @param {string} handle - The handle of the user to update.
+ * @param {string} target - The field of the user to update.
+ * @param {any} value - The new value for the specified field.
+ * @returns {Promise<void>} A promise that resolves when the user detail is updated.
+ * @throws {Error} If there is an error updating the user detail in the database.
+ */
 export const changeUserDetails = async (handle, target, value) => {
   try {
     const updateObject = {
@@ -83,6 +119,14 @@ export const changeUserDetails = async (handle, target, value) => {
   }
 };
 
+/**
+ * Adds a post to a user's list of posts.
+ *
+ * @param {string} handle - The handle of the user.
+ * @param {string} postId - The ID of the post to add.
+ * @returns {Promise<boolean>} A promise that resolves to true if the post is added successfully.
+ * @throws {Error} If there is an error adding the post to the user's list.
+ */
 export const addUserPost = async (handle, postId) => {
   try {
     const updateObject = {
@@ -96,9 +140,23 @@ export const addUserPost = async (handle, postId) => {
   }
 };
 
+/**
+ * Retrieves a user by their UID.
+ *
+ * @param {string} uid - The unique identifier of the user.
+ * @returns {Promise<Object>} A promise that resolves to the user data object.
+ * @throws {Error} If there is an error fetching the user data.
+ */
 export const getUserData = async uid => {
-  const snapshot = await get(
-    query(ref(db, 'users'), orderByChild('uid'), equalTo(uid))
-  );
-  return snapshot.val();
+  try {
+    const snapshot = await get(
+      query(ref(db, 'users'), orderByChild('uid'), equalTo(uid))
+    );
+    if (!snapshot.exists()) {
+      return new Error('User not found!');
+    }
+    return snapshot.val();
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
 };

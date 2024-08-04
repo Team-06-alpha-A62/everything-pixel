@@ -1,4 +1,4 @@
-import { get, ref, set, update } from 'firebase/database';
+import { get, ref, remove, set, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllComments = async () => {
@@ -63,5 +63,18 @@ export const hasUserVotedComment = async userHandler => {
     return snapshot.val();
   } catch (error) {
     console.error('Error checking vote:', error);
+  }
+};
+export const deleteComment = async commentId => {
+  try {
+    // Construct the reference to the comment in the "comments" table
+    const commentRef = ref(db, `comments/${commentId}`);
+
+    // Remove the comment
+    await remove(commentRef);
+
+    console.log(`Comment ${commentId} deleted successfully.`);
+  } catch (error) {
+    console.error('Error deleting comment:', error);
   }
 };

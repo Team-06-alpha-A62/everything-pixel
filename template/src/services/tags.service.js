@@ -1,4 +1,4 @@
-import { get, ref, update, push, set } from 'firebase/database';
+import { get, ref, update, set } from 'firebase/database';
 import { db } from '../config/firebase.config';
 
 export const getAllTags = async () => {
