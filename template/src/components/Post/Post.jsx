@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import PostContainer from '../../hoc/PostContainer/PostContainer.jsx';
 import PostAuthorDetails from '../PostAuthorDetails/PostAuthorDetails.jsx';
 import PostBody from '../PostBody/PostBody.jsx';
+import PostActions from '../PostActions/PostActions.jsx';
 function Post({ post }) {
   const [postAuthor, setPostAuthor] = useState({});
-  const { author, title, content, tags, createdOn } = post;
+  const { author, title, content, tags, createdOn, votes } = post;
 
   const tagsArray = Object.keys(tags ?? {});
 
@@ -20,14 +21,10 @@ function Post({ post }) {
 
   return (
     <PostContainer>
-      <PostAuthorDetails author={author}/>
+      <PostAuthorDetails author={postAuthor}/>
       <PostBody title={title} content={content} tags={tagsArray}/>
-      <br />
-      {new Date(createdOn).toLocaleDateString()}
-      <br />
-      <button type="button" onClick={() => alert(postAuthor.email)}>
-        click
-      </button>
+      <PostActions date={createdOn} votes={votes} />
+      <hr />
     </PostContainer>
   );
 }

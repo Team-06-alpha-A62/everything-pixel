@@ -5,13 +5,13 @@ import styles from './PostAuthorDetails.module.scss';
 const PostAuthorDetails = ({ author }) => {
   return (
     <div className={styles.authorDetails}>
-      <span>{author}</span>
+      <span>{author.username}</span>
     </div>
   );
 };
 
 PostAuthorDetails.propTypes = {
-  author: PropTypes.string.isRequired,
+  author: PropTypes.objectOf(PropTypes.any),
 };
 
 export default PostAuthorDetails;
