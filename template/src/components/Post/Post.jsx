@@ -12,7 +12,8 @@ import {
 } from '../../services/comments.service.js';
 function Post({ post }) {
   const [postAuthor, setPostAuthor] = useState({});
-  const { author, title, content, tags, createdOn, votes, comments } = post;
+  const { author, title, content, tags, createdOn, votes, comments, image } =
+    post;
   const [showPostComments, setShowPostComments] = useState(false);
   const [commentsObjectsArray, setCommentsObjectsArray] = useState([]);
 
@@ -56,8 +57,23 @@ function Post({ post }) {
   return (
     <PostContainer>
       <PostAuthorDetails author={postAuthor} />
-      <PostBody title={title} content={content} tags={tagsArray} />
-      <PostActions date={createdOn} votes={votes} />
+      <PostBody
+        title={title}
+        content={content}
+        tags={tagsArray}
+        image={image}
+      />
+      <PostActions
+        date={createdOn}
+        votes={votes}
+        onShowPostCommentsChange={handleShowPostComments}
+      />
+      {showPostComments && (
+        <PostComments
+          comments={commentsObjectsArray}
+          onPublishComment={handlePublishComment}
+        />
+      )}
       <hr />
     </PostContainer>
   );
