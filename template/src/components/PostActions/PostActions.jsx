@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import styles from './PostActions.module.scss';
-import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faComment,
@@ -12,23 +11,13 @@ import {
   faThumbsUp as fasThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
-const PostActions = ({ date, votes, onShowPostCommentsChange }) => {
-  const initialVotesState = {
-    upVotes: 0,
-    downVotes: 0,
-  };
-
-  const [voteState, setVoteState] = useState(initialVotesState);
-
-  useEffect(() => {
-    setVoteState({
-      ...voteState,
-      upVotes: Object.values(votes ?? {}).filter(v => v === 'upVoted').length,
-      downVotes: Object.values(votes ?? {}).filter(v => v === 'downVoted')
-        .length,
-    });
-  }, [votes]);
-
+const PostActions = ({
+  date,
+  votes,
+  onShowPostCommentsChange,
+  userVote,
+  handleUserVoteChange,
+}) => {
   return (
     <div className={styles.postActions}>
       <span>{new Date(date).toDateString()}</span>
@@ -36,13 +25,17 @@ const PostActions = ({ date, votes, onShowPostCommentsChange }) => {
         <div onClick={onShowPostCommentsChange}>
           <FontAwesomeIcon icon={faComment} />
         </div>
-        <div>
-          <FontAwesomeIcon icon={farThumbsUp} />
-          {voteState.upVotes}
+        <div onClick={() => handleUserVoteChange('upVote')}>
+          <FontAwesomeIcon
+            icon={userVote === 'upVote' ? fasThumbsUp : farThumbsUp}
+          />
+          {votes.upVote}
         </div>
-        <div>
-          {voteState.downVotes}
-          <FontAwesomeIcon icon={farThumbsDown} />
+        <div onClick={() => handleUserVoteChange('downVote')}>
+          {votes.downVote}
+          <FontAwesomeIcon
+            icon={userVote === 'downVote' ? fasThumbsDown : farThumbsDown}
+          />
         </div>
       </div>
     </div>
@@ -50,9 +43,11 @@ const PostActions = ({ date, votes, onShowPostCommentsChange }) => {
 };
 
 PostActions.propTypes = {
-  date: PropTypes.number.isRequired,
+  date: PropTypes.any,
   votes: PropTypes.any,
-  onShowPostCommentsChange: PropTypes.func,
+  onShowPostCommentsChange: PropTypes.any,
+  userVote: PropTypes.any,
+  handleUserVoteChange: PropTypes.any,
 };
 
 export default PostActions;

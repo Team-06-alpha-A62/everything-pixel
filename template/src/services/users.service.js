@@ -160,3 +160,16 @@ export const getUserData = async uid => {
     throw new Error(`${error.message}`);
   }
 };
+
+export const userVoteInteractionWithPost = async (type, postId, userHandle) => {
+  try {
+    const updateObject = {
+      [`users/${userHandle}/votes/${postId}`]: type,
+      [`posts/${postId}/votes/${userHandle}`]: type,
+    };
+
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`error trying to vote post : ${error.message}`);
+  }
+};
