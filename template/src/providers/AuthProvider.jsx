@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
         const userData = data[Object.keys(data)[0]];
         setCurrentUser({ ...currentUser, userData });
       });
-    }, 200);
+    }, 2000);
   }, [user]);
 
   const login = async (email, password) => {
@@ -64,7 +64,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (username, firstName, lastName, email, password) => {
+  const register = async (username, firstName, lastName, email, password, avatarUrl) => {
     try {
       const credential = await registerUser(email, password);
       await createUser(
@@ -72,7 +72,8 @@ export function AuthProvider({ children }) {
         credential.user.uid,
         email,
         firstName,
-        lastName
+        lastName,
+        avatarUrl
       );
       setCurrentUser({ user: credential.user, userData: null });
     } catch (error) {

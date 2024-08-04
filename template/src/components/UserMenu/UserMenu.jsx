@@ -8,11 +8,12 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { useAuth } from '../../providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import styles from './UserMenu.module.scss';
+import Avatar from 'react-avatar';
 
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
-  const { logout } = useAuth();
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -37,8 +38,13 @@ function UserMenu() {
 
   return (
     <div className={styles.userMenu} ref={menuRef}>
-      <button className="menu-button" onClick={toggleDropdown}>
-        menu
+      <button className={styles['menu-button']} onClick={toggleDropdown}>
+        <Avatar
+          name={`${currentUser.userData?.firstName} ${currentUser.userData?.lastName}`}
+          round={true}
+          size="50"
+          src={currentUser.userData?.avatarUrl}
+        />
       </button>
       {isOpen && (
         <div className={styles.dropDown}>

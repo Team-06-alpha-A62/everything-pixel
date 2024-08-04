@@ -14,15 +14,17 @@ const FilterByDate = ({ filterCriteria, value, handleFilterBy }) => {
   const handleDateChange = value => {
     setFilterDate(value);
 
-    const dateObject = new Date(value);
-    console.log(filterCriteria);
-    handleFilterBy(filterCriteria, dateObject.getTime()); // timestamp
-  }
+    const timeStamp = value ? new Date(value).getTime() : null;
+    handleFilterBy(filterCriteria, timeStamp);
+  };
 
   return (
     <div>
       <label htmlFor={value}>{filterCriteria}</label>
-      <FontAwesomeIcon onClick={toggleShowMore} icon={showMore ? faSortUp : faSortDown} />
+      <FontAwesomeIcon
+        onClick={toggleShowMore}
+        icon={showMore ? faSortUp : faSortDown}
+      />
       {showMore && (
         <>
           <br />
@@ -42,7 +44,7 @@ const FilterByDate = ({ filterCriteria, value, handleFilterBy }) => {
 FilterByDate.propTypes = {
   filterCriteria: PropTypes.string,
   value: PropTypes.string,
-  handleFilterBy: PropTypes.func
+  handleFilterBy: PropTypes.func,
 };
 
 export default FilterByDate;

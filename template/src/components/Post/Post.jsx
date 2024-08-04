@@ -52,7 +52,7 @@ function Post({ post }) {
   }, [author]);
 
   useEffect(() => {
-    if (!currentUser?.userData?.username) return;
+    if (!currentUser.userData?.username) return;
     const fetchVoteData = async () => {
       const result = await hasUserVotedPost(
         currentUser.userData.username,

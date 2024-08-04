@@ -24,7 +24,7 @@ export const uploadImage = async file => {
 
 export const uploadAvatar = async file => {
   if (!file) return null;
-
+  console.log(file);
   const fileRef = storageRef(storage, `avatars/${uuidv4()}-${file.name}`);
   await uploadBytes(fileRef, file);
   const url = await getDownloadURL(fileRef);

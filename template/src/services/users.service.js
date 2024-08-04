@@ -69,6 +69,7 @@ export const getUserByHandle = async handle => {
  * @param {string} lastName - The last name of the new user.
  * @param {string} [role='user'] - The role of the new user, defaults to 'user'.
  * @param {boolean} [isBLocked=false] - The blocked status of the new user, defaults to false.
+ * @param {string} avatarUrl - The URL reference of the users avatar inside the database
  * @returns {Promise<void>} A promise that resolves when the user is created.
  * @throws {Error} If there is an error creating the user in the database.
  */
@@ -78,9 +79,9 @@ export const createUser = async (
   email,
   firstName,
   lastName,
+  imageFile = '',
   role = 'user',
   isBLocked = false,
-  imageFile = ''
 ) => {
   const avatarUrl = await uploadAvatar(imageFile);
 
@@ -90,9 +91,9 @@ export const createUser = async (
     firstName,
     lastName,
     email,
+    avatarUrl,
     role,
     isBLocked,
-    avatarUrl
   };
   try {
     await set(ref(db, `users/${username}`), user);
