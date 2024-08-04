@@ -4,9 +4,10 @@ import Post from '../Post/Post';
 function Posts({ posts }) {
   return (
     <div>
-      {posts.map(post => (
+      {posts.map(post => {
+        return(
         <Post key={post.id} post={post} />
-      ))}
+      )})}
     </div>
   );
 }
