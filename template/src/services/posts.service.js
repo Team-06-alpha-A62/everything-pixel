@@ -67,7 +67,7 @@ export const getPostByHandle = async handle => {
  * @param {string} title - The title of the post.
  * @param {string} content - The content of the post.
  * @param {Array<string>} tags - An array of tags associated with the post.
- * @param {string} imageFile - the URL reference of the post's image inside the database
+ * @param {string} imageFile - the URL reference of the posts image inside the database
  * @returns {Promise<Object>} A promise that resolves to the newly created post's database reference.
  * @throws {Error} If there is an error creating the post in the database.
  */

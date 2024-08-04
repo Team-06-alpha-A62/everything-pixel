@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import styles from './PostAuthorDetails.module.scss';
 import Avatar from 'react-avatar';
 
+// avatar should be included later
 const PostAuthorDetails = ({ author }) => {
   return (
     <div className={styles.authorDetails}>

@@ -9,18 +9,20 @@ const registerInitialData = {
   lastName: '',
   email: '',
   password: '',
-  //usericon
+  avatarUrl: null,
 };
 
 const Register = () => {
   //const { currentUser } = useAuth();
   const [step, setStep] = useState(1);
   const [registrationData, setRegistrationData] = useState(registerInitialData);
+  const [loading, setLoading] = useState(false);
 
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const { username, firstName, lastName, email, password } = registrationData;
+  const { username, firstName, lastName, email, password, avatarUrl } =
+    registrationData;
 
   const handlePrevClick = () => {
     if (step === 1) return;
@@ -28,7 +30,7 @@ const Register = () => {
   };
 
   const handleNextClick = () => {
-    if (step === 4) return;
+    if (step === 5) return;
     setStep(s => s + 1);
   };
 
@@ -39,8 +41,16 @@ const Register = () => {
     });
   };
 
-  //validations will be in helper finctions in future
+  const handleFileChange = e => {
+    setRegistrationData({
+      ...registrationData,
+      avatarUrl: e.target.files[0],
+    });
+  };
+
+  //validations will be in helper functions in future
   const handleRegister = async () => {
+    setLoading(true);
     try {
       if (
         !registrationData.email ||
@@ -51,12 +61,19 @@ const Register = () => {
       ) {
         throw new Error('No credentials provided!');
       }
-      await register(username, firstName, lastName, email, password);
+      console.log(avatarUrl);
+      await register(username, firstName, lastName, email, password, avatarUrl);
       navigate('/feed');
     } catch (error) {
       alert(`registration error ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -66,6 +83,8 @@ const Register = () => {
         <>
           <label htmlFor="username">Username</label>
           <input
+            autoFocus
+            required
             type="text"
             value={username}
             name="username"
@@ -79,6 +98,8 @@ const Register = () => {
         <>
           <label htmlFor="firstName">First name</label>
           <input
+            autoFocus
+            required
             type="text"
             value={firstName}
             name="firstName"
@@ -87,6 +108,7 @@ const Register = () => {
           />
           <label htmlFor="lastName">Last Name</label>
           <input
+            required
             type="text"
             value={lastName}
             name="lastName"
@@ -100,6 +122,8 @@ const Register = () => {
         <>
           <label htmlFor="email">Email</label>
           <input
+            autoFocus
+            required
             type="email"
             value={email}
             name="email"
@@ -113,6 +137,8 @@ const Register = () => {
         <>
           <label htmlFor="password">Password</label>
           <input
+            autoFocus
+            required
             type="password"
             value={password}
             name="password"
@@ -121,14 +147,28 @@ const Register = () => {
           />
         </>
       )}
-      <p>Step {step} / 4</p>
+
+      {step === 5 && (
+        <>
+          <label htmlFor="avatar">Avatar</label>
+          <input
+            type="file"
+            name="avatar"
+            id="avatar"
+            accept="image/*"
+            onChange={e => handleFileChange(e)}
+          />
+        </>
+      )}
+
+      <p>Step {step} / 5</p>
       <div className="controllers">
         {step === 1 ? (
           <button onClick={() => navigate('/')}>&times; Cancel</button>
         ) : (
           <button onClick={handlePrevClick}>&larr; Back</button>
         )}
-        {step === 4 ? (
+        {step === 5 ? (
           <button onClick={handleRegister}>Register &#x2713;</button>
         ) : (
           <button onClick={handleNextClick}>Next &rarr;</button>
