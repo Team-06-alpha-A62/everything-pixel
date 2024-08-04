@@ -57,17 +57,7 @@ function Post({ post }) {
     <PostContainer>
       <PostAuthorDetails author={postAuthor} />
       <PostBody title={title} content={content} tags={tagsArray} />
-      <PostActions
-        date={createdOn}
-        votes={votes}
-        onShowPostCommentsChange={handleShowPostComments}
-      />
-      {showPostComments && (
-        <PostComments
-          comments={commentsObjectsArray}
-          onPublishComment={handlePublishComment}
-        />
-      )}
+      <PostActions date={createdOn} votes={votes} />
       <hr />
     </PostContainer>
   );

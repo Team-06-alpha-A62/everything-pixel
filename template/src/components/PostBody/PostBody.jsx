@@ -3,7 +3,7 @@ import styles from './PostBody.module.scss';
 import Button from '../../hoc/Button/Button';
 import { useState } from 'react';
 
-const PostBody = ({ title, content, tags }) => {
+const PostBody = ({ title, content, tags, image }) => {
   const [showMoreClicked, setShowMoreClicked] = useState(false);
 
   const handleReadMoreClick = () => {
@@ -33,6 +33,7 @@ const PostBody = ({ title, content, tags }) => {
       {tags.map(tag => (
         <span key={tag}>#{tag}</span>
       ))}
+      <img src={image} />
     </div>
   );
 };
@@ -41,6 +42,7 @@ PostBody.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
+  image: PropTypes.string
 };
 
 export default PostBody;
