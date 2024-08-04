@@ -30,7 +30,6 @@ export const createTag = async name => {
     await update(ref(db), {
       [`tags/${name}/name`]: name,
     });
-    return result;
   } catch (error) {
     throw new Error(`${error.message}`);
   }

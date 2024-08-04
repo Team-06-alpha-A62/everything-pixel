@@ -80,3 +80,14 @@ export const deletePost = async (userHandle, postId) => {
 
   return update(ref(db), updateObject);
 };
+
+export const hasUserVotedPost = async userHandler => {
+  try {
+    const snapshot = await get(ref(db, `posts/votes/${userHandler}`));
+    if (!snapshot.exists()) return null;
+
+    return snapshot.val();
+  } catch (error) {
+    console.error('Error checking vote:', error);
+  }
+};
