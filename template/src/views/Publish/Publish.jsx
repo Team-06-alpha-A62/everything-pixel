@@ -14,6 +14,7 @@ const initialPostData = {
   titleInput: '',
   contentInput: '',
   tagsInput: '',
+  imageFileInput: null,
 };
 
 const Publish = () => {
@@ -21,6 +22,7 @@ const Publish = () => {
   const navigate = useNavigate();
   const [tags, setTags] = useState([]);
   const [postData, setPostData] = useState(initialPostData);
+  const [loading, setLoading] = useState(false);
 
   const handleKeyDown = e => {
     if ((e.key === 'Enter' || e.key === ' ') && postData.tagsInput.trim()) {
@@ -40,6 +42,13 @@ const Publish = () => {
     setPostData({
       ...postData,
       [key]: e.target.value,
+    });
+  };
+
+  const handleFileChange = e => {
+    setPostData({
+      ...postData,
+      imageFileInput: e.target.files[0],
     });
   };
 
@@ -65,18 +74,27 @@ const Publish = () => {
       return;
     }
 
-    const post = await createPost(
-      currentUser.userData.username,
-      postData.titleInput,
-      postData.contentInput,
-      convertTagsToObject(tags)
-    );
+    setLoading(true);
 
-    const postId = post.key;
-    setPostData(initialPostData);
-    await assignTagUpdatesToDb(tags, postId);
-    await addUserPost(currentUser.userData.username, postId);
-    navigate('/feed');
+    try {
+      const post = await createPost(
+        currentUser.userData.username,
+        postData.titleInput,
+        postData.contentInput,
+        convertTagsToObject(tags),
+        postData.imageFileInput
+      );
+
+      const postId = post.key;
+      setPostData(initialPostData);
+      await assignTagUpdatesToDb(tags, postId);
+      await addUserPost(currentUser.userData.username, postId);
+      navigate('/feed');
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -90,6 +108,7 @@ const Publish = () => {
         autoFocus
         value={postData.titleInput}
         onChange={handleInputChange('titleInput')}
+        required
       />
       <br />
       <label htmlFor="content">Content</label>
@@ -98,6 +117,7 @@ const Publish = () => {
         id="content"
         value={postData.contentInput}
         onChange={handleInputChange('contentInput')}
+        required
       />
 
       <br />
@@ -121,17 +141,18 @@ const Publish = () => {
         onKeyDown={handleKeyDown}
       />
       <br />
+      <input
+        type="file"
+        name="image"
+        id="image"
+        accept="image/*"
+        onChange={e => handleFileChange(e)}
+      />
+      <br />
       <div className="controller">
         <button onClick={() => navigate(-1)}>&times; Cancel</button>
-        <button
-          onClick={handlePublish}
-          // alert(`author: ${currentUser.userData.username},
-          // title: ${postData.title},
-          // content: ${postData.content},
-          // tags: ${tags}`)
-        >
-          Publish
-        </button>
+        <button onClick={handlePublish}>Publish</button>
+        {loading ? 'Publishing...' : 'Publish'}
       </div>
     </>
   );

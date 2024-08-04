@@ -1,5 +1,6 @@
 import { get, push, ref, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
+import { uploadImage } from './images.service.js';
 
 /**
  * Retrieves all posts from the database, optionally filtering by a search term.
@@ -69,9 +70,11 @@ export const getPostByHandle = async handle => {
  * @returns {Promise<Object>} A promise that resolves to the newly created post's database reference.
  * @throws {Error} If there is an error creating the post in the database.
  */
-export const createPost = async (author, title, content, tags) => {
+export const createPost = async (author, title, content, tags, imageFile = '') => {
   try {
-    const post = { author, title, content, tags, createdOn: Date.now() };
+    const imageUrl = await uploadImage(imageFile);
+
+    const post = { author, title, content, tags, createdOn: Date.now(), image: imageUrl };
     const result = await push(ref(db, 'posts'), post);
     const id = result.key;
 

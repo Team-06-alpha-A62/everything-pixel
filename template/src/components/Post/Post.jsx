@@ -7,7 +7,7 @@ import PostBody from '../PostBody/PostBody.jsx';
 import PostActions from '../PostActions/PostActions.jsx';
 function Post({ post }) {
   const [postAuthor, setPostAuthor] = useState({});
-  const { author, title, content, tags, createdOn, votes } = post;
+  const { author, title, content, tags, createdOn, votes, image } = post;
 
   const tagsArray = Object.keys(tags ?? {});
 
@@ -22,7 +22,7 @@ function Post({ post }) {
   return (
     <PostContainer>
       <PostAuthorDetails author={postAuthor}/>
-      <PostBody title={title} content={content} tags={tagsArray}/>
+      <PostBody title={title} content={content} tags={tagsArray} image={image}/>
       <PostActions date={createdOn} votes={votes} />
       <hr />
     </PostContainer>
