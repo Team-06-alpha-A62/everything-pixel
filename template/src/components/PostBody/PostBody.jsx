@@ -1,11 +1,26 @@
 import PropTypes from 'prop-types';
 import styles from './PostBody.module.scss';
+import Button from '../../hoc/Button/Button'
+import { useState } from 'react';
 
 const PostBody = ({ title, content, tags }) => {
+  const [readMoreClicked, setReadMoreClicked] = useState(false);
+
+  const handleReadMoreClick = () => {
+    setReadMoreClicked(clicked => !clicked);
+  }
+
   return (
     <div className={styles}>
       <h1>{title}</h1>
-      <p>{content}</p>
+      { content.length > 40 && !readMoreClicked ? (
+        <>
+        <div>{content.slice(0, 40)}...<Button style={'none'} handleClick={handleReadMoreClick} >Show more</Button></div>
+
+        </>
+      ) : (
+        <div>{content}<Button style={'none'} handleClick={handleReadMoreClick} >Show less</Button></div>
+      )}
       {tags.map(tag => <span key={tag}>#{tag}</span>)}
     </div>
   );
