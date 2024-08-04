@@ -8,6 +8,7 @@ import {
   set,
 } from 'firebase/database';
 import { db } from '../config/firebase.config';
+import { uploadAvatar } from './images.service.js';
 
 /**
  * Retrieves all users from the database. Optionally filters users by a search term.
@@ -78,8 +79,11 @@ export const createUser = async (
   firstName,
   lastName,
   role = 'user',
-  isBLocked = false
+  isBLocked = false,
+  imageFile = ''
 ) => {
+  const avatarUrl = await uploadAvatar(imageFile);
+
   const user = {
     username,
     uid,
@@ -88,6 +92,7 @@ export const createUser = async (
     email,
     role,
     isBLocked,
+    avatarUrl
   };
   try {
     await set(ref(db, `users/${username}`), user);
