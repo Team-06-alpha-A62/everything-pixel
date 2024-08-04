@@ -34,6 +34,7 @@ function Post({ post }) {
       const commentsData = await Promise.all(
         Object.keys(comments ?? {}).map(async commentId => {
           const commentData = await getCommentById(commentId);
+          if (commentData.repliedToComment) return;
           return commentData;
         })
       );
@@ -52,7 +53,7 @@ function Post({ post }) {
   }, [author]);
 
   useEffect(() => {
-    if (!currentUser.userData?.username) return;
+    if (!currentUser?.userData?.username) return;
     const fetchVoteData = async () => {
       const result = await hasUserVotedPost(
         currentUser.userData.username,
@@ -83,7 +84,8 @@ function Post({ post }) {
       const newComment = await createComment(
         post.id,
         currentUser.userData.username,
-        content
+        content,
+        repliedToComment
       );
       const newCommentData = await getCommentById(newComment.key);
       setCommentsObjectsArray(prevCommentsObjectsArray => [

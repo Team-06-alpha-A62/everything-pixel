@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import PublishComment from '../PublishComment/PublishComment';
+import PostComment from '../PostComment/PostComment';
 
 const PostComments = ({ comments, onPublishComment }) => {
   return (
@@ -8,9 +9,8 @@ const PostComments = ({ comments, onPublishComment }) => {
         <p>No comments</p>
       ) : (
         <>
-          {comments.map((comment, index) => {
-            console.log(comment);
-            return <p key={index}>{comment.content}</p>;
+          {comments.map(comment => {
+            return <PostComment key={comment.id} comment={comment} />;
           })}
         </>
       )}

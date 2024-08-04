@@ -1,5 +1,6 @@
 import { get, push, ref, remove, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Retrieves all comments from the database.
@@ -64,10 +65,18 @@ export const createComment = async (
   postId,
   author,
   content,
+  repliedToComment,
   edited = false
 ) => {
   try {
-    const comment = { postId, author, content, edited, createdOn: Date.now() };
+    const comment = {
+      postId,
+      author,
+      content,
+      edited,
+      repliedToComment,
+      createdOn: Date.now(),
+    };
 
     const result = await push(ref(db, 'comments'), comment);
     const commentId = result.key;
@@ -89,12 +98,14 @@ export const createComment = async (
  * @returns {Promise<Object|null>} A promise that resolves to the user's vote data, or null if no vote exists.
  * @throws {Error} If there is an error checking the vote in the database.
  */
-export const hasUserVotedComment = async userHandler => {
+export const hasUserLikedComment = async (commentId, userHandler) => {
   try {
-    const snapshot = await get(ref(db, `comments/votes/${userHandler}`));
-    if (!snapshot.exists()) return null;
+    const snapshot = await get(
+      ref(db, `comments/${commentId}/likes/${userHandler}`)
+    );
+    if (!snapshot.exists()) return false;
 
-    return snapshot.val();
+    return true;
   } catch (error) {
     console.error('Error checking vote:', error.message);
     return null;
@@ -110,14 +121,31 @@ export const hasUserVotedComment = async userHandler => {
  */
 export const deleteComment = async commentId => {
   try {
-    // Construct the reference to the comment in the "comments" table
     const commentRef = ref(db, `comments/${commentId}`);
 
-    // Remove the comment
     await remove(commentRef);
 
     console.log(`Comment ${commentId} deleted successfully.`);
   } catch (error) {
     console.error('Error deleting comment:', error);
   }
+};
+
+export const likeComment = async (userHandle, commentId) => {
+  console.log(commentId, userHandle);
+  const updateObject = {
+    [`comments/${commentId}/likes/${userHandle}`]: true,
+    [`users/${userHandle}/likedComments/${commentId}`]: true,
+  };
+
+  await update(ref(db), updateObject);
+};
+
+export const dislikeComment = async (userHandle, commentId) => {
+  const updateObject = {
+    [`comments/${commentId}/likes/${userHandle}`]: null,
+    [`users/${userHandle}/likedComments/${commentId}`]: null,
+  };
+
+  await update(ref(db), updateObject);
 };
