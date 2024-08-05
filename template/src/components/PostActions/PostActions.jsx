@@ -17,9 +17,10 @@ const PostActions = ({
   onShowPostCommentsChange,
   userVote,
   handleUserVoteChange,
-  edited,
-  isPostDetails = false,
+  isPostDetails,
+  edited
 }) => {
+
   return (
     <div className={styles['post-actions']}>
       <span className={styles['time-created']}>{edited ? `edited: ${edited}` : date}</span>

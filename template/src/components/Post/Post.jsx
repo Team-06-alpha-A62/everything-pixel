@@ -33,10 +33,6 @@ function Post({ post }) {
     addSuffix: true,
   });
 
-  const editedTimeAgo = formatDistanceToNow(new Date(createdOn), {
-    addSuffix: true,
-  });
-
   useEffect(() => {
     if (!comments || Object.keys(comments).length === 0) return;
     const fetchComments = async () => {
@@ -149,7 +145,7 @@ function Post({ post }) {
           onShowPostCommentsChange={handleShowPostComments}
           userVote={userVote}
           handleUserVoteChange={handleUserVoteChange}
-          edited={edited && editedTimeAgo}
+          Edited={edited}
         />
         {showPostComments && (
           <PostComments

@@ -159,8 +159,8 @@ const SinglePostDetails = () => {
         votes={postVotes}
         userVote={userVote}
         handleUserVoteChange={handleUserVoteChange}
-        edited={edited}
         isPostDetails={true}
+        edited={edited}
       />
       <div>
         <PostComments
