@@ -3,11 +3,15 @@ import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import styles from './FilterByTags.module.scss';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const FilterByTags = ({ handleFilterBy }) => {
+const FilterByTags = ({ filterCriteria, handleFilterBy }) => {
   const [showMore, setShowMore] = useState(false);
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('');
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const toggleShowMore = () => {
     setShowMore(showMore => !showMore);
   };
@@ -33,7 +37,12 @@ const FilterByTags = ({ handleFilterBy }) => {
   };
 
   useEffect(() => {
-    handleFilterBy('tags', tags);
+
+    tags.length
+    ? searchParams.set(`filterBy${filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)}`, tags.join('_'))
+    : searchParams.delete(`filterBy${filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)}`);
+
+    navigate({ search: searchParams.toString() });
   }, [tags]);
 
   return (
@@ -71,6 +80,7 @@ const FilterByTags = ({ handleFilterBy }) => {
 };
 
 FilterByTags.propTypes = {
+  filterCriteria: PropTypes.string,
   handleFilterBy: PropTypes.func,
 };
 

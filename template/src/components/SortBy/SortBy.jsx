@@ -17,11 +17,10 @@ function SortBy({ sort, values }) {
   const handleClickedValueChange = value => {
     let newActiveSort = activeSort === value ? '' : value;
     setActiveSort(newActiveSort);
-
     if (newActiveSort) {
-      searchParams.set(`sortBy${sort}`, newActiveSort);
+      searchParams.set(`sortBy${sort.slice(0, 1).toUpperCase() + sort.slice(1)}`, newActiveSort);
     } else {
-      searchParams.delete(`sortBy${sort}`);
+      searchParams.delete(`sortBy${sort.slice(0, 1).toUpperCase() + sort.slice(1)}`);
     }
     navigate({ search: searchParams.toString() });
   };

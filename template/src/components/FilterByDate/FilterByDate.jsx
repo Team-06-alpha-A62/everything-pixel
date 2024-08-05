@@ -2,10 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const FilterByDate = ({ filterCriteria, value, handleFilterBy }) => {
   const [showMore, setShowMore] = useState(false);
   const [filterDate, setFilterDate] = useState('');
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate()
 
   const toggleShowMore = () => {
     setShowMore(showMore => !showMore);
@@ -14,8 +17,11 @@ const FilterByDate = ({ filterCriteria, value, handleFilterBy }) => {
   const handleDateChange = value => {
     setFilterDate(value);
 
-    const timeStamp = value ? new Date(value).getTime() : null;
-    handleFilterBy(filterCriteria, timeStamp);
+    value
+      ? searchParams.set(`filterBy${filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)}`, value)
+      : searchParams.delete(`filterBy${filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)}`);
+
+    navigate({ search: searchParams.toString() });
   };
 
   return (

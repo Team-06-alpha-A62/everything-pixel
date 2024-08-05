@@ -11,9 +11,11 @@ const Feed = () => {
   const [updatedPosts, setUpdatedPosts] = useState([]);
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
-  const sortByDate = searchParams.get('sortBydate') || '';
-  const sortByTitle = searchParams.get('sortBytitle') || '';
-  const sortByPopularity = searchParams.get('sortBypopularity') || '';
+  const sortByDate = searchParams.get('sortByDate') || '';
+  const sortByTitle = searchParams.get('sortByTitle') || '';
+  const sortByPopularity = searchParams.get('sortByPopularity') || '';
+  const filterByDate = searchParams.get('filterByDate') || '';
+  const filterByTags = searchParams.get('filterByTags') || '';
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -30,6 +32,10 @@ const Feed = () => {
     }
   }, [sortByDate, sortByTitle, sortByPopularity, posts]);
 
+  useEffect(() => {
+    if (posts.length > 0) handleFilterBy(filterByDate, filterByTags);
+  }, [filterByDate, filterByTags]);
+
   const handleSortBy = (sortDate, sortPopularity, sortTitle) => {
     let sortedPosts = [...posts];
     switch (sortDate) {
@@ -42,6 +48,7 @@ const Feed = () => {
       default:
         break;
     }
+
     switch (sortPopularity) {
       case 'most':
         sortedPosts.sort(
@@ -64,6 +71,7 @@ const Feed = () => {
       default:
         break;
     }
+
     switch (sortTitle) {
       case 'A-Z':
         sortedPosts.sort((a, b) => a.title.localeCompare(b.title));
@@ -78,21 +86,22 @@ const Feed = () => {
     setUpdatedPosts(sortedPosts);
   };
 
-  const handleFilterBy = (criteria, value) => {
+  const handleFilterBy = (filterByDate, filterByTags) => {
     let filteredPosts = [...posts];
-    switch (criteria) {
-      case 'date':
-        filteredPosts = filteredPosts.filter(post => post.createdOn >= value);
-        break;
-      case 'tags':
-        filteredPosts = filteredPosts.filter(post => {
-          const postTags = post.tags ? Object.keys(post.tags) : [];
-          return value.every(tag => postTags.includes(tag));
-        });
-        break;
-      default:
-        filteredPosts = posts;
-        break;
+    if (filterByDate) {
+      const timeStamp = new Date(filterByDate).getTime();
+      filteredPosts = filteredPosts.filter(
+        post => post.createdOn >= timeStamp
+      );
+    }
+
+    if (filterByTags) {
+      const tagsArray = filterByTags.split('_');
+      console.log(tagsArray);
+      filteredPosts = filteredPosts.filter(post => {
+        const postTags = post.tags ? Object.keys(post.tags) : [];
+        return tagsArray.every(tag => postTags.includes(tag));
+      });
     }
     setUpdatedPosts(filteredPosts);
   };
