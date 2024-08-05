@@ -57,7 +57,10 @@ export const getPostByHandle = async handle => {
       ),
       createdOn: formatDistanceToNow(new Date(snapshot.val().createdOn), {
         addSuffix: true,
-      })
+      }),
+      edited: snapshot.val().edited ? formatDistanceToNow(new Date(snapshot.val().edited), {
+        addSuffix: true,
+      }) : null
     };
   } catch (error) {
     throw new Error(`${error.message}`);

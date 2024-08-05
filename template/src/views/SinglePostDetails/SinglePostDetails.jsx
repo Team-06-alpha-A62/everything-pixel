@@ -18,7 +18,7 @@ const SinglePostDetails = () => {
   const [commentsObjectsArray, setCommentsObjectsArray] = useState([]);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
   const [userVote, setUserVote] = useState(null);
-  const { title, tags, image, content, comments, createdOn } = post || {};
+  const { title, tags, image, content, comments, createdOn, edited } = post || {};
   const tagsArray = Object.values(tags ?? {});
 
   const { id } = useParams();
@@ -130,7 +130,7 @@ const SinglePostDetails = () => {
             Back
           </button>
           <div className={styles['controls']}>
-            <button className={styles['btn']}>Delete</button>
+            <button className={styles['btn']} onClick={() => navigate(`/edit/${post.id}`)}>Edit</button>
             <button className={styles['btn']}>Delete</button>
             <button className={styles['btn']}>Report</button>
           </div>
@@ -159,6 +159,7 @@ const SinglePostDetails = () => {
         votes={postVotes}
         userVote={userVote}
         handleUserVoteChange={handleUserVoteChange}
+        edited={edited}
         isPostDetails={true}
       />
       <div>

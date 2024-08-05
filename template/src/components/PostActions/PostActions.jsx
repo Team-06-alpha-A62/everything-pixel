@@ -17,11 +17,12 @@ const PostActions = ({
   onShowPostCommentsChange,
   userVote,
   handleUserVoteChange,
+  edited,
   isPostDetails = false,
 }) => {
   return (
     <div className={styles['post-actions']}>
-      <span className={styles['time-created']}>{date}</span>
+      <span className={styles['time-created']}>{edited ? `edited: ${edited}` : date}</span>
       <div className={styles['action-buttons']}>
         {!isPostDetails && (
           <div onClick={onShowPostCommentsChange}>
@@ -52,6 +53,7 @@ PostActions.propTypes = {
   userVote: PropTypes.any,
   handleUserVoteChange: PropTypes.any,
   isPostDetails: PropTypes.bool,
+  edited: PropTypes.any,
 };
 
 export default PostActions;

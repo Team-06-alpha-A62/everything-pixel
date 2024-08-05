@@ -9,6 +9,7 @@ import NotFound from './views/NotFound/NotFound.jsx';
 import Feed from './views/Feed/Feed.jsx';
 import Publish from './views/Publish/Publish.jsx';
 import SinglePostDetails from './views/SinglePostDetails/SinglePostDetails.jsx';
+import EditPost from './views/EditPost/EditPost.jsx'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/feed" element={<Feed />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/feed/post/:id" element={<SinglePostDetails />} />
+          <Route path="/edit/:id" element={<EditPost />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </AuthProvider>

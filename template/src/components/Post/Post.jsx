@@ -25,11 +25,15 @@ function Post({ post }) {
   const [userVote, setUserVote] = useState(null);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
 
-  const { author, title, content, tags, createdOn, comments, image } = post;
+  const { author, title, content, tags, createdOn, comments, image, edited } = post;
 
   const tagsArray = Object.keys(tags ?? {});
 
   const timeAgo = formatDistanceToNow(new Date(createdOn), {
+    addSuffix: true,
+  });
+
+  const editedTimeAgo = formatDistanceToNow(new Date(createdOn), {
     addSuffix: true,
   });
 
@@ -145,6 +149,7 @@ function Post({ post }) {
           onShowPostCommentsChange={handleShowPostComments}
           userVote={userVote}
           handleUserVoteChange={handleUserVoteChange}
+          edited={edited && editedTimeAgo}
         />
         {showPostComments && (
           <PostComments
