@@ -1,6 +1,5 @@
 import { get, push, ref, remove, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Retrieves all comments from the database.

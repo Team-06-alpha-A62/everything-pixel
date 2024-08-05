@@ -96,10 +96,10 @@ const Feed = () => {
     setUpdatedPosts(filteredPosts);
   };
 
-  const handleTrendingTags = () => {
-    setPosts();
-    return;
-  };
+  // const handleTrendingTags = () => {
+  //   setPosts();
+  //   return;
+  // };
 
   return (
     <div className={styles.feed}>
