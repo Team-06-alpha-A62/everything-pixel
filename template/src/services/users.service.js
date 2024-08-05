@@ -81,7 +81,7 @@ export const createUser = async (
   lastName,
   imageFile = '',
   role = 'user',
-  isBLocked = false,
+  isBLocked = false
 ) => {
   const avatarUrl = await uploadAvatar(imageFile);
 
@@ -172,6 +172,23 @@ export const userVoteInteractionWithPost = async (type, postId, userHandle) => {
     const updateObject = {
       [`users/${userHandle}/votes/${postId}`]: type,
       [`posts/${postId}/votes/${userHandle}`]: type,
+    };
+
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`error trying to vote post : ${error.message}`);
+  }
+};
+
+export const userVoteInteractionWithComment = async (
+  type,
+  commentId,
+  userHandle
+) => {
+  try {
+    const updateObject = {
+      [`users/${userHandle}/comments/${commentId}`]: type,
+      [`comments/${commentId}/votes/${userHandle}`]: type,
     };
 
     await update(ref(db), updateObject);

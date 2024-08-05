@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
-import styles from './PostActions.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faComment,
   faThumbsDown as farThumbsDown,
   faThumbsUp as farThumbsUp,
 } from '@fortawesome/free-regular-svg-icons';
@@ -11,23 +9,12 @@ import {
   faThumbsUp as fasThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
-const PostActions = ({
-  date,
-  votes,
-  onShowPostCommentsChange,
-  userVote,
-  handleUserVoteChange,
-  isPostDetails = false,
-}) => {
+import styles from './CommentActions.module.scss';
+
+const CommentActions = ({ votes, userVote, handleUserVoteChange }) => {
   return (
-    <div className={styles.postActions}>
-      <span>{new Date(date).toDateString()}</span>
+    <div className={styles.commentActions}>
       <div className={styles.actionButtons}>
-        {!isPostDetails && (
-          <div onClick={onShowPostCommentsChange}>
-            <FontAwesomeIcon icon={faComment} />
-          </div>
-        )}
         <div onClick={() => handleUserVoteChange('upVote')}>
           <FontAwesomeIcon
             icon={userVote === 'upVote' ? fasThumbsUp : farThumbsUp}
@@ -45,13 +32,10 @@ const PostActions = ({
   );
 };
 
-PostActions.propTypes = {
-  date: PropTypes.any,
+CommentActions.propTypes = {
   votes: PropTypes.any,
-  onShowPostCommentsChange: PropTypes.any,
   userVote: PropTypes.any,
   handleUserVoteChange: PropTypes.any,
-  isPostDetails: PropTypes.bool,
 };
 
-export default PostActions;
+export default CommentActions;

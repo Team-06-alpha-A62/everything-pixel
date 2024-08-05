@@ -23,9 +23,9 @@ function SortBy({ sort, values }) {
     } else {
       searchParams.delete(`sortBy${sort}`);
     }
-
     navigate({ search: searchParams.toString() });
   };
+
   return (
     <div>
       <span>{sort}</span>

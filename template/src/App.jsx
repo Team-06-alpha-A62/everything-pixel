@@ -8,6 +8,7 @@ import { AuthProvider } from './providers/AuthProvider.jsx';
 import NotFound from './views/NotFound/NotFound.jsx';
 import Feed from './views/Feed/Feed.jsx';
 import Publish from './views/Publish/Publish.jsx';
+import SinglePostDetails from './views/SinglePostDetails/SinglePostDetails.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/publish" element={<Publish />} />
+          <Route path="/feed/post/:id" element={<SinglePostDetails />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </AuthProvider>

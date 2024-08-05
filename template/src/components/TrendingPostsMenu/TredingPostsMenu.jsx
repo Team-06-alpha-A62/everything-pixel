@@ -28,6 +28,7 @@ const TredingPostsMenu = ({ size }) => {
 
   return (
     <>
+      <h2>Trending Posts:</h2>
       {trendingPosts.map(post => (
         <TrendingPost trendingPost={post} key={post.id} />
       ))}

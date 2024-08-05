@@ -11,16 +11,18 @@
 
 .commentDetailsContainer {
   flex-grow: 1;
-  display: flex;
   flex-direction: column;
   font-size: 14px;
 }
 
 .commentContent {
-  display: flex;
+  display: block;
   flex-direction: column;
   color: #262626;
   line-height: 18px;
+}
+.timeCreated {
+  margin-left: 10px;
 }
 
 .commentTime {
@@ -36,8 +38,4 @@
   margin-left: 10px;
   font-size: 18px;
   color: #262626;
-}
-
-.commentActions:hover {
-  color: #e1306c; /* Instagram-like hover color */
 }

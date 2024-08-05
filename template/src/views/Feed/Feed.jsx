@@ -5,6 +5,7 @@ import RightSideBar from '../../components/RightSideBar/RightSideBar';
 import { getAllPosts } from '../../services/posts.service';
 import styles from './Feed.module.scss';
 import { useSearchParams } from 'react-router-dom';
+
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [updatedPosts, setUpdatedPosts] = useState([]);
@@ -104,7 +105,6 @@ const Feed = () => {
   return (
     <div className={styles.feed}>
       <LeftSideBar handleFilterBy={handleFilterBy} />
-
       <Posts posts={updatedPosts} />
       <RightSideBar
         posts={posts}

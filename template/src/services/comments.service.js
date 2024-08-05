@@ -95,19 +95,19 @@ export const createComment = async (
  * @returns {Promise<Object|null>} A promise that resolves to the user's vote data, or null if no vote exists.
  * @throws {Error} If there is an error checking the vote in the database.
  */
-export const hasUserLikedComment = async (commentId, userHandler) => {
-  try {
-    const snapshot = await get(
-      ref(db, `comments/${commentId}/likes/${userHandler}`)
-    );
-    if (!snapshot.exists()) return false;
+// export const hasUserLikedComment = async (commentId, userHandler) => {
+//   try {
+//     const snapshot = await get(
+//       ref(db, `comments/${commentId}/likes/${userHandler}`)
+//     );
+//     if (!snapshot.exists()) return false;
 
-    return true;
-  } catch (error) {
-    console.error('Error checking vote:', error.message);
-    return null;
-  }
-};
+//     return true;
+//   } catch (error) {
+//     console.error('Error checking vote:', error.message);
+//     return null;
+//   }
+// };
 
 /**
  * Deletes a comment from the database.
@@ -145,4 +145,17 @@ export const dislikeComment = async (userHandle, commentId) => {
   };
 
   await update(ref(db), updateObject);
+};
+
+export const hasUserVotedComment = async (userHandler, commentId) => {
+  try {
+    const snapshot = await get(
+      ref(db, `comments/${commentId}/votes/${userHandler}`)
+    );
+    if (!snapshot.exists()) return null;
+
+    return snapshot.val();
+  } catch (error) {
+    throw new Error(`Error checking vote: ${error.message}`);
+  }
 };

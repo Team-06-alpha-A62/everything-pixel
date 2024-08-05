@@ -2,22 +2,20 @@ import PropTypes from 'prop-types';
 import styles from './PostComment.module.scss';
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { getUserByHandle } from '../../services/users.service';
-import Avatar from 'react-avatar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
 import {
-  dislikeComment,
-  hasUserLikedComment,
-  likeComment,
-} from '../../services/comments.service';
+  getUserByHandle,
+  userVoteInteractionWithComment,
+} from '../../services/users.service';
+import Avatar from 'react-avatar';
 import { useAuth } from '../../providers/AuthProvider';
+import CommentActions from '../CommentActions/CommentActions';
+import { hasUserVotedComment } from '../../services/comments.service';
 
 const PostComment = ({ comment }) => {
   const { currentUser } = useAuth();
   const [commentAuthor, setCommentAuthor] = useState({});
-  const [isLiked, setIsLiked] = useState(false);
+  const [userVote, setUserVote] = useState(null);
+  const [commentVotes, setCommentVotes] = useState({ upVote: 0, downVote: 0 });
 
   useEffect(() => {
     const fetchCommentAuthorData = async () => {
@@ -25,33 +23,64 @@ const PostComment = ({ comment }) => {
       setCommentAuthor(commentAuthorData);
     };
     fetchCommentAuthorData();
-  });
+  }, []);
 
   useEffect(() => {
     if (!currentUser?.userData?.username) return;
-    const hasLikedComment = async () => {
-      const userLikedCommentResult = await hasUserLikedComment(
-        comment.id,
-        currentUser.userData.username
+    const fetchVoteData = async () => {
+      const result = await hasUserVotedComment(
+        currentUser.userData.username,
+        comment.id
       );
-      setIsLiked(userLikedCommentResult);
+      setUserVote(result);
     };
-    hasLikedComment();
-  }, [currentUser.userData.username, comment.id]);
+    fetchVoteData();
+  }, [currentUser, comment.id]);
+
+  useEffect(() => {
+    const updatedcommentVotes = {
+      upVote: Object.values(comment.votes || {}).filter(
+        vote => vote === 'upVote'
+      ).length,
+      downVote: Object.values(comment.votes || {}).filter(
+        vote => vote === 'downVote'
+      ).length,
+    };
+    setCommentVotes(updatedcommentVotes);
+  }, [comment.votes]);
+
+  const handleUserVoteChange = async type => {
+    try {
+      let updatedVotes = { ...commentVotes };
+      if (userVote === type) {
+        await userVoteInteractionWithComment(
+          null,
+          comment.id,
+          currentUser.userData.username
+        );
+        setUserVote(null);
+        updatedVotes[type] -= 1;
+      } else {
+        if (userVote) {
+          updatedVotes[userVote] -= 1;
+        }
+        await userVoteInteractionWithComment(
+          type,
+          comment.id,
+          currentUser.userData.username
+        );
+        setUserVote(type);
+        updatedVotes[type] += 1;
+      }
+      setCommentVotes(updatedVotes);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const timeAgo = formatDistanceToNow(new Date(comment.createdOn), {
     addSuffix: true,
   });
-
-  const toggleLike = async () => {
-    if (isLiked) {
-      console.log(currentUser.userData.username);
-      await dislikeComment(currentUser.userData.username, comment.id);
-    } else {
-      await likeComment(currentUser.userData.username, comment.id);
-    }
-    setIsLiked(isLiked => !isLiked);
-  };
 
   return (
     <div className={styles.commentContainer}>
@@ -63,17 +92,18 @@ const PostComment = ({ comment }) => {
         className={styles.commentAvatar}
       />
       <div className={styles.commentDetailsContainer}>
-        <span className={styles.commentContent}>
-          <strong>{commentAuthor.username}</strong> {comment.content}
+        <span className={styles.commentUsername}>
+          <strong>{commentAuthor.username}</strong>
         </span>
-        <span className={styles.commentTime}>{timeAgo}</span>
-      </div>
-      <div className={styles.commentActions} onClick={toggleLike}>
-        {isLiked ? (
-          <FontAwesomeIcon icon={faSolidHeart} />
-        ) : (
-          <FontAwesomeIcon icon={faRegularHeart} />
-        )}
+        <span className={styles.timeCreated}>{timeAgo}</span>
+        <span className={styles.commentContent}>{comment.content}</span>
+        <div className={styles.commentActions}>
+          <CommentActions
+            votes={commentVotes}
+            userVote={userVote}
+            handleUserVoteChange={handleUserVoteChange}
+          />
+        </div>
       </div>
     </div>
   );
