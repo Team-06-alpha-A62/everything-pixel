@@ -38,7 +38,6 @@ function Post({ post }) {
           return commentData;
         })
       );
-      console.log(commentsData);
       setCommentsObjectsArray(commentsData);
     };
     fetchComments();

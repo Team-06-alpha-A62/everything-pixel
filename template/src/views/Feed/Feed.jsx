@@ -10,6 +10,8 @@ const Feed = () => {
   const [updatedPosts, setUpdatedPosts] = useState([]);
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
+  const sortByDate = searchParams.get('sortBydate') || '';
+  const sortByTitle = searchParams.get('sortBytitle') || '';
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -20,26 +22,37 @@ const Feed = () => {
     fetchPosts();
   }, [searchQuery]);
 
-  const handleSortBy = value => {
-    let sorted = [];
-    switch (value) {
+  useEffect(() => {
+    if (posts.length > 0) {
+      handleSortBy(sortByDate, sortByTitle);
+    }
+  }, [sortByDate, sortByTitle, posts]);
+
+  const handleSortBy = (sortDate, sortTitle) => {
+    let sortedPosts = [...updatedPosts];
+
+    switch (sortDate) {
       case 'newest':
-        sorted = [...posts].sort((a, b) => b.createdOn - a.createdOn);
+        sortedPosts.sort((a, b) => b.createdOn - a.createdOn);
         break;
       case 'oldest':
-        sorted = [...posts].sort((a, b) => a.createdOn - b.createdOn);
-        break;
-      case 'A-Z':
-        sorted = [...posts].sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case 'Z-A':
-        sorted = [...posts].sort((a, b) => b.title.localeCompare(a.title));
+        sortedPosts.sort((a, b) => a.createdOn - b.createdOn);
         break;
       default:
-        sorted = posts;
         break;
     }
-    setUpdatedPosts(sorted);
+    switch (sortTitle) {
+      case 'A-Z':
+        sortedPosts.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'Z-A':
+        sortedPosts.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      default:
+        break;
+    }
+
+    setUpdatedPosts(sortedPosts);
   };
 
   const handleFilterBy = (criteria, value) => {
