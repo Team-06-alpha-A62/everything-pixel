@@ -12,6 +12,7 @@ const Feed = () => {
   const searchQuery = searchParams.get('search') || '';
   const sortByDate = searchParams.get('sortBydate') || '';
   const sortByTitle = searchParams.get('sortBytitle') || '';
+  const sortByPopularity = searchParams.get('sortBypopularity') || '';
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -24,19 +25,40 @@ const Feed = () => {
 
   useEffect(() => {
     if (posts.length > 0) {
-      handleSortBy(sortByDate, sortByTitle);
+      handleSortBy(sortByDate, sortByPopularity, sortByTitle);
     }
-  }, [sortByDate, sortByTitle, posts]);
+  }, [sortByDate, sortByTitle, sortByPopularity, posts]);
 
-  const handleSortBy = (sortDate, sortTitle) => {
+  const handleSortBy = (sortDate, sortPopularity, sortTitle) => {
     let sortedPosts = [...updatedPosts];
-
     switch (sortDate) {
       case 'newest':
         sortedPosts.sort((a, b) => b.createdOn - a.createdOn);
         break;
       case 'oldest':
         sortedPosts.sort((a, b) => a.createdOn - b.createdOn);
+        break;
+      default:
+        break;
+    }
+    switch (sortPopularity) {
+      case 'most':
+        sortedPosts.sort(
+          (a, b) =>
+            Object.values(b.comments ?? {}).length +
+            Object.values(b.votes ?? {}).length -
+            (Object.values(a.comments ?? {}).length +
+              Object.values(a.votes ?? {}).length)
+        );
+        break;
+      case 'least':
+        sortedPosts.sort(
+          (a, b) =>
+            Object.values(a.comments ?? {}).length +
+            Object.values(a.votes ?? {}).length -
+            (Object.values(b.comments ?? {}).length +
+              Object.values(b.votes ?? {}).length)
+        );
         break;
       default:
         break;
