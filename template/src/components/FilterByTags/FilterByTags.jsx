@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import styles from './FilterByTags.module.scss';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const FilterByTags = ({ filterCriteria, handleFilterBy }) => {
+const FilterByTags = ({ filterCriteria }) => {
   const [showMore, setShowMore] = useState(false);
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('');
@@ -43,6 +43,7 @@ const FilterByTags = ({ filterCriteria, handleFilterBy }) => {
     : searchParams.delete(`filterBy${filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)}`);
 
     navigate({ search: searchParams.toString() });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags]);
 
   return (
@@ -81,7 +82,6 @@ const FilterByTags = ({ filterCriteria, handleFilterBy }) => {
 
 FilterByTags.propTypes = {
   filterCriteria: PropTypes.string,
-  handleFilterBy: PropTypes.func,
 };
 
 export default FilterByTags;

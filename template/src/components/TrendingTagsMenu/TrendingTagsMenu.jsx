@@ -3,9 +3,12 @@ import styles from './TrendingTagsMenu.module.scss';
 import { useEffect, useState } from 'react';
 import { getAllTags } from '../../services/tags.service.js';
 import TrendingTag from '../TrendingTag/TrendingTag.jsx';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const TrendingTagsMenu = ({ size }) => {
   const [trendingTags, setTrendingTags] = useState([]);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const getTrendingTags = tags => {
     const sortedTags = [...tags].sort(
@@ -27,12 +30,18 @@ const TrendingTagsMenu = ({ size }) => {
       }
     };
     fetchTags();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleTagClick = tag => {
+    searchParams.set(`filterByTags`, tag);
+    navigate({ search: searchParams.toString() });
+  }
 
   return (
     <>
       {trendingTags.map(tag => (
-        <TrendingTag tag={tag} key={tag.name} />
+        <TrendingTag key={tag.name} tag={tag} postsCount={Object.values(tag.posts).length} handleTagClick={handleTagClick}/>
       ))}
     </>
   );

@@ -1,7 +1,6 @@
 .trending-tag {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
@@ -20,6 +19,10 @@
     font-size: 18px;
     color: #007bff;
     margin-right: 2px;
+  }
+
+  .posts-count {
+    color: #8a8a8a;
   }
 }
 
