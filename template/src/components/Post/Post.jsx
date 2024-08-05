@@ -25,7 +25,7 @@ function Post({ post }) {
   const [userVote, setUserVote] = useState(null);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
 
-  const { author, title, content, tags, createdOn, comments, image, edited } = post;
+  const { author, title, content, tags, createdOn, comments, image } = post;
 
   const tagsArray = Object.keys(tags ?? {});
 
@@ -145,7 +145,6 @@ function Post({ post }) {
           onShowPostCommentsChange={handleShowPostComments}
           userVote={userVote}
           handleUserVoteChange={handleUserVoteChange}
-          Edited={edited}
         />
         {showPostComments && (
           <PostComments

@@ -182,3 +182,28 @@ export const hasUserVotedPost = async (userHandler, postId) => {
     throw new Error(`Error checking vote: ${error.message}`);
   }
 };
+
+export const deletePostTag = async (tagToDelete, postId) => {
+  try {
+    const postSnapshot = await get(ref(db, `posts/${postId}`));
+
+    if (!postSnapshot.exists()) {
+      throw new Error('Post not found!');
+    }
+
+    const postTags = postSnapshot.val().tags;
+
+    if (!postTags || !(tagToDelete in postTags)) {
+      throw new Error('Tag not found in post!');
+    }
+
+    const updateObject = {
+      [`posts/${postId}/tags/${tagToDelete}`]: null,
+      [`tags/${tagToDelete}/posts/${postId}`]: null,
+    };
+
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+}

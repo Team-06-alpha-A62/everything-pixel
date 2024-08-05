@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider.jsx';
 import {
-  createPost,
+  deletePostTag,
   getPostByHandle,
   updatePostDetails,
 } from '../../services/posts.service.js';
@@ -11,7 +11,6 @@ import {
   addPostToTag,
   tagExists,
 } from '../../services/tags.service.js';
-import { addUserPost } from '../../services/users.service.js';
 import styles from './EditPost.module.scss';
 
 const initialPostData = {
@@ -21,7 +20,6 @@ const initialPostData = {
 };
 
 const EditPost = () => {
-  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [tags, setTags] = useState([]);
   const [postData, setPostData] = useState(initialPostData);
@@ -113,6 +111,13 @@ const EditPost = () => {
 
       if (fetchedData.contentInput !== postData.contentInput) {
         await updatePostDetails(id, 'content', postData.contentInput);
+      }
+
+      const currentTags = fetchedData.tags ? Object.keys(fetchedData.tags) : [];
+      const tagsToRemove = currentTags.filter(ct => !tags.includes(ct));
+
+      for (const tag of tagsToRemove) {
+        await deletePostTag(tag, id)
       }
 
       await assignTagUpdatesToDb(tags, id);
