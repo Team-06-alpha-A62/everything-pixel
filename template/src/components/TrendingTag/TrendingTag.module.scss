@@ -1,0 +1,28 @@
+.trending-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  .tag-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #007bff;
+    margin-right: 10px;
+    flex-grow: 1;
+  }
+
+  .hashtag {
+    font-weight: bold;
+    font-size: 18px;
+    color: #007bff;
+    margin-right: 2px;
+  }
+}
+
+.trending-tag:hover {
+  background-color: #dfdfdf;
+}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import TrendingPost from '../TrendingPost/TrendingPost';
 import { getAllPosts } from '../../services/posts.service';
 
-const TredingPostsMenu = ({ size }) => {
+const TrendingPostsMenu = ({ size }) => {
   const [trendingPosts, setTrendingPosts] = useState([]);
 
   useEffect(() => {
@@ -35,9 +35,8 @@ const TredingPostsMenu = ({ size }) => {
   );
 };
 
-TredingPostsMenu.propTypes = {
-  posts: PropTypes.any,
+TrendingPostsMenu.propTypes = {
   size: PropTypes.number,
 };
 
-export default TredingPostsMenu;
+export default TrendingPostsMenu;
