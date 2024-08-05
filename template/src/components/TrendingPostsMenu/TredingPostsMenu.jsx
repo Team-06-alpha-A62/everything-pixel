@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import TrendingPost from '../TrendingPost/TrendingPost';
+import { getAllPosts } from '../../services/posts.service';
 
-const TredingPostsMenu = ({ posts, size }) => {
+const TredingPostsMenu = ({ size }) => {
   const [trendingPosts, setTrendingPosts] = useState([]);
 
   useEffect(() => {
-    const trending = getTrendingPosts(posts);
-    setTrendingPosts(trending);
-  }, [posts]);
+    const fetchPosts = async () => {
+      const posts = await getAllPosts();
+      const trending = getTrendingPosts(posts);
+      setTrendingPosts(trending);
+    };
+    fetchPosts();
+  }, []);
 
   const getTrendingPosts = posts => {
     const sortedPosts = [...posts].sort(
