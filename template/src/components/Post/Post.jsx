@@ -15,6 +15,7 @@ import {
 } from '../../services/comments.service.js';
 import { hasUserVotedPost } from '../../services/posts.service.js';
 import { useAuth } from '../../providers/AuthProvider.jsx';
+import { formatDistanceToNow } from 'date-fns';
 
 function Post({ post }) {
   const { currentUser } = useAuth();
@@ -27,6 +28,10 @@ function Post({ post }) {
   const { author, title, content, tags, createdOn, comments, image } = post;
 
   const tagsArray = Object.keys(tags ?? {});
+
+  const timeAgo = formatDistanceToNow(new Date(createdOn), {
+    addSuffix: true,
+  });
 
   useEffect(() => {
     if (!comments || Object.keys(comments).length === 0) return;
@@ -135,7 +140,7 @@ function Post({ post }) {
           image={image}
         />
         <PostActions
-          date={createdOn}
+          date={timeAgo}
           votes={postVotes}
           onShowPostCommentsChange={handleShowPostComments}
           userVote={userVote}

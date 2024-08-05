@@ -20,9 +20,9 @@ const PostActions = ({
   isPostDetails = false,
 }) => {
   return (
-    <div className={styles.postActions}>
-      <span>{new Date(date).toDateString()}</span>
-      <div className={styles.actionButtons}>
+    <div className={styles['post-actions']}>
+      <span className={styles['time-created']}>{date}</span>
+      <div className={styles['action-buttons']}>
         {!isPostDetails && (
           <div onClick={onShowPostCommentsChange}>
             <FontAwesomeIcon icon={faComment} />

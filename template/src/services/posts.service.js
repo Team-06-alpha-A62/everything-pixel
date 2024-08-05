@@ -1,6 +1,7 @@
 import { get, push, ref, update } from 'firebase/database';
 import { db } from '../config/firebase.config';
 import { uploadImage } from './images.service.js';
+import { formatDistanceToNow } from 'date-fns';
 
 /**
  * Retrieves all posts from the database, optionally filtering by a search term.
@@ -54,6 +55,9 @@ export const getPostByHandle = async handle => {
       downVotedBy: Object.values(snapshot.val().votes ?? {}).filter(
         vote => vote === 'downVoted'
       ),
+      createdOn: formatDistanceToNow(new Date(snapshot.val().createdOn), {
+        addSuffix: true,
+      })
     };
   } catch (error) {
     throw new Error(`${error.message}`);

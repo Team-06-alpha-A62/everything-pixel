@@ -30,10 +30,12 @@ const Feed = () => {
     if (posts.length > 0) {
       handleSortBy(sortByDate, sortByPopularity, sortByTitle);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortByDate, sortByTitle, sortByPopularity, posts]);
 
   useEffect(() => {
     if (posts.length > 0) handleFilterBy(filterByDate, filterByTags);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByDate, filterByTags]);
 
   const handleSortBy = (sortDate, sortPopularity, sortTitle) => {
@@ -90,14 +92,11 @@ const Feed = () => {
     let filteredPosts = [...posts];
     if (filterByDate) {
       const timeStamp = new Date(filterByDate).getTime();
-      filteredPosts = filteredPosts.filter(
-        post => post.createdOn >= timeStamp
-      );
+      filteredPosts = filteredPosts.filter(post => post.createdOn >= timeStamp);
     }
 
     if (filterByTags) {
       const tagsArray = filterByTags.split('_');
-      console.log(tagsArray);
       filteredPosts = filteredPosts.filter(post => {
         const postTags = post.tags ? Object.keys(post.tags) : [];
         return tagsArray.every(tag => postTags.includes(tag));
@@ -106,19 +105,11 @@ const Feed = () => {
     setUpdatedPosts(filteredPosts);
   };
 
-  // const handleTrendingTags = () => {
-  //   setPosts();
-  //   return;
-  // };
-
   return (
     <div className={styles.feed}>
       <LeftSideBar handleFilterBy={handleFilterBy} />
       <Posts posts={updatedPosts} />
-      <RightSideBar
-        posts={posts}
-        //onTrendingTagsClick={handleTrendingTags}
-      />
+      <RightSideBar posts={posts} />
     </div>
   );
 };

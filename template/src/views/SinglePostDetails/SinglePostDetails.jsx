@@ -28,7 +28,6 @@ const SinglePostDetails = () => {
     const fetchComments = async () => {
       const commentsData = await Promise.all(
         Object.values(comments ?? {}).map(async commentId => {
-          console.log(commentId);
           const commentData = await getCommentById(commentId);
 
           return commentData;
@@ -119,29 +118,39 @@ const SinglePostDetails = () => {
   const handleBackButtonClick = () => {
     navigate('/feed');
   };
+
   return (
-    <div className={styles.postDetails}>
-      <div className={styles.header}>
-        <button className={styles.backButton} onClick={handleBackButtonClick}>
-          Back
-        </button>
-        <button className={styles.reportButton}>Report</button>
+    <div className={styles['post-details']}>
+      <div className={styles['headers']}>
+        <div className={styles['post-actions']}>
+          <button
+            className={styles['btn']}
+            onClick={handleBackButtonClick}
+          >
+            Back
+          </button>
+          <div className={styles['controls']}>
+            <button className={styles['btn']}>Delete</button>
+            <button className={styles['btn']}>Delete</button>
+            <button className={styles['btn']}>Report</button>
+          </div>
+        </div>
       </div>
-      <div className={styles.title}>{title}</div>
+      <div className={styles['title']}>{title}</div>
       {!!tagsArray.length && (
-        <div className={styles.tags}>
+        <div className={styles['tags']}>
           {tagsArray.map(tag => (
             <span key={tag}>#{tag}</span>
           ))}
         </div>
       )}
-      <div className={styles.contentArea}>
+      <div className={styles['content-area']}>
         {image && (
-          <div className={styles.image}>
+          <div className={styles['image']}>
             <img src={image} alt="Post" />
           </div>
         )}
-        <div className={styles.content}>
+        <div className={styles['content']}>
           <p>{content}</p>
         </div>
       </div>

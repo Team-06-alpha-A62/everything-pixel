@@ -1,79 +1,82 @@
-.postDetails {
+.post-details {
   background-color: #f0f0f0;
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
 
-.backButton,
-.reportButton {
-  background-color: #ff7675;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
+  .post-actions {
+    display: flex;
+    justify-content: space-between;
 
-.backButton:hover,
-.reportButton:hover {
-  background-color: #ff5252;
-}
+    .btn {
+      background-color: #ff7675;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
 
-.title {
-  background-color: #ff7675;
-  padding: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: white;
-  border-radius: 4px;
-}
+    .btn:hover {
+      background-color: #ff5252;
+    }
+  }
 
-.tags {
-  background-color: #ff7675;
-  padding: 10px;
-  margin-bottom: 20px;
-  color: white;
-  border-radius: 4px;
-}
-
-.contentArea {
-  display: flex;
-  margin-bottom: 20px;
-  gap: 10px; // Use gap for spacing between image and content
-}
-
-.image {
-  flex: 2;
-  background-color: #ff7675;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-
-  img {
-    max-width: 100%;
-    height: auto;
+  .title {
+    background-color: #ff7675;
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
     border-radius: 4px;
   }
-}
 
-.content {
-  flex: 3;
-  background-color: #ff7675;
-  padding: 10px;
-  color: white;
-  border-radius: 4px;
+  .tags {
+    background-color: #ff7675;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: white;
+    border-radius: 4px;
+  }
+
+  .content-area {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px; // Use gap for spacing between image and content
+
+    .image {
+      flex: 2;
+      background-color: #ff7675;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+      }
+    }
+
+    .content {
+      flex: 3;
+      background-color: #ff7675;
+      padding: 10px;
+      color: white;
+      border-radius: 4px;
+    }
+  }
 }
