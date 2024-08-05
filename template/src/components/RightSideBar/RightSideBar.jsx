@@ -1,17 +1,18 @@
 import SideBarContainer from '../../hoc/SideBarContainer/SideBarContainer';
-import TredingPostsMenu from '../TrendingPostsMenu/TredingPostsMenu';
+import TrendingPostsMenu from '../TrendingPostsMenu/TrendingPostsMenu.jsx';
 
 import PropTypes from 'prop-types';
+import TrendingTagsMenu from '../TrendingTagsMenu/TrendingTagsMenu.jsx';
 
-const RightSideBar = ({ posts }) => {
+const RightSideBar = () => {
   return (
     <div>
       <SideBarContainer>
-        <TredingPostsMenu posts={posts} size={5} />
+        <TrendingPostsMenu size={5} />
       </SideBarContainer>
-      {/* <SideBarContainer>
-        // we should add trending tags
-        </SideBarContainer> */}
+      <SideBarContainer>
+        <TrendingTagsMenu size={5} />
+        </SideBarContainer>
     </div>
   );
 };
