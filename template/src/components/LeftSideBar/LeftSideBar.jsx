@@ -4,7 +4,7 @@ import SortPostsMenu from '../SortPostsMenu/SortPostsMenu';
 import PropTypes from 'prop-types';
 import styles from './LeftSideBar.module.scss';
 
-const LeftSideBar = ({ handleSortBy, handleFilterBy }) => {
+const LeftSideBar = ({ handleFilterBy }) => {
   return (
     <div className={styles.leftSideBar}>
       <SideBarContainer>

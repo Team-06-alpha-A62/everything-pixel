@@ -106,7 +106,10 @@ const Feed = () => {
       <LeftSideBar handleFilterBy={handleFilterBy} />
 
       <Posts posts={updatedPosts} />
-      <RightSideBar onTrendingTagsClick={handleTrendingTags} />
+      <RightSideBar
+        posts={posts}
+        //onTrendingTagsClick={handleTrendingTags}
+      />
     </div>
   );
 };

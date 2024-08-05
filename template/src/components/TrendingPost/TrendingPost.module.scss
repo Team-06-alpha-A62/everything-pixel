@@ -1,0 +1,26 @@
+.trendingPost {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.trendingPost:hover {
+  background-color: #dfdfdf;
+}
+
+.postTitle {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin-right: 10px;
+  flex-grow: 1;
+}
+
+.postIcon {
+  color: #007bff;
+  font-size: 20px;
+}

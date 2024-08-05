@@ -34,7 +34,7 @@ function Post({ post }) {
       const commentsData = await Promise.all(
         Object.keys(comments ?? {}).map(async commentId => {
           const commentData = await getCommentById(commentId);
-          if (commentData.repliedToComment) return;
+
           return commentData;
         })
       );
@@ -83,8 +83,7 @@ function Post({ post }) {
       const newComment = await createComment(
         post.id,
         currentUser.userData.username,
-        content,
-        repliedToComment
+        content
       );
       const newCommentData = await getCommentById(newComment.key);
       setCommentsObjectsArray(prevCommentsObjectsArray => [

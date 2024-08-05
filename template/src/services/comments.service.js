@@ -65,7 +65,6 @@ export const createComment = async (
   postId,
   author,
   content,
-  repliedToComment,
   edited = false
 ) => {
   try {
@@ -74,7 +73,6 @@ export const createComment = async (
       author,
       content,
       edited,
-      repliedToComment,
       createdOn: Date.now(),
     };
 
