@@ -8,7 +8,7 @@ const LeftSideBar = ({ handleSortBy, handleFilterBy }) => {
   return (
     <div className={styles.leftSideBar}>
       <SideBarContainer>
-        <SortPostsMenu handleSortBy={handleSortBy} />
+        <SortPostsMenu />
       </SideBarContainer>
       <SideBarContainer>
         <FilterPostsMenu handleFilterBy={handleFilterBy} />

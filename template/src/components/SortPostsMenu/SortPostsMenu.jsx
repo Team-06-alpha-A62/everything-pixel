@@ -1,25 +1,13 @@
 import SortBy from '../SortBy/SortBy';
 import PropTypes from 'prop-types';
-function SortPostsMenu({ handleSortBy }) {
+function SortPostsMenu() {
   return (
     <div>
       <h1>SortBy</h1>
       <div>
-        <SortBy
-          sort={'date'}
-          values={['newest', 'oldest']}
-          handleSortBy={handleSortBy}
-        />
-        <SortBy
-          sort={'popularity'}
-          values={['most', 'least']}
-          handleSortBy={handleSortBy}
-        />
-        <SortBy
-          sort={'title'}
-          values={['A-Z', 'Z-A']}
-          handleSortBy={handleSortBy}
-        />
+        <SortBy sort={'date'} values={['newest', 'oldest']} />
+        <SortBy sort={'popularity'} values={['most', 'least']} />
+        <SortBy sort={'title'} values={['A-Z', 'Z-A']} />
       </div>
     </div>
   );

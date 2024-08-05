@@ -30,7 +30,7 @@ const Feed = () => {
   }, [sortByDate, sortByTitle, sortByPopularity, posts]);
 
   const handleSortBy = (sortDate, sortPopularity, sortTitle) => {
-    let sortedPosts = [...updatedPosts];
+    let sortedPosts = [...posts];
     switch (sortDate) {
       case 'newest':
         sortedPosts.sort((a, b) => b.createdOn - a.createdOn);
@@ -103,10 +103,7 @@ const Feed = () => {
 
   return (
     <div className={styles.feed}>
-      <LeftSideBar
-        handleSortBy={handleSortBy}
-        handleFilterBy={handleFilterBy}
-      />
+      <LeftSideBar handleFilterBy={handleFilterBy} />
 
       <Posts posts={updatedPosts} />
       <RightSideBar onTrendingTagsClick={handleTrendingTags} />
