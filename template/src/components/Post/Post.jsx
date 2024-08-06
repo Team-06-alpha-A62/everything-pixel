@@ -11,11 +11,14 @@ import PostActions from '../PostActions/PostActions.jsx';
 import { hasUserVotedPost } from '../../services/posts.service.js';
 import { useAuth } from '../../providers/AuthProvider.jsx';
 import { formatDistanceToNow } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 function Post({ post }) {
   const { currentUser } = useAuth();
   const [postAuthor, setPostAuthor] = useState({});
   const [userVote, setUserVote] = useState(null);
+  const navigate = useNavigate();
+
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
 
   const { author, title, content, tags, createdOn, comments, image } = post;
@@ -26,6 +29,10 @@ function Post({ post }) {
   const timeAgo = formatDistanceToNow(new Date(createdOn), {
     addSuffix: true,
   });
+
+  const openPostDetails = () => {
+    navigate(`/feed/post/${post.id}`);
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -96,8 +103,10 @@ function Post({ post }) {
           content={content}
           tags={tagsArray}
           image={image}
+          openPostDetails={openPostDetails}
         />
         <PostActions
+          openPostDetails={openPostDetails}
           id={post.id}
           date={timeAgo}
           votes={postVotes}

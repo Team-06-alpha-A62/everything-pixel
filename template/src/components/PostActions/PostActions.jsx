@@ -11,9 +11,9 @@ import {
   faThumbsDown as fasThumbsDown,
   faThumbsUp as fasThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 
 const PostActions = ({
+  openPostDetails,
   id,
   date,
   votes,
@@ -23,8 +23,6 @@ const PostActions = ({
   isPostDetails,
   edited,
 }) => {
-  const navigate = useNavigate();
-
   const copyToClipboard = async url => {
     try {
       await navigator.clipboard.writeText(url);
@@ -39,14 +37,11 @@ const PostActions = ({
       <span className={styles['time-created']}>
         {edited ? `edited: ${edited}` : date}
       </span>
-      <div
-        className={styles['action-buttons']}
-        onClick={() => navigate(`/feed/post/${id}`)}
-      >
+      <div className={styles['action-buttons'] }>
         {!isPostDetails && (
           <>
             {comments}
-            <FontAwesomeIcon icon={faComment} />
+            <FontAwesomeIcon icon={faComment} onClick={openPostDetails}/>
           </>
         )}
         <div
@@ -74,6 +69,7 @@ const PostActions = ({
 };
 
 PostActions.propTypes = {
+  openPostDetails: PropTypes.func,
   id: PropTypes.string,
   date: PropTypes.any,
   votes: PropTypes.any,
