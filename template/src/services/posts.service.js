@@ -91,7 +91,9 @@ export const createPost = async (
   imageFile = ''
 ) => {
   try {
-    const imageUrl = await uploadImage(imageFile);
+    const [imageUrl, imageId] = imageFile
+      ? await uploadImage(imageFile)
+      : [null, null];
 
     const post = {
       author,
@@ -99,7 +101,7 @@ export const createPost = async (
       content,
       tags,
       createdOn: Date.now(),
-      image: imageUrl,
+      image: imageId ? { id: imageId, url: imageUrl } : null,
     };
     const result = await push(ref(db, 'posts'), post);
     const id = result.key;
