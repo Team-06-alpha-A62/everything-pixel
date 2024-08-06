@@ -53,6 +53,9 @@ export const getUserByHandle = async handle => {
       posts: Object.keys(snapshot.val().posts ?? {}),
       comments: Object.keys(snapshot.val().comments ?? {}),
       likedPosts: Object.keys(snapshot.val().likedPosts ?? {}),
+      savedPosts: snapshot.val().savedPosts
+        ? Object.keys(snapshot.val().savedPosts)
+        : [],
     };
   } catch (error) {
     throw new Error(`${error.message}`);
@@ -194,5 +197,27 @@ export const userVoteInteractionWithComment = async (
     await update(ref(db), updateObject);
   } catch (error) {
     throw new Error(`error trying to vote post : ${error.message}`);
+  }
+};
+
+export const savePost = async (userHandle, postId) => {
+  try {
+    const updateObject = {
+      [`users/${userHandle}/savedPosts/${postId}`]: true,
+    };
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`error trying to save post: ${error.message}`);
+  }
+};
+
+export const unSavePost = async (userHandle, postId) => {
+  try {
+    const updateObject = {
+      [`users/${userHandle}/savedPosts/${postId}`]: null,
+    };
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`error trying to save post: ${error.message}`);
   }
 };

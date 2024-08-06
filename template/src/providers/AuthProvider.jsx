@@ -25,20 +25,6 @@ const AuthContext = createContext({
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(initialState);
 
-  // useEffect(() => {
-  //   return onAuthStateChanged(auth, async user => {
-  //     try {
-  //       if (user) {
-  //         const userData = await getUserData(user.uid);
-  //         setCurrentUser({ user, userData: userData || null });
-  //       } else {
-  //         setCurrentUser(initialState);
-  //       }
-  //     } catch (error) {
-  //       throw new Error(error.message);
-  //     }
-  //   });
-  // }, []);
   const [user] = useAuthState(auth);
 
   if (currentUser.user !== user) {
@@ -64,7 +50,14 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (username, firstName, lastName, email, password, avatarUrl) => {
+  const register = async (
+    username,
+    firstName,
+    lastName,
+    email,
+    password,
+    avatarUrl
+  ) => {
     try {
       const credential = await registerUser(email, password);
       await createUser(

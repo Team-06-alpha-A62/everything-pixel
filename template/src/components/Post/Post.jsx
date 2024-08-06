@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
   getUserByHandle,
+  savePost,
+  unSavePost,
   userVoteInteractionWithPost,
 } from '../../services/users.service';
 import PropTypes from 'prop-types';
@@ -17,6 +19,7 @@ function Post({ post }) {
   const { currentUser } = useAuth();
   const [postAuthor, setPostAuthor] = useState({});
   const [userVote, setUserVote] = useState(null);
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
 
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
@@ -37,10 +40,12 @@ function Post({ post }) {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getUserByHandle(author);
+      const isPostSaved = user.savedPosts.includes(post.id);
       setPostAuthor(user);
+      setIsSaved(isPostSaved);
     };
     fetchUser();
-  }, [author]);
+  }, [author, post.id]);
 
   useEffect(() => {
     if (!currentUser?.userData?.username) return;
@@ -94,6 +99,19 @@ function Post({ post }) {
     }
   };
 
+  const handleSavePost = async () => {
+    try {
+      if (isSaved) {
+        await unSavePost(currentUser.userData.username, post.id);
+      } else {
+        await savePost(currentUser.userData.username, post.id);
+      }
+      setIsSaved(isSaved => !isSaved);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <>
       <PostContainer>
@@ -112,7 +130,9 @@ function Post({ post }) {
           votes={postVotes}
           comments={numberOfComments}
           userVote={userVote}
+          isSaved={isSaved}
           handleUserVoteChange={handleUserVoteChange}
+          handleSavePost={handleSavePost}
         />
         <hr />
       </PostContainer>

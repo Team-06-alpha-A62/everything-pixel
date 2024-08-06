@@ -23,7 +23,7 @@ const PostDetailsHeader = ({ post }) => {
     if (post.reports && post.reports.includes(currentUser.userData.username)) {
       setHasReported(true);
     }
-  }, [post, currentUser.userData.username]);
+  }, [post, currentUser?.userData?.username]);
 
   const handleReportClick = async reportType => {
     try {
@@ -32,6 +32,7 @@ const PostDetailsHeader = ({ post }) => {
         reportType,
         currentUser.userData.username
       );
+      setHasReported(true);
       setIsReportModalOpen(false);
     } catch (error) {
       alert(`Failed to report: ${error.message}`);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   getPostByHandle,
   hasUserVotedPost,
@@ -13,22 +13,24 @@ import {
 } from '../../services/comments.service';
 import PostComments from '../../components/PostComments/PostComments';
 import { useAuth } from '../../providers/AuthProvider';
-import { userVoteInteractionWithPost } from '../../services/users.service';
+import {
+  savePost,
+  unSavePost,
+  userVoteInteractionWithPost,
+} from '../../services/users.service';
 import PostActions from '../../components/PostActions/PostActions';
-import { createPostReport } from '../../services/reports.services';
 import PostDetailsHeader from '../../components/PostDetailsHeader/PostDetailsHeader';
 import PostDetailsTitle from '../../components/PostDetailsTitle/PostDetailsTitle';
 import PostDetailsTags from '../../components/PostDetailsTags/PostDetailsTags';
 import PostDetailsContent from '../../components/PostDetailsContent/PostDetailsContent';
 
 const SinglePostDetails = () => {
-  const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [post, setPost] = useState({});
   const [commentsObjectsArray, setCommentsObjectsArray] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
   const [userVote, setUserVote] = useState(null);
-  //const [showReportDropdown, setShowReportDropdown] = useState(false);
 
   const { title, tags, image, content, comments, createdOn, edited } =
     post || {};
@@ -55,9 +57,15 @@ const SinglePostDetails = () => {
       setCommentsObjectsArray(commentsData);
     };
     fetchComments();
-  }, [comments, currentUser.userData]);
+  }, [comments, currentUser.userData, post.id]);
 
   useEffect(() => {
+    if (!currentUser.userData) return;
+    setIsSaved(Object.keys(currentUser.userData.savedPosts).includes(post.id));
+  }, [currentUser.userData, post.id]);
+
+  useEffect(() => {
+    if (!currentUser.userData) return;
     const fetchPost = async () => {
       const post = await getPostByHandle(id);
       post.isUserPost = post.author === currentUser.userData.username;
@@ -159,6 +167,19 @@ const SinglePostDetails = () => {
     }
   };
 
+  const handleSavePost = async () => {
+    try {
+      if (isSaved) {
+        await unSavePost(currentUser.userData.username, post.id);
+      } else {
+        await savePost(currentUser.userData.username, post.id);
+      }
+      setIsSaved(isSaved => !isSaved);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <div className={styles['post-details']}>
       <div className={styles['headers']}>
@@ -172,6 +193,8 @@ const SinglePostDetails = () => {
         date={createdOn}
         votes={postVotes}
         userVote={userVote}
+        isSaved={isSaved}
+        handleSavePost={handleSavePost}
         handleUserVoteChange={handleUserVoteChange}
         isPostDetails={true}
         edited={edited}

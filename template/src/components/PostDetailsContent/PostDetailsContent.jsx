@@ -18,7 +18,7 @@ const PostDetailsContent = ({ image, content }) => {
 
 PostDetailsContent.propTypes = {
   image: PropTypes.string,
-  content: PropTypes.string.isRequired,
+  content: PropTypes.string,
 };
 
 export default PostDetailsContent;

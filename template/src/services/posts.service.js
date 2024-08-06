@@ -46,7 +46,7 @@ export const getPostByHandle = async handle => {
     }
 
     const postData = snapshot.val();
-    console.log(postData.reports);
+
     return {
       ...postData,
       tags: Object.keys(postData.tags ?? {}),
@@ -154,9 +154,15 @@ export const deletePost = async (userHandle, postId) => {
     }
 
     const tags = Object.keys(postSnapshot.val().tags ?? {});
+    const comments = Object.keys(postSnapshot.val().comments ?? {});
 
     const tagsUpdateObject = tags.reduce((acc, tag) => {
       acc[`tags/${tag}/posts/${postId}`] = null;
+      return acc;
+    }, {});
+
+    const commentsUpdateObject = comments.reduce((acc, comment) => {
+      acc[`comments/${comment}`] = null;
       return acc;
     }, {});
 
@@ -164,6 +170,7 @@ export const deletePost = async (userHandle, postId) => {
       [`users/${userHandle}/posts/${postId}`]: null,
       [`posts/${postId}`]: null,
       ...tagsUpdateObject,
+      ...commentsUpdateObject,
     };
 
     await update(ref(db), updateObject);

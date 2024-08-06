@@ -6,10 +6,12 @@ import {
   faCopy,
   faThumbsDown as farThumbsDown,
   faThumbsUp as farThumbsUp,
+  faBookmark as faBookmarkRegular,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faThumbsDown as fasThumbsDown,
   faThumbsUp as fasThumbsUp,
+  faBookmark as faBookmarkSolid,
 } from '@fortawesome/free-solid-svg-icons';
 
 const PostActions = ({
@@ -19,9 +21,10 @@ const PostActions = ({
   votes,
   comments,
   userVote,
+  isSaved,
   handleUserVoteChange,
-  isPostDetails,
   edited,
+  handleSavePost,
 }) => {
   const copyToClipboard = async url => {
     try {
@@ -37,13 +40,18 @@ const PostActions = ({
       <span className={styles['time-created']}>
         {edited ? `edited: ${edited}` : date}
       </span>
-      <div className={styles['action-buttons'] }>
-        {!isPostDetails && (
-          <>
-            {comments}
-            <FontAwesomeIcon icon={faComment} onClick={openPostDetails}/>
-          </>
-        )}
+      <div className={styles['action-buttons']}>
+        <div onClick={handleSavePost}>
+          {isSaved ? (
+            <FontAwesomeIcon icon={faBookmarkSolid} />
+          ) : (
+            <FontAwesomeIcon icon={faBookmarkRegular} />
+          )}
+        </div>
+        <div>
+          {comments}
+          <FontAwesomeIcon icon={faComment} onClick={openPostDetails} />
+        </div>
         <div
           onClick={() =>
             copyToClipboard(`${window.location.origin}/feed/post/${id}`)
@@ -79,6 +87,8 @@ PostActions.propTypes = {
   handleUserVoteChange: PropTypes.any,
   isPostDetails: PropTypes.bool,
   edited: PropTypes.any,
+  isSaved: PropTypes.any,
+  handleSavePost: PropTypes.any,
 };
 
 export default PostActions;
