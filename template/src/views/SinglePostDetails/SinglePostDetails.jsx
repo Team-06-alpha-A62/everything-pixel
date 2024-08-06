@@ -198,6 +198,7 @@ const SinglePostDetails = () => {
         </div>
       </div>
       <PostActions
+        id={post.id}
         date={createdOn}
         votes={postVotes}
         userVote={userVote}
