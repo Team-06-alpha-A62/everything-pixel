@@ -14,7 +14,7 @@ const initialPostData = {
   titleInput: '',
   contentInput: '',
   tagsInput: '',
-  imageFileInput: null,
+  imageUrl: '',
 };
 
 const Publish = () => {
@@ -22,7 +22,21 @@ const Publish = () => {
   const navigate = useNavigate();
   const [tags, setTags] = useState([]);
   const [postData, setPostData] = useState(initialPostData);
+  const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const getImagePreviewUrl = file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        resolve(event.target.result);
+      };
+      reader.onerror = function (error) {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleKeyDown = e => {
     if ((e.key === 'Enter' || e.key === ' ') && postData.tagsInput.trim()) {
@@ -45,11 +59,17 @@ const Publish = () => {
     });
   };
 
-  const handleFileChange = e => {
+  const handleFileChange = async e => {
+    const file = e.target.files[0];
+
+    const imageUrl = await getImagePreviewUrl(file);
+
+
     setPostData({
       ...postData,
-      imageFileInput: e.target.files[0],
+      imageUrl: imageUrl,
     });
+    setImageFile(file);
   };
 
   const convertTagsToObject = tagsArray => {
@@ -82,7 +102,7 @@ const Publish = () => {
         postData.titleInput,
         postData.contentInput,
         convertTagsToObject(tags),
-        postData.imageFileInput
+        imageFile
       );
 
       const postId = post.key;
@@ -149,6 +169,11 @@ const Publish = () => {
         onChange={e => handleFileChange(e)}
       />
       <br />
+      {postData.imageUrl && (
+        <div className="image-preview-container">
+          <img src={postData.imageUrl} alt="Image Preview" />
+        </div>
+      )}
       <div className="controller">
         <button onClick={() => navigate(-1)}>&times; Cancel</button>
         <button onClick={handlePublish}>Publish</button>

@@ -11,10 +11,12 @@ import {
   tagExists,
 } from '../../services/tags.service.js';
 import styles from './EditPost.module.scss';
+import { uploadImage } from '../../services/images.service.js';
 
 const initialPostData = {
   titleInput: '',
   contentInput: '',
+  imageUrl: '',
   tagsInput: '',
 };
 
@@ -23,6 +25,7 @@ const EditPost = () => {
   const [tags, setTags] = useState([]);
   const [postData, setPostData] = useState(initialPostData);
   const [fetchedData, setFetchedData] = useState(initialPostData);
+  const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
@@ -35,11 +38,13 @@ const EditPost = () => {
           ...postData,
           titleInput: post.title,
           contentInput: post.content,
+          imageUrl: post.image,
         });
         setPostData({
           ...postData,
           titleInput: post.title,
           contentInput: post.content,
+          imageUrl: post.image,
         });
         setTags([...post.tags]);
       } catch (error) {
@@ -49,8 +54,21 @@ const EditPost = () => {
       }
     };
     fetchPost();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  const getImagePreviewUrl = file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        resolve(event.target.result);
+      };
+      reader.onerror = function (error) {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleKeyDown = e => {
     if ((e.key === 'Enter' || e.key === ' ') && postData.tagsInput.trim()) {
@@ -73,11 +91,21 @@ const EditPost = () => {
     });
   };
 
-  const handleFileChange = e => {
-    setPostData({
-      ...postData,
-      imageFileInput: e.target.files[0],
-    });
+  const handleFileChange = async e => {
+    const file = e.target.files[0];
+
+    if (file) {
+      try {
+        const imageUrl = await getImagePreviewUrl(file);
+        setPostData({
+          ...postData,
+          imageUrl: imageUrl,
+        });
+        setImageFile(file);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
   };
 
   const convertTagsToObject = tagsArray => {
@@ -113,11 +141,16 @@ const EditPost = () => {
         await updatePostDetails(id, 'content', postData.contentInput);
       }
 
+      if (fetchedData.imageUrl !== postData.imageUrl) {
+        const dbImageUrl = await uploadImage(imageFile);
+        await updatePostDetails(id, 'image', dbImageUrl);
+      }
+
       const currentTags = fetchedData.tags ? Object.keys(fetchedData.tags) : [];
       const tagsToRemove = currentTags.filter(ct => !tags.includes(ct));
 
       for (const tag of tagsToRemove) {
-        await deletePostTag(tag, id)
+        await deletePostTag(tag, id);
       }
 
       await assignTagUpdatesToDb(tags, id);
@@ -187,6 +220,11 @@ const EditPost = () => {
         onChange={e => handleFileChange(e)}
       />
       <br />
+      {postData.imageUrl && (
+        <div className="image-preview-container">
+          <img src={postData.imageUrl} alt="Image Preview" />
+        </div>
+      )}
       <div className="controller">
         <button onClick={() => navigate(-1)}>&times; Cancel</button>
         <button onClick={handleEditPost}>Edit</button>
