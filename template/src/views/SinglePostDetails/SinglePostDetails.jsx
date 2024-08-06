@@ -15,6 +15,11 @@ import PostComments from '../../components/PostComments/PostComments';
 import { useAuth } from '../../providers/AuthProvider';
 import { userVoteInteractionWithPost } from '../../services/users.service';
 import PostActions from '../../components/PostActions/PostActions';
+import { createPostReport } from '../../services/reports.services';
+import PostDetailsHeader from '../../components/PostDetailsHeader/PostDetailsHeader';
+import PostDetailsTitle from '../../components/PostDetailsTitle/PostDetailsTitle';
+import PostDetailsTags from '../../components/PostDetailsTags/PostDetailsTags';
+import PostDetailsContent from '../../components/PostDetailsContent/PostDetailsContent';
 
 const SinglePostDetails = () => {
   const navigate = useNavigate();
@@ -23,6 +28,8 @@ const SinglePostDetails = () => {
   const [commentsObjectsArray, setCommentsObjectsArray] = useState([]);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
   const [userVote, setUserVote] = useState(null);
+  //const [showReportDropdown, setShowReportDropdown] = useState(false);
+
   const { title, tags, image, content, comments, createdOn, edited } =
     post || {};
   const tagsArray = Object.values(tags ?? {});
@@ -152,51 +159,14 @@ const SinglePostDetails = () => {
     }
   };
 
-  const handleBackButtonClick = () => {
-    navigate('/feed');
-  };
-
   return (
     <div className={styles['post-details']}>
       <div className={styles['headers']}>
-        <div className={styles['post-actions']}>
-          <button className={styles['btn']} onClick={handleBackButtonClick}>
-            Back
-          </button>
-          <div className={styles['controls']}>
-            {post.isUserPost && (
-              <>
-                <button
-                  className={styles['btn']}
-                  onClick={() => navigate(`/edit/${post.id}`)}
-                >
-                  Edit
-                </button>
-                <button className={styles['btn']}>Delete</button>
-              </>
-            )}
-            <button className={styles['btn']}>Report</button>
-          </div>
-        </div>
+        <PostDetailsHeader post={post} />
       </div>
-      <div className={styles['title']}>{title}</div>
-      {!!tagsArray.length && (
-        <div className={styles['tags']}>
-          {tagsArray.map(tag => (
-            <span key={tag}>#{tag}</span>
-          ))}
-        </div>
-      )}
-      <div className={styles['content-area']}>
-        {image && (
-          <div className={styles['image']}>
-            <img src={image} alt="Post" />
-          </div>
-        )}
-        <div className={styles['content']}>
-          <p>{content}</p>
-        </div>
-      </div>
+      <PostDetailsTitle title={title} />
+      <PostDetailsTags tagsArray={tagsArray} />
+      <PostDetailsContent image={image} content={content} />
       <PostActions
         id={post.id}
         date={createdOn}
