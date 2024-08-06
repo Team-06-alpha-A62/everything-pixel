@@ -45,22 +45,27 @@ export const getPostByHandle = async handle => {
       throw new Error('Post not found!');
     }
 
+    const postData = snapshot.val();
+    console.log(postData.reports);
     return {
-      ...snapshot.val(),
-      tags: Object.keys(snapshot.val().tags ?? {}),
-      comments: Object.keys(snapshot.val().comments ?? {}),
-      upVotedBy: Object.values(snapshot.val().votes ?? {}).filter(
+      ...postData,
+      tags: Object.keys(postData.tags ?? {}),
+      comments: Object.keys(postData.comments ?? {}),
+      upVotedBy: Object.values(postData.votes ?? {}).filter(
         vote => vote === 'upVoted'
       ),
-      downVotedBy: Object.values(snapshot.val().votes ?? {}).filter(
+      downVotedBy: Object.values(postData.votes ?? {}).filter(
         vote => vote === 'downVoted'
       ),
-      createdOn: formatDistanceToNow(new Date(snapshot.val().createdOn), {
+      createdOn: formatDistanceToNow(new Date(postData.createdOn), {
         addSuffix: true,
       }),
-      edited: snapshot.val().edited ? formatDistanceToNow(new Date(snapshot.val().edited), {
-        addSuffix: true,
-      }) : null
+      edited: postData.edited
+        ? formatDistanceToNow(new Date(postData.edited), {
+            addSuffix: true,
+          })
+        : null,
+      reports: postData.reports ? Object.keys(postData.reports) : 'empty',
     };
   } catch (error) {
     throw new Error(`${error.message}`);
@@ -206,4 +211,4 @@ export const deletePostTag = async (tagToDelete, postId) => {
   } catch (error) {
     throw new Error(`${error.message}`);
   }
-}
+};

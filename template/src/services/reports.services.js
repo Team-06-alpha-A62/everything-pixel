@@ -21,20 +21,22 @@ export const getAllReports = async () => {
   }
 };
 
-export const createCommentReport = async (commentId, type) => {
+export const createCommentReport = async (commentId, type, userHandle) => {
   try {
     const updateObject = {
-      [`reports/commentReports/${commentId}`]: type,
+      [`reports/commentReports/${commentId}/${userHandle}`]: type,
+      [`posts/post/${commentId}/reports/${userHandle}`]: type,
     };
     await update(ref(db), updateObject);
   } catch (error) {
     throw new Error(`Failed to create comment report: ${error.message}`);
   }
 };
-export const createPostReport = async (postId, type) => {
+export const createPostReport = async (postId, type, userHandle) => {
   try {
     const updateObject = {
-      [`reports/postReports/${postId}`]: type,
+      [`reports/postReports/${postId}/${userHandle}`]: type,
+      [`posts/${postId}/reports/${userHandle}`]: type,
     };
     await update(ref(db), updateObject);
   } catch (error) {

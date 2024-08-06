@@ -1,20 +1,48 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styles from './PostDetailsHeader.module.scss';
+
 import postReportEnum from '../../enums/postReportEnum';
-import { useState } from 'react';
 import { createPostReport } from '../../services/reports.services';
+import { deletePost } from '../../services/posts.service';
+import Modal from '../Modal/Modal';
+import ReportMenu from '../ReportMenu/ReportMenu';
+import DeletePostConfirm from '../DeletePostConfirm/DeletePostConfirm';
+import { useAuth } from '../../providers/AuthProvider';
 
 const PostDetailsHeader = ({ post }) => {
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [showReportDropdown, setShowReportDropdown] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [hasReported, setHasReported] = useState(false);
+
+  useEffect(() => {
+    if (post.reports && post.reports.includes(currentUser.userData.username)) {
+      setHasReported(true);
+    }
+  }, [post, currentUser.userData.username]);
 
   const handleReportClick = async reportType => {
     try {
-      await createPostReport(post.id, reportType);
-      setShowReportDropdown(false);
+      await createPostReport(
+        post.id,
+        reportType,
+        currentUser.userData.username
+      );
+      setIsReportModalOpen(false);
     } catch (error) {
       alert(`Failed to report: ${error.message}`);
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      await deletePost(currentUser.userData.username, post.id);
+      navigate('/feed');
+    } catch (error) {
+      alert(`Failed to delete post: ${error.message}`);
     }
   };
 
@@ -27,11 +55,7 @@ const PostDetailsHeader = ({ post }) => {
       <button className={styles['btn']} onClick={handleBackButtonClick}>
         Back
       </button>
-      <div
-        className={styles['controls']}
-        onMouseEnter={() => setShowReportDropdown(true)}
-        onMouseLeave={() => setShowReportDropdown(false)}
-      >
+      <div className={styles['controls']}>
         {post.isUserPost ? (
           <>
             <button
@@ -40,37 +64,49 @@ const PostDetailsHeader = ({ post }) => {
             >
               Edit
             </button>
-            <button className={styles['btn']}>Delete</button>
+            <button
+              className={styles['btn']}
+              onClick={() => setIsDeleteModalOpen(true)}
+            >
+              Delete
+            </button>
           </>
         ) : (
-          <div className={styles['dropdown']}>
-            <button className={styles['btn']}>Report</button>
-            {showReportDropdown && (
-              <ul className={styles['dropdown-menu']}>
-                {Object.entries(postReportEnum).map(([key, value]) => (
-                  <li
-                    key={key}
-                    className={styles['dropdown-item']}
-                    onClick={() => handleReportClick(value)}
-                  >
-                    {key.replace('_', ' ')}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <button
+            className={`${styles['btn']} ${
+              hasReported ? styles['reported'] : ''
+            }`}
+            onClick={() => !hasReported && setIsReportModalOpen(true)}
+            disabled={hasReported}
+          >
+            {hasReported ? 'Reported' : 'Report'}
+          </button>
         )}
       </div>
+      <Modal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+      >
+        <ReportMenu
+          reportOptions={postReportEnum}
+          handleReportClick={handleReportClick}
+        />
+      </Modal>
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+      >
+        <DeletePostConfirm
+          onConfirm={handleDeleteClick}
+          onCancel={() => setIsDeleteModalOpen(false)}
+        />
+      </Modal>
     </div>
   );
 };
 
 PostDetailsHeader.propTypes = {
   post: PropTypes.object.isRequired,
-  setShowReportDropdown: PropTypes.func.isRequired,
-  showReportDropdown: PropTypes.bool.isRequired,
-  handleBackButtonClick: PropTypes.func.isRequired,
-  handleReportClick: PropTypes.func.isRequired,
 };
 
 export default PostDetailsHeader;
