@@ -11,7 +11,7 @@ import {
   tagExists,
 } from '../../services/tags.service.js';
 import styles from './EditPost.module.scss';
-import { uploadImage } from '../../services/images.service.js';
+import { deleteImage, uploadImage } from '../../services/images.service.js';
 
 const initialPostData = {
   titleInput: '',
@@ -34,6 +34,7 @@ const EditPost = () => {
       setLoading(true);
       try {
         const post = await getPostByHandle(id);
+        console.log(post);
         setFetchedData({
           ...postData,
           titleInput: post.title,
@@ -102,6 +103,7 @@ const EditPost = () => {
           imageUrl: imageUrl,
         });
         setImageFile(file);
+        console.log(imageFile);
       } catch (error) {
         console.log(error.message);
       }
@@ -142,8 +144,11 @@ const EditPost = () => {
       }
 
       if (fetchedData.imageUrl !== postData.imageUrl) {
-        const dbImageUrl = await uploadImage(imageFile);
-        await updatePostDetails(id, 'image', dbImageUrl);
+        if (fetchedData.imageUrl) {
+          await deleteImage(fetchedData.imageUrl);
+        }
+        const storageImageUrl = await uploadImage(imageFile);
+        await updatePostDetails(id, 'image', storageImageUrl);
       }
 
       const currentTags = fetchedData.tags ? Object.keys(fetchedData.tags) : [];

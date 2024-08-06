@@ -58,9 +58,11 @@ export const getPostByHandle = async handle => {
       createdOn: formatDistanceToNow(new Date(snapshot.val().createdOn), {
         addSuffix: true,
       }),
-      edited: snapshot.val().edited ? formatDistanceToNow(new Date(snapshot.val().edited), {
-        addSuffix: true,
-      }) : null
+      edited: snapshot.val().edited
+        ? formatDistanceToNow(new Date(snapshot.val().edited), {
+            addSuffix: true,
+          })
+        : null,
     };
   } catch (error) {
     throw new Error(`${error.message}`);
@@ -86,7 +88,9 @@ export const createPost = async (
   imageFile = ''
 ) => {
   try {
-    const imageUrl = await uploadImage(imageFile);
+    const [imageUrl, imageId] = imageFile
+      ? await uploadImage(imageFile)
+      : [null, null];
 
     const post = {
       author,
@@ -94,7 +98,7 @@ export const createPost = async (
       content,
       tags,
       createdOn: Date.now(),
-      image: imageUrl,
+      image: imageId ? { id: imageId, url: imageUrl } : null,
     };
     const result = await push(ref(db, 'posts'), post);
     const id = result.key;
@@ -206,4 +210,4 @@ export const deletePostTag = async (tagToDelete, postId) => {
   } catch (error) {
     throw new Error(`${error.message}`);
   }
-}
+};
