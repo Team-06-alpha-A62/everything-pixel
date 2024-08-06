@@ -10,6 +10,7 @@ import Modal from '../Modal/Modal';
 import ReportMenu from '../ReportMenu/ReportMenu';
 import DeletePostConfirm from '../DeletePostConfirm/DeletePostConfirm';
 import { useAuth } from '../../providers/AuthProvider';
+import { deleteImage } from '../../services/images.service';
 
 const PostDetailsHeader = ({ post }) => {
   const { currentUser } = useAuth();
@@ -39,6 +40,7 @@ const PostDetailsHeader = ({ post }) => {
 
   const handleDeleteClick = async () => {
     try {
+      if (post.image) await deleteImage(post.image);
       await deletePost(currentUser.userData.username, post.id);
       navigate('/feed');
     } catch (error) {
