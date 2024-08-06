@@ -9,14 +9,23 @@ import {
 import Avatar from 'react-avatar';
 import { useAuth } from '../../providers/AuthProvider';
 import CommentActions from '../CommentActions/CommentActions';
-import { hasUserVotedComment } from '../../services/comments.service';
+import {
+  getCommentById,
+  hasUserVotedComment,
+} from '../../services/comments.service';
+import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const PostComment = ({ comment }) => {
+const PostComment = ({
+  comment,
+  setCommentToEdit,
+  onDeleteComment,
+  isEditMode,
+}) => {
   const { currentUser } = useAuth();
   const [commentAuthor, setCommentAuthor] = useState({});
   const [userVote, setUserVote] = useState(null);
   const [commentVotes, setCommentVotes] = useState({ upVote: 0, downVote: 0 });
-
   useEffect(() => {
     const fetchCommentAuthorData = async () => {
       const commentAuthorData = await getUserByHandle(comment.author);
@@ -78,6 +87,20 @@ const PostComment = ({ comment }) => {
     }
   };
 
+  const handleEditModeChange = async () => {
+    if (!isEditMode) {
+      const { id, content } = await getCommentById(comment.id);
+      setCommentToEdit({
+        id,
+        content,
+      });
+    } else {
+      setCommentToEdit({
+        id: null,
+        content: '',
+      });
+    }
+  };
   const timeAgo = formatDistanceToNow(new Date(comment.createdOn), {
     addSuffix: true,
   });
@@ -95,6 +118,7 @@ const PostComment = ({ comment }) => {
         <span className={styles.commentUsername}>
           <strong>{commentAuthor.username}</strong>
         </span>
+        {comment.edited && <span>edited</span>}
         <span className={styles.timeCreated}>{timeAgo}</span>
         <span className={styles.commentContent}>{comment.content}</span>
         <div className={styles.commentActions}>
@@ -105,6 +129,27 @@ const PostComment = ({ comment }) => {
           />
         </div>
       </div>
+      {!!comment.isUserComment && (
+        <div>
+          {isEditMode ? (
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className={styles.undoEditComment}
+              onClick={handleEditModeChange}
+            />
+          ) : (
+            <span className={styles.editComment} onClick={handleEditModeChange}>
+              edit
+            </span>
+          )}
+          <span
+            className={styles.deleteComment}
+            onClick={() => onDeleteComment(comment.id)}
+          >
+            delete
+          </span>
+        </div>
+      )}
     </div>
   );
 };

@@ -88,26 +88,14 @@ export const createComment = async (
   }
 };
 
-/**
- * Checks if a user has voted on a comment.
- *
- * @param {string} userHandler - The handler of the user.
- * @returns {Promise<Object|null>} A promise that resolves to the user's vote data, or null if no vote exists.
- * @throws {Error} If there is an error checking the vote in the database.
- */
-// export const hasUserLikedComment = async (commentId, userHandler) => {
-//   try {
-//     const snapshot = await get(
-//       ref(db, `comments/${commentId}/likes/${userHandler}`)
-//     );
-//     if (!snapshot.exists()) return false;
+export const editCommentContent = async (commentId, newContent) => {
+  const updateObject = {
+    [`comments/${commentId}/content`]: newContent,
+    [`comments/${commentId}/edited`]: Date.now(),
+  };
 
-//     return true;
-//   } catch (error) {
-//     console.error('Error checking vote:', error.message);
-//     return null;
-//   }
-// };
+  update(ref(db), updateObject);
+};
 
 /**
  * Deletes a comment from the database.
@@ -116,13 +104,12 @@ export const createComment = async (
  * @returns {Promise<void>} A promise that resolves when the comment is deleted.
  * @throws {Error} If there is an error deleting the comment from the database.
  */
-export const deleteComment = async commentId => {
+export const deleteComment = async (commentId, postId) => {
   try {
     const commentRef = ref(db, `comments/${commentId}`);
-
+    const postCommentRef = ref(db, `posts/${postId}/comments/${commentId}`);
     await remove(commentRef);
-
-    console.log(`Comment ${commentId} deleted successfully.`);
+    await remove(postCommentRef);
   } catch (error) {
     console.error('Error deleting comment:', error);
   }

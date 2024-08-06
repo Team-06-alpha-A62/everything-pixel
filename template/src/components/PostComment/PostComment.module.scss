@@ -39,3 +39,22 @@
   font-size: 18px;
   color: #262626;
 }
+.editComment {
+  padding-left: 5px;
+  color: rgb(39, 39, 199);
+  cursor: pointer;
+}
+
+.deleteComment {
+  display: block;
+  color: red;
+  cursor: pointer;
+}
+
+.undoEditComment {
+  cursor: pointer;
+}
+.undoEditComment:hover {
+  cursor: pointer;
+  color: rgb(219, 63, 28);
+}

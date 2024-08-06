@@ -5,7 +5,12 @@ import {
   hasUserVotedPost,
 } from '../../services/posts.service';
 import styles from './SinglePostDetails.module.scss';
-import { createComment, getCommentById } from '../../services/comments.service';
+import {
+  createComment,
+  deleteComment,
+  editCommentContent,
+  getCommentById,
+} from '../../services/comments.service';
 import PostComments from '../../components/PostComments/PostComments';
 import { useAuth } from '../../providers/AuthProvider';
 import { userVoteInteractionWithPost } from '../../services/users.service';
@@ -18,33 +23,41 @@ const SinglePostDetails = () => {
   const [commentsObjectsArray, setCommentsObjectsArray] = useState([]);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
   const [userVote, setUserVote] = useState(null);
-  const { title, tags, image, content, comments, createdOn, edited } = post || {};
+  const { title, tags, image, content, comments, createdOn, edited } =
+    post || {};
   const tagsArray = Object.values(tags ?? {});
 
   const { id } = useParams();
 
   useEffect(() => {
-    if (!comments || Object.keys(comments).length === 0) return;
+    if (
+      !comments ||
+      Object.keys(comments).length === 0 ||
+      !currentUser?.userData
+    )
+      return;
     const fetchComments = async () => {
       const commentsData = await Promise.all(
         Object.values(comments ?? {}).map(async commentId => {
           const commentData = await getCommentById(commentId);
-
+          commentData.isUserComment =
+            commentData.author === currentUser.userData.username;
           return commentData;
         })
       );
       setCommentsObjectsArray(commentsData);
     };
     fetchComments();
-  }, [comments]);
+  }, [comments, currentUser.userData]);
 
   useEffect(() => {
     const fetchPost = async () => {
       const post = await getPostByHandle(id);
+      post.isUserPost = post.author === currentUser.userData.username;
       setPost(post);
     };
     fetchPost();
-  }, [id]);
+  }, [id, currentUser?.userData]);
 
   useEffect(() => {
     const updatedPostVotes = {
@@ -77,12 +90,36 @@ const SinglePostDetails = () => {
         content
       );
       const newCommentData = await getCommentById(newComment.key);
+      newCommentData.isUserComment = true;
       setCommentsObjectsArray(prevCommentsObjectsArray => [
         ...prevCommentsObjectsArray,
         newCommentData,
       ]);
     } catch (error) {
       alert(error.message);
+    }
+  };
+
+  const handleDeleteComment = async commentId => {
+    await deleteComment(commentId, post.id);
+    const updatedCommentsObjectsArray = commentsObjectsArray.filter(
+      comment => comment.id !== commentId
+    );
+    setCommentsObjectsArray(updatedCommentsObjectsArray);
+  };
+
+  const handleEditComment = async (commentId, commentNewContent) => {
+    try {
+      await editCommentContent(commentId, commentNewContent);
+      const editedCommentsObjectsArray = commentsObjectsArray.map(comment => {
+        if (comment.id === commentId) {
+          return { ...comment, content: commentNewContent, edited: Date.now() };
+        }
+        return comment;
+      });
+      setCommentsObjectsArray(editedCommentsObjectsArray);
+    } catch (error) {
+      alert('editing comment error:', error.message);
     }
   };
 
@@ -123,15 +160,21 @@ const SinglePostDetails = () => {
     <div className={styles['post-details']}>
       <div className={styles['headers']}>
         <div className={styles['post-actions']}>
-          <button
-            className={styles['btn']}
-            onClick={handleBackButtonClick}
-          >
+          <button className={styles['btn']} onClick={handleBackButtonClick}>
             Back
           </button>
           <div className={styles['controls']}>
-            <button className={styles['btn']} onClick={() => navigate(`/edit/${post.id}`)}>Edit</button>
-            <button className={styles['btn']}>Delete</button>
+            {post.isUserPost && (
+              <>
+                <button
+                  className={styles['btn']}
+                  onClick={() => navigate(`/edit/${post.id}`)}
+                >
+                  Edit
+                </button>
+                <button className={styles['btn']}>Delete</button>
+              </>
+            )}
             <button className={styles['btn']}>Report</button>
           </div>
         </div>
@@ -166,6 +209,8 @@ const SinglePostDetails = () => {
         <PostComments
           comments={commentsObjectsArray}
           onPublishComment={handlePublishComment}
+          handleEditComment={handleEditComment}
+          handleDeleteComment={handleDeleteComment}
         />
       </div>
     </div>

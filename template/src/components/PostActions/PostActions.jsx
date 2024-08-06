@@ -18,12 +18,13 @@ const PostActions = ({
   userVote,
   handleUserVoteChange,
   isPostDetails,
-  edited
+  edited,
 }) => {
-
   return (
     <div className={styles['post-actions']}>
-      <span className={styles['time-created']}>{edited ? `edited: ${edited}` : date}</span>
+      <span className={styles['time-created']}>
+        {edited ? `edited: ${edited}` : date}
+      </span>
       <div className={styles['action-buttons']}>
         {!isPostDetails && (
           <div onClick={onShowPostCommentsChange}>
