@@ -3,6 +3,7 @@ import styles from './PostActions.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faComment,
+  faCopy,
   faThumbsDown as farThumbsDown,
   faThumbsUp as farThumbsUp,
 } from '@fortawesome/free-regular-svg-icons';
@@ -10,26 +11,48 @@ import {
   faThumbsDown as fasThumbsDown,
   faThumbsUp as fasThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const PostActions = ({
+  id,
   date,
   votes,
-  onShowPostCommentsChange,
+  comments,
   userVote,
   handleUserVoteChange,
   isPostDetails,
-  edited
+  edited,
 }) => {
+  const navigate = useNavigate();
+
+  const copyToClipboard = async url => {
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('URL copied successfully!');
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div className={styles['post-actions']}>
-      <span className={styles['time-created']}>{edited ? `edited: ${edited}` : date}</span>
-      <div className={styles['action-buttons']}>
+      <span className={styles['time-created']}>
+        {edited ? `edited: ${edited}` : date}
+      </span>
+      <div className={styles['action-buttons'] } onClick={() => navigate(`/feed/post/${id}`)}>
         {!isPostDetails && (
-          <div onClick={onShowPostCommentsChange}>
+          <>
+            {comments}
             <FontAwesomeIcon icon={faComment} />
-          </div>
+          </>
         )}
+        <div
+          onClick={() =>
+            copyToClipboard(`${window.location.origin}/feed/post/${id}`)
+          }
+        >
+          <FontAwesomeIcon icon={faCopy} />
+        </div>
         <div onClick={() => handleUserVoteChange('upVote')}>
           <FontAwesomeIcon
             icon={userVote === 'upVote' ? fasThumbsUp : farThumbsUp}
@@ -48,8 +71,10 @@ const PostActions = ({
 };
 
 PostActions.propTypes = {
+  id: PropTypes.string,
   date: PropTypes.any,
   votes: PropTypes.any,
+  comments: PropTypes.number,
   onShowPostCommentsChange: PropTypes.any,
   userVote: PropTypes.any,
   handleUserVoteChange: PropTypes.any,

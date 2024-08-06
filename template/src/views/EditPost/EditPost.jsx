@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../../providers/AuthProvider.jsx';
 import {
   deletePostTag,
   getPostByHandle,
@@ -50,7 +49,8 @@ const EditPost = () => {
       }
     };
     fetchPost();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const handleKeyDown = e => {
     if ((e.key === 'Enter' || e.key === ' ') && postData.tagsInput.trim()) {

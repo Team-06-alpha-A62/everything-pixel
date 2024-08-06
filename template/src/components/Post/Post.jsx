@@ -8,11 +8,6 @@ import PostContainer from '../../hoc/PostContainer/PostContainer.jsx';
 import PostAuthorDetails from '../PostAuthorDetails/PostAuthorDetails.jsx';
 import PostBody from '../PostBody/PostBody.jsx';
 import PostActions from '../PostActions/PostActions.jsx';
-import PostComments from '../PostComments/PostComments.jsx';
-import {
-  createComment,
-  getCommentById,
-} from '../../services/comments.service.js';
 import { hasUserVotedPost } from '../../services/posts.service.js';
 import { useAuth } from '../../providers/AuthProvider.jsx';
 import { formatDistanceToNow } from 'date-fns';
@@ -20,33 +15,17 @@ import { formatDistanceToNow } from 'date-fns';
 function Post({ post }) {
   const { currentUser } = useAuth();
   const [postAuthor, setPostAuthor] = useState({});
-  const [showPostComments, setShowPostComments] = useState(false);
-  const [commentsObjectsArray, setCommentsObjectsArray] = useState([]);
   const [userVote, setUserVote] = useState(null);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
 
   const { author, title, content, tags, createdOn, comments, image } = post;
 
   const tagsArray = Object.keys(tags ?? {});
+  const numberOfComments = Object.keys(comments ?? {}).length;
 
   const timeAgo = formatDistanceToNow(new Date(createdOn), {
     addSuffix: true,
   });
-
-  useEffect(() => {
-    if (!comments || Object.keys(comments).length === 0) return;
-    const fetchComments = async () => {
-      const commentsData = await Promise.all(
-        Object.keys(comments ?? {}).map(async commentId => {
-          const commentData = await getCommentById(commentId);
-
-          return commentData;
-        })
-      );
-      setCommentsObjectsArray(commentsData);
-    };
-    fetchComments();
-  }, [comments]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -78,27 +57,6 @@ function Post({ post }) {
     };
     setPostVotes(updatedPostVotes);
   }, [post.votes]);
-
-  const handleShowPostComments = () => {
-    setShowPostComments(prevShowPostComments => !prevShowPostComments);
-  };
-
-  const handlePublishComment = async content => {
-    try {
-      const newComment = await createComment(
-        post.id,
-        currentUser.userData.username,
-        content
-      );
-      const newCommentData = await getCommentById(newComment.key);
-      setCommentsObjectsArray(prevCommentsObjectsArray => [
-        ...prevCommentsObjectsArray,
-        newCommentData,
-      ]);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const handleUserVoteChange = async type => {
     try {
@@ -140,18 +98,13 @@ function Post({ post }) {
           image={image}
         />
         <PostActions
+          id={post.id}
           date={timeAgo}
           votes={postVotes}
-          onShowPostCommentsChange={handleShowPostComments}
+          comments={numberOfComments}
           userVote={userVote}
           handleUserVoteChange={handleUserVoteChange}
         />
-        {showPostComments && (
-          <PostComments
-            comments={commentsObjectsArray}
-            onPublishComment={handlePublishComment}
-          />
-        )}
         <hr />
       </PostContainer>
     </>
