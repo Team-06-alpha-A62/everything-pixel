@@ -88,19 +88,32 @@ export const createComment = async (
   }
 };
 
+/**
+ * Edits the content of a comment in the database.
+ *
+ * @param {string} commentId - The ID of the comment to edit.
+ * @param {string} newContent - The new content for the comment.
+ * @returns {Promise<void>} A promise that resolves when the comment is updated.
+ * @throws {Error} If there is an error updating the comment content.
+ */
 export const editCommentContent = async (commentId, newContent) => {
-  const updateObject = {
-    [`comments/${commentId}/content`]: newContent,
-    [`comments/${commentId}/edited`]: Date.now(),
-  };
+  try {
+    const updateObject = {
+      [`comments/${commentId}/content`]: newContent,
+      [`comments/${commentId}/edited`]: Date.now(),
+    };
 
-  update(ref(db), updateObject);
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`Error editing comment content: ${error.message}`);
+  }
 };
 
 /**
  * Deletes a comment from the database.
  *
  * @param {string} commentId - The ID of the comment to delete.
+ * @param {string} postId - The ID of the post the comment is associated with.
  * @returns {Promise<void>} A promise that resolves when the comment is deleted.
  * @throws {Error} If there is an error deleting the comment from the database.
  */
@@ -115,29 +128,61 @@ export const deleteComment = async (commentId, postId) => {
   }
 };
 
+/**
+ * Likes a comment in the database.
+ *
+ * @param {string} userHandle - The handle of the user liking the comment.
+ * @param {string} commentId - The ID of the comment to like.
+ * @returns {Promise<void>} A promise that resolves when the comment is liked.
+ * @throws {Error} If there is an error liking the comment in the database.
+ */
 export const likeComment = async (userHandle, commentId) => {
-  console.log(commentId, userHandle);
-  const updateObject = {
-    [`comments/${commentId}/likes/${userHandle}`]: true,
-    [`users/${userHandle}/likedComments/${commentId}`]: true,
-  };
+  try {
+    console.log(commentId, userHandle);
+    const updateObject = {
+      [`comments/${commentId}/likes/${userHandle}`]: true,
+      [`users/${userHandle}/likedComments/${commentId}`]: true,
+    };
 
-  await update(ref(db), updateObject);
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`Error liking comment: ${error.message}`);
+  }
 };
 
+/**
+ * Dislikes a comment in the database.
+ *
+ * @param {string} userHandle - The handle of the user disliking the comment.
+ * @param {string} commentId - The ID of the comment to dislike.
+ * @returns {Promise<void>} A promise that resolves when the comment is disliked.
+ * @throws {Error} If there is an error disliking the comment in the database.
+ */
 export const dislikeComment = async (userHandle, commentId) => {
-  const updateObject = {
-    [`comments/${commentId}/likes/${userHandle}`]: null,
-    [`users/${userHandle}/likedComments/${commentId}`]: null,
-  };
+  try {
+    const updateObject = {
+      [`comments/${commentId}/likes/${userHandle}`]: null,
+      [`users/${userHandle}/likedComments/${commentId}`]: null,
+    };
 
-  await update(ref(db), updateObject);
+    await update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`Error disliking comment: ${error.message}`);
+  }
 };
 
-export const hasUserVotedComment = async (userHandler, commentId) => {
+/**
+ * Checks if a user has voted on a comment.
+ *
+ * @param {string} userHandle - The handle of the user to check.
+ * @param {string} commentId - The ID of the comment to check.
+ * @returns {Promise<string|null>} A promise that resolves to the vote type ('upVoted' or 'downVoted') or null if no vote exists.
+ * @throws {Error} If there is an error checking the vote in the database.
+ */
+export const hasUserVotedComment = async (userHandle, commentId) => {
   try {
     const snapshot = await get(
-      ref(db, `comments/${commentId}/votes/${userHandler}`)
+      ref(db, `comments/${commentId}/votes/${userHandle}`)
     );
     if (!snapshot.exists()) return null;
 

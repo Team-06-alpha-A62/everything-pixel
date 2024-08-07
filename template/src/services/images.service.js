@@ -7,6 +7,13 @@ import {
 import { storage } from '../config/firebase.config.js';
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Extracts the filename from a Firebase Storage URL.
+ *
+ * @param {string} url - The Firebase Storage URL from which to extract the filename.
+ * @returns {string} The extracted filename.
+ * @throws {Error} If the URL format is invalid or extraction fails.
+ */
 const extractFilenameFromURL = url => {
   try {
     const parts = url.split('/o/');
@@ -26,7 +33,8 @@ const extractFilenameFromURL = url => {
  * Uploads an image to Firebase Storage and returns the download URL.
  *
  * @param {File} file - The image file to upload.
- * @returns {Promise<string>} The download URL of the uploaded image.
+ * @returns {Promise<string>} A promise that resolves to the download URL of the uploaded image.
+ * @throws {Error} If no file is selected or the upload fails.
  */
 export const uploadImage = async file => {
   if (!file) throw new Error('No file selected');
@@ -39,9 +47,17 @@ export const uploadImage = async file => {
     return url;
   } catch (error) {
     console.log(error.message);
+    throw new Error(`Error uploading image: ${error.message}`);
   }
 };
 
+/**
+ * Uploads an avatar to Firebase Storage and returns the download URL.
+ *
+ * @param {File} file - The avatar file to upload.
+ * @returns {Promise<string>} A promise that resolves to the download URL of the uploaded avatar.
+ * @throws {Error} If no file is selected or the upload fails.
+ */
 export const uploadAvatar = async file => {
   if (!file) throw new Error('No file selected');
 
@@ -53,9 +69,17 @@ export const uploadAvatar = async file => {
     return url;
   } catch (error) {
     console.log(error.message);
+    throw new Error(`Error uploading avatar: ${error.message}`);
   }
 };
 
+/**
+ * Deletes an image from Firebase Storage.
+ *
+ * @param {string} url - The URL of the image to delete.
+ * @returns {Promise<void>} A promise that resolves when the image is deleted.
+ * @throws {Error} If the deletion fails or the URL is invalid.
+ */
 export const deleteImage = async url => {
   try {
     const fileName = extractFilenameFromURL(url);
@@ -63,9 +87,17 @@ export const deleteImage = async url => {
     await deleteObject(desertRef);
   } catch (error) {
     console.log(error.message);
+    throw new Error(`Error deleting image: ${error.message}`);
   }
 };
 
+/**
+ * Deletes an avatar from Firebase Storage.
+ *
+ * @param {string} url - The URL of the avatar to delete.
+ * @returns {Promise<void>} A promise that resolves when the avatar is deleted.
+ * @throws {Error} If the deletion fails or the URL is invalid.
+ */
 export const deleteAvatar = async url => {
   try {
     const fileName = extractFilenameFromURL(url);
@@ -73,5 +105,6 @@ export const deleteAvatar = async url => {
     await deleteObject(desertRef);
   } catch (error) {
     console.log(error.message);
+    throw new Error(`Error deleting avatar: ${error.message}`);
   }
 };
