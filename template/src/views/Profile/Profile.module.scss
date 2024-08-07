@@ -1,0 +1,89 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Ensure padding and borders are included in element's total width and height */
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  padding: 50px 150px;
+  gap: 20px;
+  background-color: #f4f4f9; // Light grey background
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+
+  h1 {
+    margin: 0 0 5px 10px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  p {
+    margin: 0 0 0 10px;
+    font-size: 1.25rem;
+    color: #888;
+  }
+}
+
+.main-content {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1; // Allow content to grow and take remaining space
+}
+
+.profile-side-bar {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  width: 200px;
+  background-color: #ffffff; // White background for sidebar
+  border-right: 1px solid #e0e0e0; // Light grey border
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar
+  padding: 20px;
+  flex-shrink: 0; // Prevent shrinking
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 20px;
+
+      a {
+        display: flex;
+        align-items: center;
+        color: #555;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #007bff; // Change color on hover
+        }
+
+        svg {
+          margin-right: 10px; // Space between icon and text
+        }
+      }
+    }
+  }
+}
+
+.content {
+  flex-grow: 1; // Allow content to grow and take remaining space
+  border-radius: 10px;
+  padding: 20px;
+  overflow-y: auto; // Allow scrolling if content is large
+  background-color: #ffffff; // White background for sidebar
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar
+}

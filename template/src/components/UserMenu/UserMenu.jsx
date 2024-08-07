@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { useAuth } from '../../providers/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './UserMenu.module.scss';
 import Avatar from 'react-avatar';
 
@@ -50,7 +50,9 @@ function UserMenu() {
         <div className={styles.dropDown}>
           <ul>
             <li>
-              <FontAwesomeIcon icon={faUser} /> Profile
+              <Link to='/profile'>
+                <FontAwesomeIcon icon={faUser} /> Profile
+              </Link>
             </li>
             <li>
               <FontAwesomeIcon icon={faGear} />

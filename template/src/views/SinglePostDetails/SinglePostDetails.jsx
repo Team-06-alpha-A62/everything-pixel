@@ -61,7 +61,7 @@ const SinglePostDetails = () => {
 
   useEffect(() => {
     if (!currentUser.userData) return;
-    setIsSaved(Object.keys(currentUser.userData.savedPosts).includes(post.id));
+    setIsSaved(Object.keys(currentUser?.userData.savedPosts).includes(post.id));
   }, [currentUser.userData, post.id]);
 
   useEffect(() => {

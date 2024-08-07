@@ -10,6 +10,7 @@ import Feed from './views/Feed/Feed.jsx';
 import Publish from './views/Publish/Publish.jsx';
 import SinglePostDetails from './views/SinglePostDetails/SinglePostDetails.jsx';
 import EditPost from './views/EditPost/EditPost.jsx'
+import Profile from './views/Profile/Profile.jsx';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/publish" element={<Publish />} />
+          <Route path="/profile/*" element={<Profile />} />
           <Route path="/feed/post/:id" element={<SinglePostDetails />} />
           <Route path="/edit/:id" element={<EditPost />} />
           <Route path="/*" element={<NotFound />} />

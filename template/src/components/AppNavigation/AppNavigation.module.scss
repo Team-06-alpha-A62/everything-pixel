@@ -1,6 +1,36 @@
-.appNav {
+.app-nav {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%);
+  width: 100%; // Make navigation take full width
+  grid-template-columns: auto 1fr auto; // Define three columns: auto for logo, 1fr for center, auto for right section
   display: grid;
-  grid-template-columns: auto 1fr auto auto auto auto;
-  grid-gap: 10px;
-  align-items: center;
+  height: 100px;
+  padding: 0 2rem;
+  background-color: #fff; // Optional: Background color to ensure it looks good on all backgrounds
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar
+  z-index: 1000; // Ensure it stays on top of other content
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .left-section {
+    justify-content: flex-start;
+    align-self: center;
+  }
+
+  .center-section {
+    justify-content: center;
+    width: 80%; // Center section should take 80% of the remaining width
+  }
+
+  .right-section {
+    justify-content: flex-end;
+    display: flex;
+    gap: 10px;
+  }
 }
