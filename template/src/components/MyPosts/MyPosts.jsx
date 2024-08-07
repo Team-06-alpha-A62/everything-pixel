@@ -1,11 +1,40 @@
 import PropTypes from 'prop-types';
+import TrendingPost from '../TrendingPost/TrendingPost.jsx';
+import { useEffect, useState } from 'react';
+import { getPostByHandle } from '../../services/posts.service.js';
 
-const MyPosts = () => {
+const MyPosts = ({ posts }) => {
+  const [myPosts, setMyPosts] = useState([]);
+
+  useEffect(() => {
+    try {
+      const fetchPosts = async () => {
+        const postsData = await Promise.all(
+          posts.map(post => getPostByHandle(post))
+        );
+        setMyPosts(postsData);
+      };
+      fetchPosts();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
+
   return (
-      <div>My Posts</div>
-  )
-}
+    <>
+      {myPosts.length ? (
+        myPosts.map(post => {
+          return <TrendingPost key={post.id} trendingPost={post} />;
+        })
+      ) : (
+        <p>No Posts Yet</p>
+      )}
+    </>
+  );
+};
 
-MyPosts.propTypes = {};
+MyPosts.propTypes = {
+  posts: PropTypes.array,
+};
 
-export default MyPosts
+export default MyPosts;

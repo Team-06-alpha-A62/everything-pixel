@@ -9,7 +9,7 @@ const TrendingPost = ({ trendingPost }) => {
   const navigate = useNavigate();
 
   const navigateToSinglePostDetails = () => {
-    navigate(`post/${trendingPost.id}`);
+    navigate(`/post/${trendingPost.id}`);
   };
 
   return (

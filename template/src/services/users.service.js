@@ -62,6 +62,10 @@ export const getUserByHandle = async handle => {
       followers: snapshot.val().followers
         ? Object.keys(snapshot.val().followers)
         : [],
+      reports: {
+        comments: Object.values(snapshot.val().reports?.comments ?? {}),
+        posts: Object.values(snapshot.val().reports?.posts ?? {}),
+      },
     };
   } catch (error) {
     throw new Error(`${error.message}`);

@@ -160,7 +160,7 @@ const EditPost = () => {
       await assignTagUpdatesToDb(tags, id);
       await updatePostDetails(id, 'tags', convertTagsToObject(tags, id));
       await updatePostDetails(id, 'edited', Date.now());
-      navigate(`/feed/post/${id}`);
+      navigate(`/post/${id}`);
     } catch (error) {
       console.log(error.message);
     } finally {

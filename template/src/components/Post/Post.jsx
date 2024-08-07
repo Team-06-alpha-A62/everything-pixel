@@ -35,7 +35,7 @@ function Post({ post }) {
   });
 
   const openPostDetails = () => {
-    navigate(`/feed/post/${post.id}`);
+    navigate(`/post/${post.id}`);
   };
 
   useEffect(() => {

@@ -54,7 +54,7 @@ const PostActions = ({
         </div>
         <div
           onClick={() =>
-            copyToClipboard(`${window.location.origin}/feed/post/${id}`)
+            copyToClipboard(`${window.location.origin}/post/${id}`)
           }
         >
           <FontAwesomeIcon icon={faCopy} />

@@ -17,16 +17,33 @@ import EditProfile from '../../components/EditProfile/EditProfile.jsx';
 import SavedPosts from '../../components/SavedPosts/SavedPosts.jsx';
 import Follows from '../../components/Follows/Follows.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
+import { getUserByHandle } from '../../services/users.service.js';
 
 const Profile = () => {
   const [user, setUser] = useState({});
   const { currentUser } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setUser({
-      ...currentUser.userData,
-    });
+    setLoading(true);
+    try {
+      const fetchUser = async () => {
+        const user = await getUserByHandle(currentUser.userData?.username);
+        setUser({
+          ...user,
+        });
+      };
+      fetchUser();
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
   }, [currentUser.userData]);
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className={styles['profile-container']}>
@@ -101,9 +118,20 @@ const Profile = () => {
           <Routes>
             <Route element={<ProfileInfo />} />
             <Route path="general" element={<ProfileInfo user={user} />} />
-            <Route path="my-posts" element={<MyPosts user={user} />} />
-            <Route path="saved-posts" element={<SavedPosts user={user} />} />
-            <Route path="follows" element={<Follows user={user} />} />
+            <Route path="my-posts" element={<MyPosts posts={user.posts} />} />
+            <Route
+              path="saved-posts"
+              element={<SavedPosts savedPosts={user.savedPosts} />}
+            />
+            <Route
+              path="follows"
+              element={
+                <Follows
+                  following={user.following}
+                  followers={user.followers}
+                />
+              }
+            />
             <Route path="edit" element={<EditProfile user={user} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

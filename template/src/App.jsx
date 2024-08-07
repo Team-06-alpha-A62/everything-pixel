@@ -24,7 +24,7 @@ function App() {
           <Route path="/feed" element={<Feed />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/profile/*" element={<Profile />} />
-          <Route path="/feed/post/:id" element={<SinglePostDetails />} />
+          <Route path="/post/:id" element={<SinglePostDetails />} />
           <Route path="/edit/:id" element={<EditPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
