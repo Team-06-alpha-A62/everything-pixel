@@ -46,7 +46,7 @@ const Profile = () => {
   }
 
   return (
-    <div className={styles['profile-container']}>
+    <div className={`${styles['profile-container']} halftone`}>
       <div className={styles['profile-header']}>
         <div>
           <Avatar

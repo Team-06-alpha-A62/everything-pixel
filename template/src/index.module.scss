@@ -61,4 +61,15 @@ img {
     color: $color-brand-600 !important;
     font-weight: bold;
   }
+
+  .halftone {
+    background-image: radial-gradient(
+        circle at center,
+        #f3f4f687 0.1rem,
+        transparent 0
+      ),
+      radial-gradient(circle at center, #f3f4f687 0.1rem, transparent 0);
+    background-size: 0.5rem 0.5rem;
+    background-position: 0 0, 0.3rem 0.75rem;
+  }
 }
