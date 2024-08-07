@@ -115,7 +115,7 @@ function Post({ post }) {
   return (
     <>
       <PostContainer>
-        <PostAuthorDetails author={postAuthor} />
+        <PostAuthorDetails author={postAuthor} currentUser={currentUser} />
         <PostBody
           title={title}
           content={content}

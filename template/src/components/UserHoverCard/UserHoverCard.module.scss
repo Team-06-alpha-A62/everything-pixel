@@ -1,0 +1,48 @@
+.userHoverCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  width: 200px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+
+  &.visible {
+    transform: translate(-50%, -100%);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .userInfo {
+    margin-left: 10px;
+    text-align: center;
+  }
+
+  .username {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .followButton {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0c85d0;
+    }
+  }
+}

@@ -56,6 +56,12 @@ export const getUserByHandle = async handle => {
       savedPosts: snapshot.val().savedPosts
         ? Object.keys(snapshot.val().savedPosts)
         : [],
+      following: snapshot.val().following
+        ? Object.keys(snapshot.val().following)
+        : [],
+      followers: snapshot.val().followers
+        ? Object.keys(snapshot.val().followers)
+        : [],
     };
   } catch (error) {
     throw new Error(`${error.message}`);
@@ -219,5 +225,28 @@ export const unSavePost = async (userHandle, postId) => {
     await update(ref(db), updateObject);
   } catch (error) {
     throw new Error(`error trying to save post: ${error.message}`);
+  }
+};
+
+export const followUser = async (userHandler, userToFollowHandler) => {
+  try {
+    const updateObject = {
+      [`users/${userHandler}/following/${userToFollowHandler}`]: true,
+      [`users/${userToFollowHandler}/followers/${userHandler}`]: true,
+    };
+    update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`error trying to follow user: ${error.message}`);
+  }
+};
+export const unfollowUser = async (userHandler, userToFollowHandler) => {
+  try {
+    const updateObject = {
+      [`users/${userHandler}/following/${userToFollowHandler}`]: null,
+      [`users/${userToFollowHandler}/followers/${userHandler}`]: null,
+    };
+    update(ref(db), updateObject);
+  } catch (error) {
+    throw new Error(`error trying to unfollow user: ${error.message}`);
   }
 };
