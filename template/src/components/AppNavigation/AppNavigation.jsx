@@ -17,9 +17,7 @@ const AppNavigation = () => {
       </div>
       <div className={styles['right-section']}>
         <NavLink to="/feed">Feed</NavLink>
-        <Button style={'none'}>
-          <Link to="/publish">Publish</Link>
-        </Button>
+        <NavLink to="/publish">Publish</NavLink>
         <ToggleTheme />
         <UserMenu />
       </div>

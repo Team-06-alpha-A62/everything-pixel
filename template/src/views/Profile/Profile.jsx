@@ -16,6 +16,7 @@ import MyPosts from '../../components/MyPosts/MyPosts.jsx';
 import EditProfile from '../../components/EditProfile/EditProfile.jsx';
 import SavedPosts from '../../components/SavedPosts/SavedPosts.jsx';
 import Follows from '../../components/Follows/Follows.jsx';
+import NotFound from '../NotFound/NotFound.jsx';
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -98,12 +99,13 @@ const Profile = () => {
         </nav>
         <div className={styles['content']}>
           <Routes>
-            <Route path="/" element={<ProfileInfo />} />
-            <Route path="general" element={<ProfileInfo />} />
-            <Route path="my-posts" element={<MyPosts />} />
-            <Route path="saved-posts" element={<SavedPosts />} />
-            <Route path="follows" element={<Follows />} />
-            <Route path="edit" element={<EditProfile />} />
+            <Route element={<ProfileInfo />} />
+            <Route path="general" element={<ProfileInfo user={user} />} />
+            <Route path="my-posts" element={<MyPosts user={user} />} />
+            <Route path="saved-posts" element={<SavedPosts user={user} />} />
+            <Route path="follows" element={<Follows user={user} />} />
+            <Route path="edit" element={<EditProfile user={user} />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </div>

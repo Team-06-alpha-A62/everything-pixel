@@ -9,7 +9,7 @@
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  padding: 50px 150px;
+  padding: 50px 250px;
   gap: 20px;
   background-color: #f4f4f9; // Light grey background
 }
@@ -37,14 +37,13 @@
 .main-content {
   display: flex;
   gap: 20px;
-  flex-grow: 1; // Allow content to grow and take remaining space
 }
 
 .profile-side-bar {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  width: 200px;
+  width: 300px;
   background-color: #ffffff; // White background for sidebar
   border-right: 1px solid #e0e0e0; // Light grey border
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar

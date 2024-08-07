@@ -50,7 +50,7 @@ function UserMenu() {
         <div className={styles.dropDown}>
           <ul>
             <li>
-              <Link to='/profile'>
+              <Link to='/profile/general'>
                 <FontAwesomeIcon icon={faUser} /> Profile
               </Link>
             </li>

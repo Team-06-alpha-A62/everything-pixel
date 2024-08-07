@@ -26,7 +26,7 @@ function App() {
           <Route path="/profile/*" element={<Profile />} />
           <Route path="/feed/post/:id" element={<SinglePostDetails />} />
           <Route path="/edit/:id" element={<EditPost />} />
-          <Route path="/*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

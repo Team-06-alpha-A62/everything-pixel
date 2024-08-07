@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Oxygen:wght@300;400;700&display=swap');
+
 *,
 *::before,
 *::after {
@@ -6,8 +9,19 @@
 
 #root {
   justify-items: center;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Oxygen', sans-serif; // Default font for paragraphs and general text
+}
+
+h1,
+h2,
+h3,
+a {
+  font-family: 'Orbitron', sans-serif; // Font for headings and links
 }
 
 :global {
