@@ -45,6 +45,9 @@ const PublishComment = ({
 
 PublishComment.propTypes = {
   onPublishComment: PropTypes.func,
+  commentToEdit: PropTypes.any,
+  onEditComment: PropTypes.any,
+  setCommentToEdit: PropTypes.any,
 };
 
 export default PublishComment;

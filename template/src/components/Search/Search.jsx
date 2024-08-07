@@ -11,7 +11,7 @@ function Search() {
   };
 
   return (
-    <div className={styles.searchContainer}>
+    <div className={styles['search-container']}>
       <input type="text" value={search} onChange={handleSearchQueryChange} />
     </div>
   );

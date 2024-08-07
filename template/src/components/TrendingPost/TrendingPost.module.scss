@@ -1,4 +1,4 @@
-.trendingPost {
+.trending-post {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,11 +8,11 @@
   transition: background-color 0.3s ease;
 }
 
-.trendingPost:hover {
+.trending-post:hover {
   background-color: #dfdfdf;
 }
 
-.postTitle {
+.post-title {
   font-weight: bold;
   font-size: 16px;
   color: #333;
@@ -20,7 +20,7 @@
   flex-grow: 1;
 }
 
-.postIcon {
+.post-icon {
   color: #007bff;
   font-size: 20px;
 }

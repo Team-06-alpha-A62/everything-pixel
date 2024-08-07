@@ -13,9 +13,12 @@ const TrendingPost = ({ trendingPost }) => {
   };
 
   return (
-    <div className={styles.trendingPost} onClick={navigateToSinglePostDetails}>
-      <span className={styles.postTitle}>{title}</span>
-      <FontAwesomeIcon icon={faAnglesRight} className={styles.postIcon} />
+    <div
+      className={styles['trending-post']}
+      onClick={navigateToSinglePostDetails}
+    >
+      <span className={styles['post-title']}>{title}</span>
+      <FontAwesomeIcon icon={faAnglesRight} className={styles['post-icon']} />
     </div>
   );
 };

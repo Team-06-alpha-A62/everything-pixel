@@ -37,7 +37,7 @@ function UserMenu() {
   }, []);
 
   return (
-    <div className={styles.userMenu} ref={menuRef}>
+    <div className={styles['user-menu']} ref={menuRef}>
       <button className={styles['menu-button']} onClick={toggleDropdown}>
         <Avatar
           name={`${currentUser.userData?.firstName} ${currentUser.userData?.lastName}`}
@@ -47,10 +47,10 @@ function UserMenu() {
         />
       </button>
       {isOpen && (
-        <div className={styles.dropDown}>
+        <div className={styles['drop-down']}>
           <ul>
             <li>
-              <Link to='/profile'>
+              <Link to="/profile">
                 <FontAwesomeIcon icon={faUser} /> Profile
               </Link>
             </li>

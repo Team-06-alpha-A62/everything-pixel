@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const FilterByDate = ({ filterCriteria, value, handleFilterBy }) => {
+const FilterByDate = ({ filterCriteria, value }) => {
   const [showMore, setShowMore] = useState(false);
   const [filterDate, setFilterDate] = useState('');
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const toggleShowMore = () => {
     setShowMore(showMore => !showMore);
@@ -18,8 +18,17 @@ const FilterByDate = ({ filterCriteria, value, handleFilterBy }) => {
     setFilterDate(value);
 
     value
-      ? searchParams.set(`filterBy${filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)}`, value)
-      : searchParams.delete(`filterBy${filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)}`);
+      ? searchParams.set(
+          `filterBy${
+            filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)
+          }`,
+          value
+        )
+      : searchParams.delete(
+          `filterBy${
+            filterCriteria.slice(0, 1).toUpperCase() + filterCriteria.slice(1)
+          }`
+        );
 
     navigate({ search: searchParams.toString() });
   };

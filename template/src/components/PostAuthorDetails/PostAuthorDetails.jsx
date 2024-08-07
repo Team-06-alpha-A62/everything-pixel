@@ -36,7 +36,7 @@ const PostAuthorDetails = ({ author, currentUser }) => {
   };
 
   return (
-    <div className={styles.authorDetails}>
+    <div className={styles['author-details']}>
       <Avatar
         name={`${author.firstName} ${author.lastName}`}
         round={true}

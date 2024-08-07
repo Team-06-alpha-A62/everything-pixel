@@ -13,8 +13,8 @@ import styles from './CommentActions.module.scss';
 
 const CommentActions = ({ votes, userVote, handleUserVoteChange }) => {
   return (
-    <div className={styles.commentActions}>
-      <div className={styles.actionButtons}>
+    <div className={styles['comment-actions']}>
+      <div className={styles['action-buttons']}>
         <div onClick={() => handleUserVoteChange('upVote')}>
           <FontAwesomeIcon
             icon={userVote === 'upVote' ? fasThumbsUp : farThumbsUp}

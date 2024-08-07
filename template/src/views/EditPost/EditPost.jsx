@@ -34,7 +34,6 @@ const EditPost = () => {
       setLoading(true);
       try {
         const post = await getPostByHandle(id);
-        console.log(post);
         setFetchedData({
           ...postData,
           titleInput: post.title,
@@ -201,7 +200,7 @@ const EditPost = () => {
       <div>
         {tags.map((tag, index) => {
           return (
-            <div className={styles.tag} key={tag}>
+            <div className={styles['tag']} key={tag}>
               <span onClick={() => handleDeleteTag(index)}>&times;</span>
               <span>{tag}</span>
             </div>

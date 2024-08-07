@@ -48,10 +48,7 @@ const PostComment = ({
   }, [comment.author]);
 
   useEffect(() => {
-    if (
-      comment.reports &&
-      comment.reports.includes(currentUser.userData.username)
-    ) {
+    if (comment.reports && comment.reports[currentUser.userData.username]) {
       setHasReported(true);
     }
   }, [comment, currentUser?.userData?.username]);
@@ -143,22 +140,22 @@ const PostComment = ({
   });
 
   return (
-    <div className={styles.commentContainer}>
+    <div className={styles['comment-container']}>
       <Avatar
         name={`${commentAuthor.firstName} ${commentAuthor.lastName}`}
         round={true}
         size="32"
         src={commentAuthor.avatarUrl}
-        className={styles.commentAvatar}
+        className={styles['comment-avatar']}
       />
-      <div className={styles.commentDetailsContainer}>
-        <span className={styles.commentUsername}>
+      <div className={styles['comment-details-container']}>
+        <span className={styles['comment-username']}>
           <strong>{commentAuthor.username}</strong>
         </span>
         {comment.edited && <span>edited</span>}
-        <span className={styles.timeCreated}>{timeAgo}</span>
-        <span className={styles.commentContent}>{comment.content}</span>
-        <div className={styles.commentActions}>
+        <span className={styles['time-created']}>{timeAgo}</span>
+        <span className={styles['comment-content']}>{comment.content}</span>
+        <div className={styles['comment-actions']}>
           <CommentActions
             votes={commentVotes}
             userVote={userVote}
@@ -171,20 +168,28 @@ const PostComment = ({
           {isEditMode ? (
             <FontAwesomeIcon
               icon={faCircleXmark}
-              className={styles.undoEditComment}
+              className={styles['undo-edit-comment']}
               onClick={handleEditModeChange}
             />
           ) : (
-            <FontAwesomeIcon onClick={handleEditModeChange} icon={faPen} />
+            <FontAwesomeIcon
+              onClick={handleEditModeChange}
+              icon={faPen}
+              className={styles['edit-comment']}
+            />
           )}
 
           <FontAwesomeIcon
             onClick={() => onDeleteComment(comment.id)}
             icon={faTrashCan}
+            className={styles['delete-comment']}
           />
         </div>
       ) : hasReported ? (
-        <FontAwesomeIcon icon={faFlagSolid} className={styles.reportedFlag} />
+        <FontAwesomeIcon
+          icon={faFlagSolid}
+          className={styles['reported-flag']}
+        />
       ) : (
         <FontAwesomeIcon
           icon={faFlag}
@@ -206,6 +211,9 @@ const PostComment = ({
 
 PostComment.propTypes = {
   comment: PropTypes.object.isRequired,
+  setCommentToEdit: PropTypes.func.isRequired,
+  onDeleteComment: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
 };
 
 export default PostComment;
