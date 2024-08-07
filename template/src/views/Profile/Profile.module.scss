@@ -1,8 +1,4 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box; /* Ensure padding and borders are included in element's total width and height */
-}
+@import '../../variables.scss';
 
 .profile-container {
   display: flex;
@@ -11,7 +7,7 @@
   width: 100%;
   padding: 50px 250px;
   gap: 20px;
-  background-color: #f4f4f9; // Light grey background
+  background-color: $color-grey-50; // Light grey background
 }
 
 .profile-header {
@@ -22,15 +18,12 @@
 
   h1 {
     margin: 0 0 5px 10px;
-    font-size: 3rem;
     font-weight: bold;
-    color: #333;
   }
 
   p {
     margin: 0 0 0 10px;
-    font-size: 1.25rem;
-    color: #888;
+    color: $color-grey-400;
   }
 }
 
@@ -44,9 +37,9 @@
   flex-direction: column;
   border-radius: 10px;
   width: 300px;
-  background-color: #ffffff; // White background for sidebar
-  border-right: 1px solid #e0e0e0; // Light grey border
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar
+  background-color: $color-grey-0; // White background for sidebar
+  border-right: 2px solid $color-grey-50; // Light grey border
+  box-shadow: $shadow-sm; // Subtle shadow for sidebar
   padding: 20px;
   flex-shrink: 0; // Prevent shrinking
 
@@ -56,22 +49,19 @@
     margin: 0;
 
     li {
-      margin-bottom: 20px;
-
       a {
         display: flex;
         align-items: center;
-        color: #555;
         text-decoration: none;
-        font-size: 16px;
+        padding: 1.25rem;
         transition: color 0.3s;
 
         &:hover {
-          color: #007bff; // Change color on hover
+          background-color: $color-grey-50;
         }
 
         svg {
-          margin-right: 10px; // Space between icon and text
+          margin-right: 10px;
         }
       }
     }
@@ -83,6 +73,6 @@
   border-radius: 10px;
   padding: 20px;
   overflow-y: auto; // Allow scrolling if content is large
-  background-color: #ffffff; // White background for sidebar
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar
+  background-color: $color-grey-0; // White background for sidebar
+  box-shadow: $shadow-sm; // Subtle shadow for sidebar
 }

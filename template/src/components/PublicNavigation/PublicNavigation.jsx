@@ -6,10 +6,10 @@ import styles from './PublicNavigation.module.scss';
 function PublicNavigation() {
   return (
     <div className={styles['public-nav']}>
-      <div className={styles.logo}>
+      <div className={styles['left-section']}>
         <Logo />
       </div>
-      <div className={styles['nav-links']}>
+      <div className={styles['right-section']}>
         <ToggleTheme />
         <NavLink to="/login">Login</NavLink>
         <NavLink to="/register">Register</NavLink>

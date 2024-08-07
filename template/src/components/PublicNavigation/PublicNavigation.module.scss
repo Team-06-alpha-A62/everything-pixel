@@ -1,11 +1,31 @@
 .public-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%);
+  width: 100%; // Make navigation take full width
+  grid-template-columns: auto 1fr auto; // Define three columns: auto for logo, 1fr for center, auto for right section
+  display: grid;
+  height: 100px;
+  padding: 0 2rem;
+  background-color: #fff; // Optional: Background color to ensure it looks good on all backgrounds
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar
+  z-index: 1000; // Ensure it stays on top of other content
 
-.nav-links {
-  display: flex;
-  gap: 10px;
+  div {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .left-section {
+    justify-content: flex-start;
+    align-self: center;
+  }
+
+  .right-section {
+    justify-content: flex-end;
+    display: flex;
+    gap: 10px;
+  }
 }

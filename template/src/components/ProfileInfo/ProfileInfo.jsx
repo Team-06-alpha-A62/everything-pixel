@@ -5,31 +5,31 @@ const ProfileInfo = ({ user }) => {
   return (
     <div className={styles['profile-info-container']}>
       <div className={styles['info-grid']}>
-        <h1 className={styles['info-heading']}>General Info</h1>
+        <h2 className={styles['info-heading']}>General Info</h2>
         <div>
           <h3>Username</h3>
-          <p>{user.username}</p>
+          <span>{user.username}</span>
         </div>
         <div>
           <h3>First name</h3>
-          <p>{user.firstName}</p>
+          <span>{user.firstName}</span>
         </div>
         <div>
           <h3>Last name</h3>
-          <p>{user.lastName}</p>
+          <span>{user.lastName}</span>
         </div>
         <div>
           <h3>Bio</h3>
-          <p>{user.bio || 'N/A'}</p>
+          <span>{user.bio || 'N/A'}</span>
         </div>
-        <h1 className={styles['info-heading']}>Contact Info</h1>
+        <h2 className={styles['info-heading']}>Contact Info</h2>
         <div>
           <h3>Email address</h3>
-          <p>{user.email}</p>
+          <span>{user.email}</span>
         </div>
         <div>
           <h3>Phone number</h3>
-          <p>{user.number || 'N/A'}</p>
+          <span>{user.number || 'N/A'}</span>
         </div>
       </div>
     </div>

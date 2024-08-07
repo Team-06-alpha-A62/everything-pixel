@@ -1,14 +1,14 @@
+@import '../../variables';
+
 .profile-info-container {
   max-width: 1000px; // Set a max width to keep the content from stretching too wide
   margin: 0 auto; // Center the container
   padding: 20px; // Add padding around the container
-  h1 {
-    font-size: 2rem;
+  h2 {
     font-weight: bold;
-    color: #333;
 
     &.info-heading {
-      border-bottom: 1px solid #e7e7e7; // Subtle border for separation
+      border-bottom: 1px solid $color-grey-50; // Subtle border for separation
       padding-bottom: 10px; // Space between text and border
       margin-bottom: 20px; // Margin to separate from next section
     }
@@ -22,21 +22,21 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       padding: 20px;
-      background-color: #f9f9f9; // Light background for each info block
+      background-color: $color-grey-50; // Light background for each info block
       border-radius: 8px; // Rounded corners for each info block
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for each info block
-
+      box-shadow: $shadow-sm;
+      // Subtle shadow for each info block
       h3 {
         margin: 0;
         font-size: 1.125rem;
-        font-weight: bold;
-        color: #555;
       }
 
       p {
         margin: 5px 0 0;
-        font-size: 1rem;
-        color: #666;
+      }
+
+      span {
+        color: $color-grey-500;
       }
     }
   }

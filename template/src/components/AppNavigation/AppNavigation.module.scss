@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .app-nav {
   position: fixed;
   left: 50%;
@@ -8,8 +10,8 @@
   display: grid;
   height: 100px;
   padding: 0 2rem;
-  background-color: #fff; // Optional: Background color to ensure it looks good on all backgrounds
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); // Subtle shadow for sidebar
+  background-color: $color-grey-0; // Optional: Background color to ensure it looks good on all backgrounds
+  box-shadow: $shadow-sm; // Subtle shadow for sidebar
   z-index: 1000; // Ensure it stays on top of other content
 
   div {
@@ -31,6 +33,11 @@
   .right-section {
     justify-content: flex-end;
     display: flex;
-    gap: 10px;
+    gap: 20px;
+  }
+
+  a:hover {
+    transition: color 0.3s;
+    color: $color-brand-500;
   }
 }

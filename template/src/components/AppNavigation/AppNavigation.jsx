@@ -1,5 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
-import Button from '../../hoc/Button/Button';
+import { NavLink } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Search from '../Search/Search';
 import ToggleTheme from '../ToggleTheme/ToggleTheme';
@@ -7,6 +6,7 @@ import UserMenu from '../UserMenu/UserMenu';
 import styles from './AppNavigation.module.scss';
 
 const AppNavigation = () => {
+
   return (
     <div className={styles['app-nav']}>
       <div className={styles['left-section']}>
