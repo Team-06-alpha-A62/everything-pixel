@@ -24,8 +24,8 @@ export const getAllReports = async () => {
 export const createCommentReport = async (commentId, type, userHandle) => {
   try {
     const updateObject = {
-      [`reports/reports/${commentId}/${userHandle}`]: type,
-      [`posts/post/${commentId}/reports/${userHandle}`]: type,
+      [`reports/comment/${commentId}/${userHandle}`]: type,
+      [`comments/${commentId}/reports/${userHandle}`]: type,
       [`users/${userHandle}/reports/comments/${commentId}`]: type,
     };
     await update(ref(db), updateObject);
@@ -36,7 +36,7 @@ export const createCommentReport = async (commentId, type, userHandle) => {
 export const createPostReport = async (postId, type, userHandle) => {
   try {
     const updateObject = {
-      [`reports/reports/${postId}/${userHandle}`]: type,
+      [`reports/post/${postId}/${userHandle}`]: type,
       [`posts/${postId}/reports/${userHandle}`]: type,
       [`users/${userHandle}/reports/posts/${postId}`]: type,
     };

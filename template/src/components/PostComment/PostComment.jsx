@@ -13,8 +13,18 @@ import {
   getCommentById,
   hasUserVotedComment,
 } from '../../services/comments.service';
-import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import {
+  faCircleXmark,
+  faFlag,
+  faTrashCan,
+} from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faFlag as faFlagSolid } from '@fortawesome/free-solid-svg-icons'; // Import solid flag icon
+import Modal from '../Modal/Modal';
+import ReportMenu from '../ReportMenu/ReportMenu';
+import commentReportEnum from '../../enums/commentReportEnum';
+import { createCommentReport } from '../../services/reports.services';
 
 const PostComment = ({
   comment,
@@ -25,14 +35,26 @@ const PostComment = ({
   const { currentUser } = useAuth();
   const [commentAuthor, setCommentAuthor] = useState({});
   const [userVote, setUserVote] = useState(null);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [hasReported, setHasReported] = useState(false);
   const [commentVotes, setCommentVotes] = useState({ upVote: 0, downVote: 0 });
+
   useEffect(() => {
     const fetchCommentAuthorData = async () => {
       const commentAuthorData = await getUserByHandle(comment.author);
       setCommentAuthor(commentAuthorData);
     };
     fetchCommentAuthorData();
-  }, []);
+  }, [comment.author]);
+
+  useEffect(() => {
+    if (
+      comment.reports &&
+      comment.reports.includes(currentUser.userData.username)
+    ) {
+      setHasReported(true);
+    }
+  }, [comment, currentUser?.userData?.username]);
 
   useEffect(() => {
     if (!currentUser?.userData?.username) return;
@@ -101,6 +123,21 @@ const PostComment = ({
       });
     }
   };
+
+  const handleReportClick = async reportType => {
+    try {
+      await createCommentReport(
+        comment.id,
+        reportType,
+        currentUser.userData.username
+      );
+      setIsReportModalOpen(false);
+      setHasReported(true);
+    } catch (error) {
+      alert(`Failed to report: ${error.message}`);
+    }
+  };
+
   const timeAgo = formatDistanceToNow(new Date(comment.createdOn), {
     addSuffix: true,
   });
@@ -129,7 +166,7 @@ const PostComment = ({
           />
         </div>
       </div>
-      {!!comment.isUserComment && (
+      {comment.isUserComment ? (
         <div>
           {isEditMode ? (
             <FontAwesomeIcon
@@ -138,18 +175,31 @@ const PostComment = ({
               onClick={handleEditModeChange}
             />
           ) : (
-            <span className={styles.editComment} onClick={handleEditModeChange}>
-              edit
-            </span>
+            <FontAwesomeIcon onClick={handleEditModeChange} icon={faPen} />
           )}
-          <span
-            className={styles.deleteComment}
+
+          <FontAwesomeIcon
             onClick={() => onDeleteComment(comment.id)}
-          >
-            delete
-          </span>
+            icon={faTrashCan}
+          />
         </div>
+      ) : hasReported ? (
+        <FontAwesomeIcon icon={faFlagSolid} className={styles.reportedFlag} />
+      ) : (
+        <FontAwesomeIcon
+          icon={faFlag}
+          onClick={() => setIsReportModalOpen(true)}
+        />
       )}
+      <Modal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+      >
+        <ReportMenu
+          reportOptions={commentReportEnum}
+          handleReportClick={handleReportClick}
+        />
+      </Modal>
     </div>
   );
 };
