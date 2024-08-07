@@ -14,6 +14,7 @@ import {
 import PostComments from '../../components/PostComments/PostComments';
 import { useAuth } from '../../providers/AuthProvider';
 import {
+  isPostSaved,
   savePost,
   unSavePost,
   userVoteInteractionWithPost,
@@ -60,9 +61,16 @@ const SinglePostDetails = () => {
   }, [comments, currentUser.userData, post.id]);
 
   useEffect(() => {
-    if (!currentUser.userData) return;
-    setIsSaved(Object.keys(currentUser?.userData.savedPosts).includes(post.id));
-  }, [currentUser.userData, post.id]);
+    if (!currentUser?.userData) return;
+    const isPostSavedChecker = async () => {
+      const isPostSavedResult = await isPostSaved(
+        currentUser.userData.username,
+        post.id
+      );
+      setIsSaved(isPostSavedResult);
+    };
+    isPostSavedChecker();
+  }, [currentUser?.userData, post.id]);
 
   useEffect(() => {
     if (!currentUser.userData) return;

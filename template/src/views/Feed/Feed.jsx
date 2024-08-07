@@ -107,7 +107,7 @@ const Feed = () => {
 
   return (
     <div className={styles['feed']}>
-      <LeftSideBar handleFilterBy={handleFilterBy} />
+      <LeftSideBar />
       <Posts posts={updatedPosts} />
       <RightSideBar posts={posts} />
     </div>

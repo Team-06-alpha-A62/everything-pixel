@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   getUserByHandle,
+  isPostSaved,
   savePost,
   unSavePost,
   userVoteInteractionWithPost,
@@ -40,12 +41,22 @@ function Post({ post }) {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getUserByHandle(author);
-      const isPostSaved = user.savedPosts.includes(post.id);
       setPostAuthor(user);
-      setIsSaved(isPostSaved);
     };
     fetchUser();
-  }, [author, post.id]);
+  }, [author, post.id, currentUser.userData]);
+
+  useEffect(() => {
+    if (!currentUser?.userData) return;
+    const isPostSavedChecker = async () => {
+      const isPostSavedResult = await isPostSaved(
+        currentUser.userData.username,
+        post.id
+      );
+      setIsSaved(isPostSavedResult);
+    };
+    isPostSavedChecker();
+  }, [currentUser?.userData, post.id]);
 
   useEffect(() => {
     if (!currentUser?.userData?.username) return;

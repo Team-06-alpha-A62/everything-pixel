@@ -301,3 +301,102 @@ export const unfollowUser = async (userHandler, userToFollowHandler) => {
     throw new Error(`Error trying to unfollow user: ${error.message}`);
   }
 };
+
+/**
+ * Checks if a post is saved by a specific user.
+ *
+ * @param {string} userHandle - The username or handle of the user.
+ * @param {string} postId - The ID of the post to check.
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the post is saved.
+ */
+export const isPostSaved = async (userHandle, postId) => {
+  try {
+    const snapshot = await get(
+      ref(db, `users/${userHandle}/savedPosts/${postId}`)
+    );
+
+    return snapshot.exists();
+  } catch (error) {
+    console.error('Error checking if post is saved:', error);
+    return false;
+  }
+};
+
+/**
+ * Checks if a user is followed by a specific user.
+ *
+ * @param {string} userHandle - The username or handle of the user.
+ * @param {string} postId - The username of the userToCHeck.
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the post is saved.
+ */
+export const isUserFollowed = async (userHandle, userToCheck) => {
+  try {
+    const snapshot = await get(
+      ref(db, `users/${userHandle}/following/${userToCheck}`)
+    );
+
+    return snapshot.exists();
+  } catch (error) {
+    throw new Error(`Error checking if user is followed ${error.message}`);
+  }
+};
+
+/**
+ * Retrieves all users that the specified user is following.
+ *
+ * @param {string} userHandle - The username or handle of the user.
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of user handles.
+ */
+export const getAllFollowingUsers = async userHandle => {
+  try {
+    const snapshot = await get(ref(db, `users/${userHandle}/following`));
+
+    if (!snapshot.exists()) return [];
+
+    return Object.keys(snapshot.val());
+  } catch (error) {
+    throw new Error(
+      `Error fetching following users for ${userHandle}: ${error.message}`
+    );
+  }
+};
+
+/**
+ * Retrieves all followers of the specified user.
+ *
+ * @param {string} userHandle - The username or handle of the user.
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of user handles.
+ */
+export const getAllFollowers = async userHandle => {
+  try {
+    const snapshot = await get(ref(db, `users/${userHandle}/followers`));
+
+    if (!snapshot.exists()) return [];
+
+    return Object.keys(snapshot.val());
+  } catch (error) {
+    throw new Error(
+      `Error fetching followers for ${userHandle}: ${error.message}`
+    );
+  }
+};
+
+/**
+ * Retrieves all followers of the specified user.
+ *
+ * @param {string} userHandle - The username or handle of the user.
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of user handles.
+ */
+export const getAllSavedPosts = async userHandle => {
+  try {
+    const snapshot = await get(ref(db, `users/${userHandle}/savedPosts`));
+
+    if (!snapshot.exists()) return [];
+
+    return Object.keys(snapshot.val());
+  } catch (error) {
+    throw new Error(
+      `Error fetching saved posts for ${userHandle}: ${error.message}`
+    );
+  }
+};

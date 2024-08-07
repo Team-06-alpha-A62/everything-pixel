@@ -4,14 +4,14 @@ import SortPostsMenu from '../SortPostsMenu/SortPostsMenu';
 import PropTypes from 'prop-types';
 import styles from './LeftSideBar.module.scss';
 
-const LeftSideBar = ({ handleFilterBy }) => {
+const LeftSideBar = () => {
   return (
     <div className={styles['left-side-bar']}>
       <SideBarContainer>
         <SortPostsMenu />
       </SideBarContainer>
       <SideBarContainer>
-        <FilterPostsMenu handleFilterBy={handleFilterBy} />
+        <FilterPostsMenu />
       </SideBarContainer>
     </div>
   );

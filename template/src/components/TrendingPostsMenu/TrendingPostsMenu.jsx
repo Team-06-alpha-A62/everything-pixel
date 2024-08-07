@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import TrendingPost from '../TrendingPost/TrendingPost';
-import { getAllPosts } from '../../services/posts.service';
+//import { getAllPosts } from '../../services/posts.service';
 
-const TrendingPostsMenu = ({ size }) => {
+const TrendingPostsMenu = ({ size, posts }) => {
   const [trendingPosts, setTrendingPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const posts = await getAllPosts();
+      //const posts = await getAllPosts();
       const trending = getTrendingPosts(posts);
       setTrendingPosts(trending);
     };
     fetchPosts();
-  }, []);
+  }, [posts]);
 
   const getTrendingPosts = posts => {
     const sortedPosts = [...posts].sort(
@@ -37,7 +37,20 @@ const TrendingPostsMenu = ({ size }) => {
 };
 
 TrendingPostsMenu.propTypes = {
-  size: PropTypes.number,
+  size: PropTypes.number.isRequired,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      content: PropTypes.string,
+      createdOn: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
+      edited: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      image: PropTypes.string,
+      title: PropTypes.string.isRequired,
+      tags: PropTypes.objectOf(PropTypes.bool),
+    })
+  ).isRequired,
 };
 
 export default TrendingPostsMenu;

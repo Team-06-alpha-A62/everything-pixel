@@ -3,27 +3,20 @@ import FilterByTags from '../FilterByTags/FilterByTags.jsx';
 import PropTypes from 'prop-types';
 import styles from './FilterPostsMenu.module.scss';
 
-const FilterPostsMenu = ({ handleFilterBy }) => {
+const FilterPostsMenu = () => {
   return (
     <div>
       <h1>Filter By</h1>
       <div>
-        <FilterByDate
-          filterCriteria={'date'}
-          value={'date'}
-          handleFilterBy={handleFilterBy}
-        />
-        <FilterByTags
-          filterCriteria={'tags'}
-          handleFilterBy={handleFilterBy}
-        />
+        <FilterByDate filterCriteria={'date'} value={'date'} />
+        <FilterByTags filterCriteria={'tags'} />
       </div>
     </div>
   );
-}
+};
 
 FilterPostsMenu.propTypes = {
-  handleFilterBy: PropTypes.func
-}
+  handleFilterBy: PropTypes.func,
+};
 
 export default FilterPostsMenu;

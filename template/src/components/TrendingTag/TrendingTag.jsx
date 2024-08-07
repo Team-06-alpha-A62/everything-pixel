@@ -19,9 +19,12 @@ const TrendingTag = ({ tag, postsCount, handleTagClick }) => {
 };
 
 TrendingTag.propTypes = {
-  tag: PropTypes.object,
-  postsCount: PropTypes.number,
-  handleTagClick: PropTypes.func,
+  tag: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    posts: PropTypes.objectOf(PropTypes.bool).isRequired,
+  }).isRequired,
+  postsCount: PropTypes.number.isRequired,
+  handleTagClick: PropTypes.func.isRequired,
 };
 
 export default TrendingTag;

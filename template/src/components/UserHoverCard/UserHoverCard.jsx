@@ -1,15 +1,26 @@
 import PropTypes from 'prop-types';
 import styles from './UserHoverCard.module.scss';
 import Avatar from 'react-avatar';
-import { followUser, unfollowUser } from '../../services/users.service';
+import {
+  followUser,
+  isUserFollowed,
+  unfollowUser,
+} from '../../services/users.service';
 import { useEffect, useState } from 'react';
 
 const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
   const [hasFollowed, setHasFollowed] = useState(false);
 
   useEffect(() => {
-    setHasFollowed(currentUser.userData.following[author.username]);
-  }, [currentUser?.userData?.following, author.username]);
+    const hasFollowedChecker = async () => {
+      const hasFollowedResult = await isUserFollowed(
+        currentUser.userData.username,
+        author.username
+      );
+      setHasFollowed(hasFollowedResult);
+    };
+    hasFollowedChecker();
+  }, [currentUser?.userData?.username, author.username]);
 
   const handleFollowToggle = async () => {
     if (hasFollowed) {

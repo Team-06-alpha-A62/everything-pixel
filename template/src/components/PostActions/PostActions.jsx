@@ -79,16 +79,16 @@ const PostActions = ({
 PostActions.propTypes = {
   openPostDetails: PropTypes.func,
   id: PropTypes.string,
-  date: PropTypes.any,
-  votes: PropTypes.any,
+  date: PropTypes.string,
+  votes: PropTypes.shape({
+    upVote: PropTypes.number,
+    downVote: PropTypes.number,
+  }).isRequired,
   comments: PropTypes.number,
-  onShowPostCommentsChange: PropTypes.any,
-  userVote: PropTypes.any,
-  handleUserVoteChange: PropTypes.any,
-  isPostDetails: PropTypes.bool,
-  edited: PropTypes.any,
-  isSaved: PropTypes.any,
-  handleSavePost: PropTypes.any,
+  userVote: PropTypes.oneOf(['upVote', 'downVote', null]),
+  handleUserVoteChange: PropTypes.func.isRequired,
+  edited: PropTypes.string,
+  isSaved: PropTypes.bool.isRequired,
+  handleSavePost: PropTypes.func.isRequired,
 };
-
 export default PostActions;

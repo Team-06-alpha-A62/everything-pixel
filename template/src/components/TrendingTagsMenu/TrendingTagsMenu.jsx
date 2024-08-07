@@ -10,15 +10,6 @@ const TrendingTagsMenu = ({ size }) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const getTrendingTags = tags => {
-    const sortedTags = [...tags].sort(
-      (a, b) =>
-        Object.values(b.posts ?? {}).length -
-        Object.values(a.posts ?? {}).length
-    );
-    return sortedTags.slice(0, size);
-  };
-
   useEffect(() => {
     const fetchTags = async () => {
       try {
@@ -30,25 +21,38 @@ const TrendingTagsMenu = ({ size }) => {
       }
     };
     fetchTags();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const getTrendingTags = tags => {
+    const sortedTags = [...tags].sort(
+      (a, b) =>
+        Object.values(b.posts ?? {}).length -
+        Object.values(a.posts ?? {}).length
+    );
+    return sortedTags.slice(0, size);
+  };
 
   const handleTagClick = tag => {
     searchParams.set(`filterByTags`, tag);
     navigate({ search: searchParams.toString() });
-  }
+  };
 
   return (
     <>
       {trendingTags.map(tag => (
-        <TrendingTag key={tag.name} tag={tag} postsCount={Object.values(tag.posts).length} handleTagClick={handleTagClick}/>
+        <TrendingTag
+          key={tag.name}
+          tag={tag}
+          postsCount={Object.values(tag.posts).length}
+          handleTagClick={handleTagClick}
+        />
       ))}
     </>
   );
 };
 
 TrendingTagsMenu.propTypes = {
-  size: PropTypes.number,
+  size: PropTypes.number.isRequired,
 };
 
 export default TrendingTagsMenu;
