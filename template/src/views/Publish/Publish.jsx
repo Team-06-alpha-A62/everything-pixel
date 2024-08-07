@@ -64,7 +64,6 @@ const Publish = () => {
 
     const imageUrl = await getImagePreviewUrl(file);
 
-
     setPostData({
       ...postData,
       imageUrl: imageUrl,
@@ -145,7 +144,7 @@ const Publish = () => {
       <div>
         {tags.map((tag, index) => {
           return (
-            <div className={styles.tag} key={tag}>
+            <div className={styles['tag']} key={tag}>
               <span onClick={() => handleDeleteTag(index)}>&times;</span>
               <span>{tag}</span>
             </div>

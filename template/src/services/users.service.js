@@ -176,6 +176,15 @@ export const getUserData = async uid => {
   }
 };
 
+/**
+ * Updates the vote interaction of a user with a post.
+ *
+ * @param {string} type - The type of vote ('upVote' or 'downVote').
+ * @param {string} postId - The ID of the post being voted on.
+ * @param {string} userHandle - The user handle of the voter.
+ * @returns {Promise<void>} A promise that resolves when the vote interaction is successfully updated.
+ * @throws {Error} If there is an error updating the vote interaction in the database.
+ */
 export const userVoteInteractionWithPost = async (type, postId, userHandle) => {
   try {
     const updateObject = {
@@ -185,10 +194,19 @@ export const userVoteInteractionWithPost = async (type, postId, userHandle) => {
 
     await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`error trying to vote post : ${error.message}`);
+    throw new Error(`Error trying to vote post: ${error.message}`);
   }
 };
 
+/**
+ * Updates the vote interaction of a user with a comment.
+ *
+ * @param {string} type - The type of vote ('upVote' or 'downVote').
+ * @param {string} commentId - The ID of the comment being voted on.
+ * @param {string} userHandle - The user handle of the voter.
+ * @returns {Promise<void>} A promise that resolves when the vote interaction is successfully updated.
+ * @throws {Error} If there is an error updating the vote interaction in the database.
+ */
 export const userVoteInteractionWithComment = async (
   type,
   commentId,
@@ -202,10 +220,18 @@ export const userVoteInteractionWithComment = async (
 
     await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`error trying to vote post : ${error.message}`);
+    throw new Error(`Error trying to vote comment: ${error.message}`);
   }
 };
 
+/**
+ * Saves a post to the user's saved posts.
+ *
+ * @param {string} userHandle - The user handle of the user saving the post.
+ * @param {string} postId - The ID of the post to save.
+ * @returns {Promise<void>} A promise that resolves when the post is successfully saved.
+ * @throws {Error} If there is an error saving the post to the database.
+ */
 export const savePost = async (userHandle, postId) => {
   try {
     const updateObject = {
@@ -213,10 +239,18 @@ export const savePost = async (userHandle, postId) => {
     };
     await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`error trying to save post: ${error.message}`);
+    throw new Error(`Error trying to save post: ${error.message}`);
   }
 };
 
+/**
+ * Removes a post from the user's saved posts.
+ *
+ * @param {string} userHandle - The user handle of the user removing the saved post.
+ * @param {string} postId - The ID of the post to remove.
+ * @returns {Promise<void>} A promise that resolves when the post is successfully removed from saved posts.
+ * @throws {Error} If there is an error removing the saved post from the database.
+ */
 export const unSavePost = async (userHandle, postId) => {
   try {
     const updateObject = {
@@ -224,29 +258,46 @@ export const unSavePost = async (userHandle, postId) => {
     };
     await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`error trying to save post: ${error.message}`);
+    throw new Error(`Error trying to remove saved post: ${error.message}`);
   }
 };
 
+/**
+ * Follows a user by updating the follower/following relationship in the database.
+ *
+ * @param {string} userHandler - The user handle of the user who wants to follow.
+ * @param {string} userToFollowHandler - The user handle of the user to be followed.
+ * @returns {Promise<void>} A promise that resolves when the follow relationship is successfully updated.
+ * @throws {Error} If there is an error updating the follow relationship in the database.
+ */
 export const followUser = async (userHandler, userToFollowHandler) => {
   try {
     const updateObject = {
       [`users/${userHandler}/following/${userToFollowHandler}`]: true,
       [`users/${userToFollowHandler}/followers/${userHandler}`]: true,
     };
-    update(ref(db), updateObject);
+    await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`error trying to follow user: ${error.message}`);
+    throw new Error(`Error trying to follow user: ${error.message}`);
   }
 };
+
+/**
+ * Unfollows a user by removing the follower/following relationship in the database.
+ *
+ * @param {string} userHandler - The user handle of the user who wants to unfollow.
+ * @param {string} userToFollowHandler - The user handle of the user to be unfollowed.
+ * @returns {Promise<void>} A promise that resolves when the unfollow relationship is successfully updated.
+ * @throws {Error} If there is an error updating the unfollow relationship in the database.
+ */
 export const unfollowUser = async (userHandler, userToFollowHandler) => {
   try {
     const updateObject = {
       [`users/${userHandler}/following/${userToFollowHandler}`]: null,
       [`users/${userToFollowHandler}/followers/${userHandler}`]: null,
     };
-    update(ref(db), updateObject);
+    await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`error trying to unfollow user: ${error.message}`);
+    throw new Error(`Error trying to unfollow user: ${error.message}`);
   }
 };

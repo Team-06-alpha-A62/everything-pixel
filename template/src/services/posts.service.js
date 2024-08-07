@@ -26,7 +26,7 @@ export const getAllPosts = async (search = '') => {
 
     return posts;
   } catch (error) {
-    throw new Error(`${error.message}`);
+    throw new Error(`Error fetching posts: ${error.message}`);
   }
 };
 
@@ -68,7 +68,7 @@ export const getPostByHandle = async handle => {
       reports: postData.reports ? Object.keys(postData.reports) : 'empty',
     };
   } catch (error) {
-    throw new Error(`${error.message}`);
+    throw new Error(`Error fetching post: ${error.message}`);
   }
 };
 
@@ -79,7 +79,7 @@ export const getPostByHandle = async handle => {
  * @param {string} title - The title of the post.
  * @param {string} content - The content of the post.
  * @param {Array<string>} tags - An array of tags associated with the post.
- * @param {string} imageFile - the URL reference of the posts image inside the database
+ * @param {string} imageFile - The URL reference of the post's image inside the database.
  * @returns {Promise<Object>} A promise that resolves to the newly created post's database reference.
  * @throws {Error} If there is an error creating the post in the database.
  */
@@ -112,7 +112,7 @@ export const createPost = async (
 
     return result;
   } catch (error) {
-    throw new Error(`${error.message}`);
+    throw new Error(`Error creating post: ${error.message}`);
   }
 };
 
@@ -133,7 +133,7 @@ export const updatePostDetails = async (handle, target, value) => {
 
     await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`${error.message}`);
+    throw new Error(`Error updating post detail: ${error.message}`);
   }
 };
 
@@ -175,7 +175,7 @@ export const deletePost = async (userHandle, postId) => {
 
     await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`${error.message}`);
+    throw new Error(`Error deleting post: ${error.message}`);
   }
 };
 
@@ -183,6 +183,7 @@ export const deletePost = async (userHandle, postId) => {
  * Checks if a user has voted on a post.
  *
  * @param {string} userHandler - The handler of the user.
+ * @param {string} postId - The ID of the post to check the vote for.
  * @returns {Promise<Object|null>} A promise that resolves to the user's vote data, or null if no vote exists.
  * @throws {Error} If there is an error checking the vote in the database.
  */
@@ -197,6 +198,14 @@ export const hasUserVotedPost = async (userHandler, postId) => {
   }
 };
 
+/**
+ * Deletes a tag from a post in the database.
+ *
+ * @param {string} tagToDelete - The tag to delete from the post.
+ * @param {string} postId - The ID of the post to delete the tag from.
+ * @returns {Promise<void>} A promise that resolves when the tag is deleted from the post.
+ * @throws {Error} If there is an error deleting the tag from the post in the database.
+ */
 export const deletePostTag = async (tagToDelete, postId) => {
   try {
     const postSnapshot = await get(ref(db, `posts/${postId}`));
@@ -218,6 +227,6 @@ export const deletePostTag = async (tagToDelete, postId) => {
 
     await update(ref(db), updateObject);
   } catch (error) {
-    throw new Error(`${error.message}`);
+    throw new Error(`Error deleting post tag: ${error.message}`);
   }
 };

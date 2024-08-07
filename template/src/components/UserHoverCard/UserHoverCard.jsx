@@ -23,7 +23,7 @@ const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
 
   return (
     <div
-      className={`${styles.userHoverCard} ${styles.visible}`}
+      className={`${styles['user-hover-card']} ${styles['visible']}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -33,9 +33,12 @@ const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
         size="60"
         src={author.avatarUrl}
       />
-      <div className={styles.userInfo}>
-        <span className={styles.username}>{author.username}</span>
-        <button onClick={handleFollowToggle} className={styles.followButton}>
+      <div className={styles['user-info']}>
+        <span className={styles['username']}>{author.username}</span>
+        <button
+          onClick={handleFollowToggle}
+          className={styles['follow-button']}
+        >
           {hasFollowed ? 'Unfollow' : 'Follow'}
         </button>
       </div>

@@ -9,7 +9,7 @@ import NotFound from './views/NotFound/NotFound.jsx';
 import Feed from './views/Feed/Feed.jsx';
 import Publish from './views/Publish/Publish.jsx';
 import SinglePostDetails from './views/SinglePostDetails/SinglePostDetails.jsx';
-import EditPost from './views/EditPost/EditPost.jsx'
+import EditPost from './views/EditPost/EditPost.jsx';
 import Profile from './views/Profile/Profile.jsx';
 
 function App() {

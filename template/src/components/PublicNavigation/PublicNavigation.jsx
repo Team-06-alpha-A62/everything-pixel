@@ -5,11 +5,11 @@ import styles from './PublicNavigation.module.scss';
 
 function PublicNavigation() {
   return (
-    <div className={styles.publicNav}>
+    <div className={styles['public-nav']}>
       <div className={styles.logo}>
         <Logo />
       </div>
-      <div className={styles.navLinks}>
+      <div className={styles['nav-links']}>
         <ToggleTheme />
         <NavLink to="/login">Login</NavLink>
         <NavLink to="/register">Register</NavLink>

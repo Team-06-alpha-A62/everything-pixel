@@ -6,7 +6,7 @@ import styles from './LeftSideBar.module.scss';
 
 const LeftSideBar = ({ handleFilterBy }) => {
   return (
-    <div className={styles.leftSideBar}>
+    <div className={styles['left-side-bar']}>
       <SideBarContainer>
         <SortPostsMenu />
       </SideBarContainer>
