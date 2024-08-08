@@ -12,7 +12,7 @@ function Search() {
 
   return (
     <div className={styles['search-container']}>
-      <input type="text" value={search} onChange={handleSearchQueryChange} />
+      <input type="text" value={search} onChange={handleSearchQueryChange} placeholder='Search...'/>
     </div>
   );
 }

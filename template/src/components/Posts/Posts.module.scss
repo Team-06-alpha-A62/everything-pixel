@@ -1,22 +1,26 @@
+@import '../../variables';
+
 .posts-page {
   display: flex;
   justify-content: center;
-  padding: 20px;
   width: 100%;
+  flex: 1;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
+
 .lottie-animation {
   width: 100%;
 }
-.posts-container {
-  padding: 20px;
-  border-radius: 10px;
-}
 
 .post-item {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
+  box-shadow: $shadow-sm;
   margin-bottom: 20px;
-  background-color: #fff;
+  display: flex;
+  background-color: $color-grey-0;
   padding: 20px;
-  border-radius: 20px;
+  border-radius: $border-radius-md;
 }

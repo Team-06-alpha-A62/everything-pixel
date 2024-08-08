@@ -39,6 +39,7 @@ const TrendingTagsMenu = ({ size }) => {
 
   return (
     <>
+      <h2>Trending Tags:</h2>
       {trendingTags.map(tag => (
         <TrendingTag
           key={tag.name}

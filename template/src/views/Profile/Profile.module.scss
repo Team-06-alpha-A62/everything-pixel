@@ -37,25 +37,25 @@
 .profile-side-bar {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   border-radius: 10px;
   width: 300px;
+  height: 350px;
   background-color: $color-grey-0; // White background for sidebar
   border-right: 1px solid $color-grey-100; // Light grey border
   box-shadow: $shadow-sm; // Subtle shadow for sidebar
-  padding: 20px;
+  padding: 0 20px;
   flex-shrink: 0; // Prevent shrinking
 
   ul {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
 
     li {
       a {
         display: flex;
         align-items: center;
         text-decoration: none;
-        padding: 1.25rem;
+        padding: 1.1rem;
         transition: color 0.3s;
 
         &:hover {

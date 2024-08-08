@@ -5,9 +5,13 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box; /* Ensure padding and borders are included in element's total width and height */
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+html {
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -21,6 +25,13 @@ body {
 
   &::-webkit-scrollbar {
     display: none;
+  }
+}
+
+input {
+  &::placeholder {
+    color: $color-grey-400;
+    font-family: 'Oxygen';
   }
 }
 
@@ -75,5 +86,30 @@ img {
       radial-gradient(circle at center, #f3f4f687 0.1rem, transparent 0);
     background-size: 0.5rem 0.5rem;
     background-position: 0 0, 0.3rem 0.75rem;
+  }
+
+  .dropdown-content {
+    position: fixed;
+    top: 90px;
+    right: 10%;
+    padding: 1rem;
+    background-color: $color-grey-0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius-md;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+    }
+
+    li {
+      width: 100%;
+      padding: 1.25rem 2rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-grey-50;
+      }
+    }
   }
 }

@@ -42,7 +42,7 @@ const UserMenu = () => {
         )
       }
     >
-      <div className={styles['drop-down']}>
+      <div className={`${styles['drop-down']} dropdown-content`}>
         <ul>
           <Link to="/profile/general">
             <li>

@@ -1,12 +1,12 @@
 import SideBarContainer from '../../hoc/SideBarContainer/SideBarContainer';
 import TrendingPostsMenu from '../TrendingPostsMenu/TrendingPostsMenu.jsx';
-
+import styles from './RightSideBar.module.scss';
 import PropTypes from 'prop-types';
 import TrendingTagsMenu from '../TrendingTagsMenu/TrendingTagsMenu.jsx';
 
 const RightSideBar = ({ posts }) => {
   return (
-    <div>
+    <div className={styles['right-side-bar']}>
       <SideBarContainer>
         <TrendingPostsMenu posts={posts} size={5} />
       </SideBarContainer>
