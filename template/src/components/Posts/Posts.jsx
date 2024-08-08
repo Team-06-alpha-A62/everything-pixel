@@ -1,12 +1,27 @@
 import PropTypes from 'prop-types';
 import Post from '../Post/Post';
+import { useState } from 'react';
+import styles from './Posts.module.scss';
+import animationData from '../../assets/pacman-loading-animation.json';
+import Lottie from 'lottie-react';
 
 function Posts({ posts }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 1000);
+
   return (
     <div>
-      {posts.map(post => {
-        return <Post key={post.id} post={post} />;
-      })}
+      {isLoading ? (
+        <Lottie
+          animationData={animationData}
+          className={styles['lottie-animation']}
+        />
+      ) : (
+        posts.map(post => <Post key={post.id} post={post} />)
+      )}
     </div>
   );
 }

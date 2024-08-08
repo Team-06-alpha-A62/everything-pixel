@@ -18,6 +18,10 @@ body {
   line-height: 1.5;
   font-size: 1.1rem;
   background-color: $color-grey-50;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 input:focus,

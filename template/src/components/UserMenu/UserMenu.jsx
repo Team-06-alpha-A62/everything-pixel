@@ -6,8 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './UserMenu.module.scss';
 import Avatar from 'react-avatar';
 import DropDown from '../../hoc/DropDown/DropDown.jsx';
+import { useState } from 'react';
+import animationData from '../../assets/avatar-loading-animation.json';
+import Lottie from 'lottie-react';
 
 const UserMenu = () => {
+  const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -16,15 +20,26 @@ const UserMenu = () => {
     navigate('/');
   };
 
+  setTimeout(() => {
+    setIsLoadingAvatar(false);
+  }, 1000);
+
   return (
     <DropDown
       element={
-        <Avatar
-          name={`${currentUser.userData?.firstName} ${currentUser.userData?.lastName}`}
-          round={true}
-          size="50"
-          src={currentUser.userData?.avatarUrl}
-        />
+        isLoadingAvatar ? (
+          <Lottie
+            animationData={animationData}
+            className={styles['lottie-animation']}
+          />
+        ) : (
+          <Avatar
+            name={`${currentUser.userData?.firstName} ${currentUser.userData?.lastName}`}
+            round={true}
+            size="50"
+            src={currentUser.userData?.avatarUrl}
+          />
+        )
       }
     >
       <div className={styles['drop-down']}>

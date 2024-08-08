@@ -24,7 +24,7 @@ const AuthContext = createContext({
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(initialState);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [user] = useAuthState(auth);
 
   if (currentUser.user !== user) {
@@ -32,21 +32,30 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setTimeout(() => setIsLoading(false), 1500);
+      return;
+    }
+
+    setIsLoading(true);
     setTimeout(() => {
       getUserData(currentUser.user.uid).then(data => {
         const userData = data[Object.keys(data)[0]];
         setCurrentUser({ ...currentUser, userData });
       });
-    }, 2000);
+      setIsLoading(false);
+    }, 1500);
   }, [user]);
 
   const login = async (email, password) => {
     try {
+      setIsLoading(true);
       const credentials = await loginUser(email, password);
       setCurrentUser({ user: credentials.user, userData: null });
     } catch (error) {
       throw new Error(`Something went wrong logging in: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,6 +68,7 @@ export function AuthProvider({ children }) {
     avatarUrl
   ) => {
     try {
+      setIsLoading(true);
       const credential = await registerUser(email, password);
       await createUser(
         username,
@@ -71,15 +81,20 @@ export function AuthProvider({ children }) {
       setCurrentUser({ user: credential.user, userData: null });
     } catch (error) {
       throw new Error(`Registration error: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const logout = async () => {
     try {
+      setIsLoading(true);
       await logoutUser();
       setCurrentUser(initialState);
     } catch (error) {
       throw new Error(`Logout error: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,6 +103,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     register,
+    isLoading,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

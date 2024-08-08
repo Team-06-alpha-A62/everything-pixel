@@ -18,14 +18,15 @@ import SavedPosts from '../../components/SavedPosts/SavedPosts.jsx';
 import Follows from '../../components/Follows/Follows.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import { getUserByHandle } from '../../services/users.service.js';
+import animationData from '../../assets/avatar-loading-animation.json';
+import Lottie from 'lottie-react';
 
 const Profile = () => {
+  const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
   const [user, setUser] = useState({});
   const { currentUser } = useAuth();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     try {
       const fetchUser = async () => {
         const user = await getUserByHandle(currentUser.userData?.username);
@@ -36,25 +37,29 @@ const Profile = () => {
       fetchUser();
     } catch (error) {
       console.log(error.message);
-    } finally {
-      setLoading(false);
     }
   }, [currentUser.userData]);
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
+  setTimeout(() => {
+    setIsLoadingAvatar(false);
+  }, 1000);
   return (
     <div className={`${styles['profile-container']}`}>
       <div className={styles['profile-header']}>
-        <div>
-          <Avatar
-            name={`${user.firstName} ${user.lastName}`}
-            round={true}
-            size="100"
-            src={user.avatarUrl}
-          />
+        <div className="profile-avatar">
+          {isLoadingAvatar ? (
+            <Lottie
+              animationData={animationData}
+              className={styles['lottie-animation']}
+            />
+          ) : (
+            <Avatar
+              name={`${user.firstName} ${user.lastName}`}
+              round={true}
+              size="100"
+              src={user.avatarUrl}
+            />
+          )}
         </div>
         <div>
           <h1>
