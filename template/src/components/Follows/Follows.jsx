@@ -3,17 +3,19 @@ import { useEffect, useState } from 'react';
 import { getUserByHandle } from '../../services/users.service';
 import styles from './Follows.module.scss';
 import Avatar from 'react-avatar';
+import { useAuth } from '../../providers/AuthProvider.jsx';
 
 const Follows = ({ following, followers }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const { currentUser } = useAuth;
+  const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('following');
   const [followingData, setFollowingData] = useState([]);
   const [followersData, setFollowersData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const followingData = await Promise.all(
           following.map(f => getUserByHandle(f))
         );
@@ -41,6 +43,12 @@ const Follows = ({ following, followers }) => {
       ? 'You are not following anyone yet.'
       : 'No one is following you yet.';
 
+  if (isLoading && currentUser?.userData) {
+    return (
+      <div className={styles['loading']}>Loading...</div>
+    )
+  }
+
   return (
     <div className={styles['follows-container']}>
       <div className={styles['tabs']}>
@@ -64,8 +72,6 @@ const Follows = ({ following, followers }) => {
       <div className={styles['listContainer']}>
         {isLoading ? (
           <div className={styles['loading']}>Loading...</div>
-        ) : activeList.length === 0 ? (
-          <div className={styles['noData']}>{noDataMessage}</div>
         ) : (
           activeList.map((user, index) => (
             <div key={index} className={styles['userItem']}>

@@ -17,6 +17,7 @@ body {
   padding-top: 100px;
   line-height: 1.5;
   font-size: 1.1rem;
+  background-color: $color-grey-50;
 }
 
 input:focus,
@@ -27,7 +28,6 @@ select:focus {
   outline-offset: -1px;
 }
 
-p,
 h1,
 h2,
 h3,

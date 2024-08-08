@@ -3,11 +3,10 @@
 .profile-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  // height: 100vh;
   width: 100%;
   padding: 50px 250px;
   gap: 20px;
-  background-color: $color-grey-50; // Light grey background
 }
 
 .profile-header {
@@ -38,7 +37,7 @@
   border-radius: 10px;
   width: 300px;
   background-color: $color-grey-0; // White background for sidebar
-  border-right: 2px solid $color-grey-50; // Light grey border
+  border-right: 1px solid $color-grey-100; // Light grey border
   box-shadow: $shadow-sm; // Subtle shadow for sidebar
   padding: 20px;
   flex-shrink: 0; // Prevent shrinking
@@ -75,4 +74,5 @@
   overflow-y: auto; // Allow scrolling if content is large
   background-color: $color-grey-0; // White background for sidebar
   box-shadow: $shadow-sm; // Subtle shadow for sidebar
+  border-left: 1px solid $color-grey-100; // Light grey border
 }
