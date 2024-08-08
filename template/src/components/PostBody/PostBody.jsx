@@ -1,23 +1,22 @@
 import PropTypes from 'prop-types';
 import styles from './PostBody.module.scss';
-import Button from '../../hoc/Button/Button';
 
 const PostBody = ({ title, content, tags, image, openPostDetails }) => {
   return (
-    <div className={styles}>
-      <h1>{title}</h1>
+    <div className={styles['post-body']}>
+      <h1 className={styles['post-title']}>
+        {title.length > 50 ? `${title.slice(0, 50)}...` : title}
+      </h1>
       <div>
         {content.length > 40 ? `${content.slice(0, 40)}...` : content}
         <br />
-        <Button style={'none'} handleClick={openPostDetails}>
-          Show details
-        </Button>
+        <button onClick={openPostDetails}>Show details</button>
       </div>
 
       {tags.map(tag => (
         <span key={tag}>#{tag}</span>
       ))}
-      <img src={image} />
+      {image && <img src={image} alt={title} />}
     </div>
   );
 };

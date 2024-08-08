@@ -1,5 +1,14 @@
 .feed {
-  display: flex;
-  margin-top: 100px;
-  padding: 0 2rem;
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto 6fr auto;
+  justify-items: center;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+  .feed {
+    grid-template-columns: 1fr;
+  }
 }

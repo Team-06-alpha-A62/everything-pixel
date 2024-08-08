@@ -17,7 +17,9 @@ const TrendingPost = ({ trendingPost }) => {
       className={styles['trending-post']}
       onClick={navigateToSinglePostDetails}
     >
-      <span className={styles['post-title']}>{title}</span>
+      <span className={styles['post-title']}>
+        {title.length > 30 ? `${title.slice(0, 30)}...` : title}
+      </span>
       <FontAwesomeIcon icon={faAnglesRight} className={styles['post-icon']} />
     </div>
   );

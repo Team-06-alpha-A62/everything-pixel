@@ -1,5 +1,22 @@
+.posts-page {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+}
 .lottie-animation {
   width: 100%;
-  height: 100%;
-  image-rendering: pixelated; /* Applies pixelation */
+}
+.posts-container {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.post-item {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
 }

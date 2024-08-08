@@ -145,7 +145,6 @@ function Post({ post }) {
           handleUserVoteChange={handleUserVoteChange}
           handleSavePost={handleSavePost}
         />
-        <hr />
       </PostContainer>
     </>
   );
