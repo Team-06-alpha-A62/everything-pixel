@@ -126,7 +126,7 @@ const Profile = () => {
             <Route path="my-posts" element={<MyPosts posts={user.posts} />} />
             <Route
               path="saved-posts"
-              element={<SavedPosts savedPosts={user.savedPosts} />}
+              element={<SavedPosts posts={user.savedPosts} />}
             />
             <Route
               path="follows"

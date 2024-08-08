@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import TrendingPost from '../TrendingPost/TrendingPost.jsx';
 import { useEffect, useState } from 'react';
 import { getPostByHandle } from '../../services/posts.service.js';
+import ProfileSinglePost from '../ProfileSinglePost/ProfileSinglePost.jsx';
 
 const MyPosts = ({ posts }) => {
   const [myPosts, setMyPosts] = useState([]);
@@ -18,13 +18,13 @@ const MyPosts = ({ posts }) => {
     } catch (error) {
       console.log(error.message);
     }
-  }, []);
+  }, [posts]);
 
   return (
     <>
       {myPosts.length ? (
         myPosts.map(post => {
-          return <TrendingPost key={post.id} trendingPost={post} />;
+          return <ProfileSinglePost key={post.id} post={post} />;
         })
       ) : (
         <p>No Posts Yet</p>

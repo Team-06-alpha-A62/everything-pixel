@@ -3,7 +3,6 @@
 .profile-container {
   display: flex;
   flex-direction: column;
-  // height: 100vh;
   width: 100%;
   padding: 50px 250px;
   gap: 20px;
@@ -23,6 +22,10 @@
   p {
     margin: 0 0 0 10px;
     color: $color-grey-400;
+  }
+
+  .lottie-animation {
+    width: 100px;
   }
 }
 

@@ -7,6 +7,11 @@ import {
 import { storage } from '../config/firebase.config.js';
 import { v4 as uuidv4 } from 'uuid';
 
+import invader1 from '../assets/invader-1.png';
+import invader2 from '../assets/invader-2.png';
+import invader3 from '../assets/invader-3.png';
+
+
 /**
  * Extracts the filename from a Firebase Storage URL.
  *
@@ -29,6 +34,22 @@ const extractFilenameFromURL = url => {
   }
 };
 
+const getRandomInvaderImage = async () => {
+  const invaderImages = [
+    { name: 'invader-1.png', path: invader1 },
+    { name: 'invader-2.png', path: invader2 },
+    { name: 'invader-3.png', path: invader3 },
+  ];
+
+  const randomIndex = Math.floor(Math.random() * invaderImages.length);
+  const selectedImage = invaderImages[randomIndex];
+
+  const response = await fetch(selectedImage.path);
+  const blob = await response.blob();
+
+  return new File([blob], selectedImage.name, { type: blob.type });
+};
+
 /**
  * Uploads an image to Firebase Storage and returns the download URL.
  *
@@ -37,7 +58,9 @@ const extractFilenameFromURL = url => {
  * @throws {Error} If no file is selected or the upload fails.
  */
 export const uploadImage = async file => {
-  if (!file) throw new Error('No file selected');
+  if (!file) {
+    file = await getRandomInvaderImage();
+  }
 
   try {
     const fileRef = storageRef(storage, `images/${uuidv4()}-${file.name}`);
@@ -59,7 +82,9 @@ export const uploadImage = async file => {
  * @throws {Error} If no file is selected or the upload fails.
  */
 export const uploadAvatar = async file => {
-  if (!file) throw new Error('No file selected');
+  if (!file) {
+    file = await getRandomInvaderImage();
+  }
 
   try {
     const fileRef = storageRef(storage, `avatars/${uuidv4()}-${file.name}`);

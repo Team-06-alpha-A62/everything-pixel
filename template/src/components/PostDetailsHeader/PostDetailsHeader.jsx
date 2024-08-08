@@ -50,7 +50,7 @@ const PostDetailsHeader = ({ post }) => {
   };
 
   const handleBackButtonClick = () => {
-    navigate('/feed');
+    navigate(-1);
   };
 
   return (
