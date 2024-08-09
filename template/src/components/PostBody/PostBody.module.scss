@@ -11,6 +11,8 @@
   }
 
   .content {
+    display: flex;
+    align-items: center;
     font-size: 1rem;
     color: #333;
     margin-bottom: 10px;
@@ -18,7 +20,7 @@
   }
 
   .tags {
-    font-size: 0.9rem;
+    // font-size: 0.9rem;
     font-weight: bold;
     color: $color-brand-500;
     margin-bottom: 10px;

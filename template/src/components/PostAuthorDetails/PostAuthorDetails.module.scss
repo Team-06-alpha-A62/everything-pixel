@@ -1,5 +1,8 @@
+@import '../../variables';
+
 .author-details {
   display: flex;
+  gap: 10px;
   align-items: center;
   margin-bottom: 10px;
   position: relative;
@@ -9,12 +12,8 @@
 
   span {
     font-weight: bold;
-    color: #555;
+    color: $color-grey-700;
     cursor: pointer;
     position: relative;
-
-    &:hover {
-      color: #000;
-    }
   }
 }

@@ -7,6 +7,7 @@ import {
   unfollowUser,
 } from '../../services/users.service';
 import { useEffect, useState } from 'react';
+import Button from '../../hoc/Button/Button.jsx';
 
 const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
   const [hasFollowed, setHasFollowed] = useState(false);
@@ -46,12 +47,12 @@ const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
       />
       <div className={styles['user-info']}>
         <span className={styles['username']}>{author.username}</span>
-        <button
-          onClick={handleFollowToggle}
-          className={styles['follow-button']}
+        <Button
+          style={hasFollowed ? 'secondary' : 'primary'}
+          handleClick={handleFollowToggle}
         >
           {hasFollowed ? 'Unfollow' : 'Follow'}
-        </button>
+        </Button>
       </div>
     </div>
   );

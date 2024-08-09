@@ -9,8 +9,9 @@
   margin: 0;
   padding: 0;
 }
-html {
-  height: 100%;
+html,
+#root {
+  height: 100vh;
 }
 
 body {
@@ -49,7 +50,8 @@ h4,
 h5,
 h6,
 a,
-li {
+li,
+label {
   font-family: 'Orbitron', sans-serif; // Font for headings and links
   color: $color-grey-600;
 }
@@ -70,10 +72,26 @@ img {
   filter: grayscale($image-grayscale) opacity($image-opacity);
 }
 
+button {
+  all: unset;
+  text-decoration: none;
+  border: none;
+  background-color: none;
+  padding: 7.5px 15px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+}
+
 :global {
   .active {
     color: $color-brand-600 !important;
     font-weight: bold;
+  }
+
+  .dragging {
+    background-color: $color-brand-500;
+    color: $color-grey-0;
   }
 
   .halftone {

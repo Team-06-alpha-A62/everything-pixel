@@ -7,6 +7,11 @@
   padding-top: 10px;
   border-top: 1px solid $color-grey-200;
 
+  .time-created {
+    font-size: 0.9rem;
+    color: $color-grey-400;
+  }
+
   .action-buttons {
     display: grid;
     justify-content: end;

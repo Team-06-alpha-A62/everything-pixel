@@ -1,6 +1,37 @@
-.none {
-  all: unset;
-  text-decoration: none;
-  border: none;
-  background-color: none;
+@import '../../variables';
+
+.primary {
+  border-radius: $border-radius-md;
+  background-color: $color-brand-500;
+  border: 2px solid $color-brand-500;
+  color: $color-grey-0;
+  transition: background-color 0.2s;
+
+  &:hover {
+    border-color: $color-brand-600;
+    background-color: $color-brand-600;
+  }
+}
+
+.secondary {
+  border: 2px solid $color-grey-700;
+  color: $color-grey-700;
+  border-radius: $border-radius-md;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $color-grey-100;
+    border-color: $color-brand-600;
+    color: $color-brand-600;
+  }
+}
+
+.tertiary {
+  color: $color-brand-500;
+  transition: background-color 0.2s;
+
+  &:hover {
+    font-weight: bold;
+    color: $color-brand-600;
+  }
 }

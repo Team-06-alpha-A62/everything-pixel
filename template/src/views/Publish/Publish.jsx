@@ -9,6 +9,10 @@ import {
 } from '../../services/tags.service.js';
 import { addUserPost } from '../../services/users.service.js';
 import styles from './Publish.module.scss';
+import DragZone from '../../components/DragZone/DragZone.jsx';
+import Button from '../../hoc/Button/Button.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 
 const initialPostData = {
   titleInput: '',
@@ -117,68 +121,81 @@ const Publish = () => {
   };
 
   return (
-    <>
-      <h1>Publish post</h1>
-      <label htmlFor="title">Title</label>
-      <input
-        type="text"
-        name="title"
-        id="title"
-        autoFocus
-        value={postData.titleInput}
-        onChange={handleInputChange('titleInput')}
-        required
-      />
-      <br />
-      <label htmlFor="content">Content</label>
-      <textarea
-        name="content"
-        id="content"
-        value={postData.contentInput}
-        onChange={handleInputChange('contentInput')}
-        required
-      />
-
-      <br />
-      <label htmlFor="tags">Tags</label>
-      <div>
-        {tags.map((tag, index) => {
-          return (
-            <div className={styles['tag']} key={tag}>
-              <span onClick={() => handleDeleteTag(index)}>&times;</span>
-              <span>{tag}</span>
-            </div>
-          );
-        })}
-      </div>
-      <input
-        type="text"
-        name="tags"
-        id="tags"
-        value={postData.tagsInput}
-        onChange={handleInputChange('tagsInput')}
-        onKeyDown={handleKeyDown}
-      />
-      <br />
-      <input
-        type="file"
-        name="image"
-        id="image"
-        accept="image/*"
-        onChange={e => handleFileChange(e)}
-      />
-      <br />
-      {postData.imageUrl && (
-        <div className="image-preview-container">
-          <img src={postData.imageUrl} alt="Image Preview" />
+    <div className={styles['publish-wrapper']}>
+      <div className={styles['publish-container']}>
+        <h1>Publish new post</h1>
+        <div className={styles['input-section']}>
+          <label htmlFor="title">Title</label>
+          <input
+            className={styles['post-title']}
+            type="text"
+            name="title"
+            id="title"
+            autoFocus
+            value={postData.titleInput}
+            onChange={handleInputChange('titleInput')}
+            required
+          />
         </div>
-      )}
-      <div className="controller">
-        <button onClick={() => navigate(-1)}>&times; Cancel</button>
-        <button onClick={handlePublish}>Publish</button>
-        {loading ? 'Publishing...' : 'Publish'}
+        <div className={styles['input-section']}>
+          <label htmlFor="tags">Tags</label>
+          <div className={styles['publish-tags']}>
+            {tags.map((tag, index) => {
+              return (
+                <div className={styles['tag']} key={tag}>
+                  <span>{tag}</span>
+                  <span
+                    onClick={() => handleDeleteTag(index)}
+                    className={styles['delete-tag']}
+                  >
+                    &times;
+                  </span>
+                </div>
+              );
+            })}
+            <input
+              type="text"
+              name="tags"
+              id="tags"
+              value={postData.tagsInput}
+              onChange={handleInputChange('tagsInput')}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+        </div>
+        <div className={styles['content']}>
+          <div className={styles['input-section']}>
+            <label>Image</label>
+            <DragZone
+              handleFileChange={handleFileChange}
+              imageUrl={postData.imageUrl}
+            />
+          </div>
+          <div className={styles['input-section']}>
+            <label htmlFor="content">Content</label>
+            <textarea
+              className={styles['publish-textarea']}
+              name="content"
+              id="content"
+              value={postData.contentInput}
+              onChange={handleInputChange('contentInput')}
+              required
+            />
+          </div>
+        </div>
+
+        <div className={styles['controllers']}>
+          <Button style="secondary" handleClick={() => navigate(-1)}>
+            &times;
+            Cancel
+          </Button>
+          <Button style="primary" handleClick={handlePublish}>
+            Publish
+            &#x2713;
+          </Button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
