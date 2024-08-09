@@ -7,16 +7,20 @@ const PostBody = ({ title, content, tags, image, openPostDetails }) => {
       <h1 className={styles['post-title']}>
         {title.length > 50 ? `${title.slice(0, 50)}...` : title}
       </h1>
-      <div>
+      <div className={styles['content']}>
         {content.length > 40 ? `${content.slice(0, 40)}...` : content}
         <br />
         <button onClick={openPostDetails}>Show details</button>
       </div>
 
-      {tags.map(tag => (
-        <span key={tag}>#{tag}</span>
-      ))}
-      {image && <img src={image} alt={title} />}
+      <div className={styles['tags']}>
+        {tags.map(tag => (
+          <span key={tag}>#{tag}</span>
+        ))}
+      </div>
+      <div className={styles['image-container']}>
+        {<img src={image} alt={title} className={styles['image']} />}
+      </div>
     </div>
   );
 };

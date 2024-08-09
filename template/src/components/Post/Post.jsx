@@ -15,6 +15,7 @@ import { hasUserVotedPost } from '../../services/posts.service.js';
 import { useAuth } from '../../providers/AuthProvider.jsx';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import styles from './Post.module.scss';
 
 function Post({ post }) {
   const { currentUser } = useAuth();
@@ -124,7 +125,7 @@ function Post({ post }) {
   };
 
   return (
-    <>
+    <div className={styles['post-container']}>
       <PostContainer>
         <PostAuthorDetails author={postAuthor} currentUser={currentUser} />
         <PostBody
@@ -146,7 +147,7 @@ function Post({ post }) {
           handleSavePost={handleSavePost}
         />
       </PostContainer>
-    </>
+    </div>
   );
 }
 

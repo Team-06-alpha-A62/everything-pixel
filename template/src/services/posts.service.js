@@ -91,7 +91,7 @@ export const createPost = async (
   imageFile = ''
 ) => {
   try {
-    const imageUrl = imageFile && await uploadImage(imageFile);
+    const imageUrl = imageFile && (await uploadImage(imageFile));
 
     const post = {
       author,
@@ -99,7 +99,7 @@ export const createPost = async (
       content,
       tags,
       createdOn: Date.now(),
-      image: imageUrl
+      image: imageUrl,
     };
     const result = await push(ref(db, 'posts'), post);
     const id = result.key;
@@ -167,6 +167,7 @@ export const deletePost = async (userHandle, postId) => {
     const updateObject = {
       [`users/${userHandle}/posts/${postId}`]: null,
       [`posts/${postId}`]: null,
+      [`users/${userHandle}/savedPosts/${postId}`]: null,
       ...tagsUpdateObject,
       ...commentsUpdateObject,
     };

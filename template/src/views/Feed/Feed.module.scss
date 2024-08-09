@@ -1,12 +1,9 @@
 .feed {
   display: grid;
-  width: 100%;
-  grid-template-columns: 1fr minmax(700px, 5fr) 1fr;
+  grid-template-columns: auto minmax(auto, 3fr) auto;
   justify-items: center;
-  max-width: 80%;
+  max-width: 70%;
   margin: 50px auto;
-  height: 100vh; // Full viewport height
-  overflow: hidden;
 }
 
 @media (max-width: 1200px) {

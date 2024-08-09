@@ -1,13 +1,43 @@
-.post-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+@import '../../variables';
 
-.post-title {
-  overflow: hidden;
-  // text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 1.5rem; // Adjust as necessary
-  max-width: 100%; // Ensure it does not exceed container width
+.post-body {
+  padding: 0;
+  margin-bottom: 10px;
+
+  .post-title {
+    font-size: 1.2rem;
+    color: #000;
+    margin-bottom: 5px;
+  }
+
+  .content {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .tags {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: $color-brand-500;
+    margin-bottom: 10px;
+
+    span {
+      margin-right: 5px;
+    }
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+
+    img {
+      border-radius: $border-radius-md;
+      height: inherit;
+      width: 600px;
+    }
+  }
 }

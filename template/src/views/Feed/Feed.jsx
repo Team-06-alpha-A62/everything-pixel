@@ -108,7 +108,9 @@ const Feed = () => {
   return (
     <div className={styles['feed']}>
       <LeftSideBar />
+
       <Posts posts={updatedPosts} />
+
       <RightSideBar posts={posts} />
     </div>
   );

@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import styles from './ProfileSinglePost.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const ProfileSinglePost = ({ post }) => {
   const {
@@ -19,11 +20,22 @@ const ProfileSinglePost = ({ post }) => {
     edited,
     createdOn,
     comments,
-    upVotedBy,
-    downVotedBy,
+    votes,
   } = post;
   const navigate = useNavigate();
+  const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
 
+  useEffect(() => {
+    const updatedPostVotes = {
+      upVote: Object.values(votes || {}).filter(vote => vote === 'upVote')
+        .length,
+      downVote: Object.values(votes || {}).filter(vote => vote === 'downVote')
+        .length,
+    };
+    setPostVotes(updatedPostVotes);
+  }, [votes]);
+
+  console.log(post);
   const navigateToSinglePostDetails = () => {
     navigate(`/post/${id}`);
   };
@@ -61,11 +73,11 @@ const ProfileSinglePost = ({ post }) => {
             <FontAwesomeIcon icon={faComment} />
           </div>
           <div>
-            <span>{upVotedBy.length}</span>
+            <span>{postVotes.upVote}</span>
             <FontAwesomeIcon icon={faThumbsUp} />
           </div>
           <div>
-            <span>{downVotedBy.length}</span>
+            <span>{postVotes.downVote}</span>
             <FontAwesomeIcon icon={faThumbsDown} />
           </div>
         </div>

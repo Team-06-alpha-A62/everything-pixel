@@ -5,11 +5,7 @@
   justify-content: center;
   width: 100%;
   flex: 1;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  padding-top: 20px;
 }
 
 .lottie-animation {
@@ -17,10 +13,11 @@
 }
 
 .post-item {
-  box-shadow: $shadow-sm;
-  margin-bottom: 20px;
-  display: flex;
+  flex-shrink: 0;
+  width: 100%;
   background-color: $color-grey-0;
-  padding: 20px;
-  border-radius: $border-radius-md;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: $shadow-sm;
 }
