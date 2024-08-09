@@ -1,10 +1,36 @@
+@import '../../variables';
+
 .post-actions {
   display: flex;
   justify-content: space-between;
-}
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid $color-grey-200;
 
-.action-buttons {
-  display: flex;
-  gap: 8px;
-  cursor: pointer;
+  .action-buttons {
+    display: grid;
+    justify-content: end;
+    grid-template-columns: repeat(5, 40px);
+    gap: 40px;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: $color-grey-600;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      svg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &:hover {
+        color: $color-brand-500;
+      }
+    }
+  }
 }

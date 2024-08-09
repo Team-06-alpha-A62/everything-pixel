@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
+import Avatar from 'react-avatar'; // Import the Avatar component
+import styles from './Register.module.scss';
 
 const registerInitialData = {
   username: '',
@@ -13,10 +15,10 @@ const registerInitialData = {
 };
 
 const Register = () => {
-  //const { currentUser } = useAuth();
   const [step, setStep] = useState(1);
   const [registrationData, setRegistrationData] = useState(registerInitialData);
   const [loading, setLoading] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState(null); // State to hold the avatar preview
 
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -42,13 +44,14 @@ const Register = () => {
   };
 
   const handleFileChange = e => {
+    const file = e.target.files[0];
     setRegistrationData({
       ...registrationData,
-      avatarUrl: e.target.files[0],
+      avatarUrl: file,
     });
+    setAvatarPreview(URL.createObjectURL(file)); // Set the avatar preview
   };
 
-  //validations will be in helper functions in future
   const handleRegister = async () => {
     setLoading(true);
     try {
@@ -61,7 +64,6 @@ const Register = () => {
       ) {
         throw new Error('No credentials provided!');
       }
-      console.log(avatarUrl);
       await register(username, firstName, lastName, email, password, avatarUrl);
       navigate('/feed');
     } catch (error) {
@@ -72,112 +74,151 @@ const Register = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   return (
-    <>
-      <h1>Welcome to ∀ PXL</h1>
-      <p>Let&apos;s get to meet you</p>
-      {step === 1 && (
-        <>
-          <label htmlFor="username">Username</label>
-          <input
-            autoFocus
-            required
-            type="text"
-            value={username}
-            name="username"
-            id="username"
-            onChange={handleInputChange('username')}
-          />
-        </>
-      )}
-
-      {step === 2 && (
-        <>
-          <label htmlFor="firstName">First name</label>
-          <input
-            autoFocus
-            required
-            type="text"
-            value={firstName}
-            name="firstName"
-            id="firstName"
-            onChange={handleInputChange('firstName')}
-          />
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            required
-            type="text"
-            value={lastName}
-            name="lastName"
-            id="lastName"
-            onChange={handleInputChange('lastName')}
-          />
-        </>
-      )}
-
-      {step === 3 && (
-        <>
-          <label htmlFor="email">Email</label>
-          <input
-            autoFocus
-            required
-            type="email"
-            value={email}
-            name="email"
-            id="email"
-            onChange={handleInputChange('email')}
-          />
-        </>
-      )}
-
-      {step === 4 && (
-        <>
-          <label htmlFor="password">Password</label>
-          <input
-            autoFocus
-            required
-            type="password"
-            value={password}
-            name="password"
-            id="password"
-            onChange={handleInputChange('password')}
-          />
-        </>
-      )}
-
-      {step === 5 && (
-        <>
-          <label htmlFor="avatar">Avatar</label>
-          <input
-            type="file"
-            name="avatar"
-            id="avatar"
-            accept="image/*"
-            onChange={e => handleFileChange(e)}
-          />
-        </>
-      )}
-
-      <p>Step {step} / 5</p>
-      <div className="controllers">
-        {step === 1 ? (
-          <button onClick={() => navigate('/')}>&times; Cancel</button>
-        ) : (
-          <button onClick={handlePrevClick}>&larr; Back</button>
+    <div className={styles.register}>
+      <h1 className={styles.title}>Welcome to ∀ PXL</h1>
+      <p className={styles.subtitle}>Let&apos;s get to meet you</p>
+      <div className={styles.form}>
+        {step === 1 && (
+          <>
+            <label htmlFor="username" className={styles.label}>
+              Username
+            </label>
+            <input
+              autoFocus
+              required
+              type="text"
+              value={username}
+              name="username"
+              id="username"
+              className={styles.input}
+              onChange={handleInputChange('username')}
+            />
+          </>
         )}
-        {step === 5 ? (
-          <button onClick={handleRegister}>Register &#x2713;</button>
-        ) : (
-          <button onClick={handleNextClick}>Next &rarr;</button>
+
+        {step === 2 && (
+          <>
+            <label htmlFor="firstName" className={styles.label}>
+              First name
+            </label>
+            <input
+              autoFocus
+              required
+              type="text"
+              value={firstName}
+              name="firstName"
+              id="firstName"
+              className={styles.input}
+              onChange={handleInputChange('firstName')}
+            />
+            <label htmlFor="lastName" className={styles.label}>
+              Last Name
+            </label>
+            <input
+              required
+              type="text"
+              value={lastName}
+              name="lastName"
+              id="lastName"
+              className={styles.input}
+              onChange={handleInputChange('lastName')}
+            />
+          </>
         )}
+
+        {step === 3 && (
+          <>
+            <label htmlFor="email" className={styles.label}>
+              Email
+            </label>
+            <input
+              autoFocus
+              required
+              type="email"
+              value={email}
+              name="email"
+              id="email"
+              className={styles.input}
+              onChange={handleInputChange('email')}
+            />
+          </>
+        )}
+
+        {step === 4 && (
+          <>
+            <label htmlFor="password" className={styles.label}>
+              Password
+            </label>
+            <input
+              autoFocus
+              required
+              type="password"
+              value={password}
+              name="password"
+              id="password"
+              className={styles.input}
+              onChange={handleInputChange('password')}
+            />
+          </>
+        )}
+
+        {step === 5 && (
+          <>
+            <label htmlFor="avatar" className={styles.label}>
+              Avatar
+            </label>
+            <input
+              type="file"
+              name="avatar"
+              id="avatar"
+              accept="image/*"
+              className={styles.input}
+              onChange={handleFileChange}
+            />
+            {avatarPreview && (
+              <div className={styles.avatarPreview}>
+                <Avatar src={avatarPreview} size="100" round={true} />{' '}
+              </div>
+            )}
+          </>
+        )}
+
+        <p className={styles.step}>Step {step} / 5</p>
+        <div className={styles.controllers}>
+          {step === 1 ? (
+            <button
+              className={`${styles.button} ${styles.cancel}`}
+              onClick={() => navigate('/')}
+            >
+              &times; Cancel
+            </button>
+          ) : (
+            <button className={styles.button} onClick={handlePrevClick}>
+              &larr; Back
+            </button>
+          )}
+          {step === 5 ? (
+            <button
+              className={`${styles.button} ${styles.registerButton}`}
+              onClick={handleRegister}
+            >
+              Register &#x2713;
+            </button>
+          ) : (
+            <button className={styles.button} onClick={handleNextClick}>
+              Next &rarr;
+            </button>
+          )}
+        </div>
+        <p className={styles.loginLink}>
+          Already have an account? <Link to="/login">Login</Link> Instead
+        </p>
       </div>
-      <p>
-        Already have an account? <Link to="/login">Login</Link> Instead
-      </p>
-    </>
+    </div>
   );
 };
 
