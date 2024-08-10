@@ -10,7 +10,7 @@ const PostDetailsContent = ({ image, content }) => {
         </div>
       )}
       <div className={styles['content']}>
-        <p>{content}</p>
+        <pre>{content}</pre>
       </div>
     </div>
   );

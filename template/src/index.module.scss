@@ -81,6 +81,7 @@ button {
   cursor: pointer;
   font-family: 'Orbitron', sans-serif;
   font-size: 0.9rem;
+  font-weight: bold;
 
   &:active {
     border-radius: $border-radius-sm;

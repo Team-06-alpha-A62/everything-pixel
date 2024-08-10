@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import styles from './PostDetailsTitle.module.scss';
 
 const PostDetailsTitle = ({ title }) => {
-  return <div className={styles['title']}>{title} hiii</div>;
+  return <h1 className={styles['title']}>{title}</h1>;
 };
 
 PostDetailsTitle.propTypes = {

@@ -94,7 +94,7 @@ export const createUser = async (
   lastName,
   imageFile = '',
   role = 'user',
-  isBLocked = false
+  isBlocked = false
 ) => {
   const avatarUrl = await uploadAvatar(imageFile);
 
@@ -106,7 +106,7 @@ export const createUser = async (
     email,
     avatarUrl,
     role,
-    isBLocked,
+    isBlocked,
   };
   try {
     await set(ref(db, `users/${username}`), user);

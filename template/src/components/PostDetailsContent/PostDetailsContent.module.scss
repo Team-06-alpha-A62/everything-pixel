@@ -1,10 +1,5 @@
 .image {
   text-align: center;
-
-  img {
-    max-width: 100%;
-    border-radius: 8px;
-  }
 }
 
 .content {
@@ -12,4 +7,10 @@
   font-size: 1rem;
   color: #333;
   line-height: 1.6;
+
+  pre {
+    white-space: pre-wrap; /* Wrap the text, respecting newlines */
+    word-wrap: break-word; /* Break words that are too long to fit */
+    overflow-wrap: break-word; /* Ensure long words break to prevent overflow */
+  }
 }

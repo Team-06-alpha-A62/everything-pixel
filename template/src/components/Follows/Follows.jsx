@@ -2,11 +2,12 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { getUserByHandle } from '../../services/users.service';
 import styles from './Follows.module.scss';
-import Avatar from 'react-avatar';
+
 import { useAuth } from '../../providers/AuthProvider.jsx';
+import UserListItem from '../UserListItem/UserListItem.jsx';
 
 const Follows = ({ following, followers }) => {
-  const { currentUser } = useAuth;
+  const { currentUser } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('following');
   const [followingData, setFollowingData] = useState([]);
@@ -74,15 +75,16 @@ const Follows = ({ following, followers }) => {
           <div className={styles['loading']}>Loading...</div>
         ) : (
           activeList.map((user, index) => (
-            <div key={index} className={styles['userItem']}>
-              <Avatar
-                name={`${user.firstName} ${user.lastName}`}
-                round={true}
-                size="50"
-                src={user.avatarUrl}
-              />
-              <span>{user.username}</span>
-            </div>
+            <UserListItem key={index} user={user} />
+            // <div key={index} className={styles['userItem']}>
+            //   <Avatar
+            //     name={`${user.firstName} ${user.lastName}`}
+            //     round={true}
+            //     size="50"
+            //     src={user.avatarUrl}
+            //   />
+            //   <span>{user.username}</span>
+            // </div>
           ))
         )}
       </div>

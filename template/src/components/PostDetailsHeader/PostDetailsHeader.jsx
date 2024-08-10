@@ -11,6 +11,7 @@ import ReportMenu from '../ReportMenu/ReportMenu';
 import DeletePostConfirm from '../DeletePostConfirm/DeletePostConfirm';
 import { useAuth } from '../../providers/AuthProvider';
 import { deleteImage } from '../../services/images.service';
+import Button from '../../hoc/Button/Button.jsx';
 
 const PostDetailsHeader = ({ post }) => {
   const { currentUser } = useAuth();
@@ -55,24 +56,27 @@ const PostDetailsHeader = ({ post }) => {
 
   return (
     <div className={styles['post-actions']}>
-      <button className={styles['btn']} onClick={handleBackButtonClick}>
-        Back
-      </button>
+            <Button
+              style="secondary"
+              handleClick={handleBackButtonClick}
+            >
+             &larr; Back
+            </Button>
       <div className={styles['controls']}>
         {post.isUserPost ? (
           <>
-            <button
-              className={styles['btn']}
-              onClick={() => navigate(`/edit/${post.id}`)}
+            <Button
+              style="primary"
+              handleClick={() => navigate(`/edit/${post.id}`)}
             >
               Edit
-            </button>
-            <button
-              className={styles['btn']}
-              onClick={() => setIsDeleteModalOpen(true)}
+            </Button>
+            <Button
+              style="alert"
+              handleClick={() => setIsDeleteModalOpen(true)}
             >
               Delete
-            </button>
+            </Button>
           </>
         ) : (
           <button

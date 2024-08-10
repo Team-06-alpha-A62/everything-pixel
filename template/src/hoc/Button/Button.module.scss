@@ -35,3 +35,36 @@
     color: $color-brand-600;
   }
 }
+
+.success {
+  border-radius: $border-radius-md;
+  background-color: $color-green-700;
+  border: 2px solid $color-green-700;
+  color: $color-grey-0;
+}
+
+.alert {
+  border-radius: $border-radius-md;
+  background-color: $color-red-700;
+  border: 2px solid $color-red-700;
+  color: $color-grey-0;
+  transition: background-color 0.2s;
+
+  &:hover {
+    border-color: $color-red-800;
+    background-color: $color-red-800;
+  }
+}
+
+.alert-secondary {
+  border: 2px solid $color-red-700;
+  color: $color-red-700;
+  border-radius: $border-radius-md;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $color-grey-100;
+    border-color: $color-red-800;
+    color: $color-red-800;
+  }
+}
