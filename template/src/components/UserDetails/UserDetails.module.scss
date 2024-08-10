@@ -17,16 +17,11 @@
 
 .back-button,
 .suspend-button {
-  background-color: $color-grey-100; // White background for sidebar
-  border-right: 1px solid $color-grey-100; // Light grey border
+  background-color: $color-grey-100;
+  border-right: 1px solid $color-grey-100;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.suspend-button {
-  background-color: #ff4d4f;
-  color: $color-grey-0;
 }
 
 .stats {
@@ -36,21 +31,22 @@
 }
 
 .tabs {
-  margin-bottom: 30px;
+  display: flex;
+  margin-bottom: 10px;
+  font-family: 'Orbitron', sans-serif;
 
   .tab {
+    color: $color-grey-700;
     padding: 10px 20px;
-
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    color: #555;
     transition: color 0.3s, border-bottom 0.3s;
     border-bottom: 2px solid transparent;
-  }
 
-  .tab.active {
-    color: #007bff;
-    border-bottom-color: #007bff;
+    &.active {
+      color: $color-brand-500;
+      border-bottom-color: $color-brand-500;
+    }
   }
 }

@@ -24,6 +24,7 @@ import { getUserByHandle } from '../../services/users.service.js';
 import Users from '../../components/Users/Users.jsx';
 import ProfileHeader from '../../components/ProfileHeader/ProfileHeader.jsx';
 import UserDetails from '../../components/UserDetails/UserDetails.jsx';
+import Suspended from '../../components/Suspended/Suspended.jsx';
 
 const Profile = () => {
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
@@ -146,7 +147,7 @@ const Profile = () => {
               }
             />
             <Route path="users" element={<Users />} />
-            <Route path="suspended" element={<SavedPosts />} />
+            <Route path="suspended" element={<Suspended />} />
             <Route path="edit" element={<EditProfile user={user} />} />
             <Route path="users/user/:username" element={<UserDetails />} />
             <Route path="*" element={<NotFound />} />
