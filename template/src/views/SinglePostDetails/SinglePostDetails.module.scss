@@ -1,106 +1,18 @@
 .post-details {
-  background-color: #f0f0f0;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
   max-width: 800px;
   margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
+.headers {
+  margin-bottom: 20px;
+}
 
-  .post-actions {
-    display: flex;
-    justify-content: space-between;
-
-    .btn {
-      background-color: #ff7675;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-weight: bold;
-      color: white;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #ff5252;
-    }
-  }
-
-  .title {
-    background-color: #ff7675;
-    padding: 10px;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: white;
-    border-radius: 4px;
-  }
-
-  .tags {
-    background-color: #ff7675;
-    padding: 10px;
-    margin-bottom: 20px;
-    color: white;
-    border-radius: 4px;
-  }
-
-  .content-area {
-    display: flex;
-    margin-bottom: 20px;
-    gap: 10px; // Use gap for spacing between image and content
-
-    .image {
-      flex: 2;
-      background-color: #ff7675;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 4px;
-
-      img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 4px;
-      }
-    }
-
-    .content {
-      flex: 3;
-      background-color: #ff7675;
-      padding: 10px;
-      color: white;
-      border-radius: 4px;
-    }
-  }
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .dropdown-menu {
-    display: block;
-    position: absolute;
-    background-color: white;
-    min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 4px;
-  }
-
-  .dropdown-item {
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .dropdown-item:hover {
-    background-color: #f1f1f1;
-  }
+.content-area {
+  margin-top: 20px;
 }
