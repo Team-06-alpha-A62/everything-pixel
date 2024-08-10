@@ -1,48 +1,33 @@
 .post-actions {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  align-items: center;
+  margin-top: 20px;
 
   .btn {
-    background-color: #ff7675;
-    border: none;
     padding: 10px 20px;
+    background-color: #6200ee;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
-    color: white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: #3700b3;
+    }
 
     &.reported {
-      background-color: #999;
-    }
-    &:not(.reported):hover {
-      background-color: #ff5252;
+      background-color: #bbb;
+      cursor: not-allowed;
     }
   }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
+  .controls {
+    display: flex;
 
-  .dropdown-menu {
-    display: block;
-    position: absolute;
-    background-color: white;
-    min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 4px;
-  }
-
-  .dropdown-item {
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .dropdown-item:hover {
-    background-color: #f1f1f1;
+    .btn {
+      margin-left: 10px;
+    }
   }
 }
