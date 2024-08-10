@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../providers/AuthProvider.jsx';
 import {
+  changeUserDetails,
   followUser,
   isUserFollowed,
   unfollowUser,
@@ -13,20 +14,25 @@ import {
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const UserListItem = ({ user, handleClick }) => {
-  const [hasFollowed, setHasFollowed] = useState();
+const UserListItem = ({ user }) => {
+  const [hasFollowed, setHasFollowed] = useState(false);
   const { currentUser } = useAuth();
   const { firstName, lastName, avatarUrl, username, isBlocked } = user;
+  const [isUserBlocked, setIsUserBlocked] = useState(isBlocked);
 
   useEffect(() => {
-    const hasFollowedChecker = async () => {
-      const hasFollowedResult = await isUserFollowed(
-        currentUser.userData.username,
-        username
-      );
-      setHasFollowed(hasFollowedResult);
-    };
-    hasFollowedChecker();
+    try {
+      const hasFollowedChecker = async () => {
+        const hasFollowedResult = await isUserFollowed(
+          currentUser.userData.username,
+          username
+        );
+        setHasFollowed(hasFollowedResult);
+      };
+      hasFollowedChecker();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, [currentUser?.userData?.username, username]);
 
   const handleFollowToggle = async () => {
@@ -38,6 +44,17 @@ const UserListItem = ({ user, handleClick }) => {
       setHasFollowed(true);
     }
   };
+
+  const handleToggleUserBlock = async () => {
+    if (isUserBlocked) {
+      setIsUserBlocked(false);
+      await changeUserDetails(username, 'isBlocked', false);
+    } else {
+      setIsUserBlocked(true);
+      await changeUserDetails(username, 'isBlocked', true);
+    }
+  };
+
   return (
     <div className={styles['user-item']}>
       <div className={styles['user-info']}>
@@ -60,16 +77,16 @@ const UserListItem = ({ user, handleClick }) => {
           </Button>
         )}
 
-        {currentUser.userData?.role === 'admin' && isBlocked ? (
-          <Button style="alert-secondary" handleClick={handleClick}>
+        {currentUser.userData?.role === 'admin' && isUserBlocked ? (
+          <Button style="alert-secondary" handleClick={handleToggleUserBlock}>
             Unsuspend
           </Button>
         ) : (
-          <Button style="alert" handleClick={handleClick}>
+          <Button style="alert" handleClick={handleToggleUserBlock}>
             Suspend
           </Button>
         )}
-        <Link handleClick={handleClick} to={`/profile/users/user/${username}`}>
+        <Link to={`/profile/users/user/${username}`}>
           <FontAwesomeIcon icon={faEye} className={styles['eye-icon']} />
         </Link>
       </div>
@@ -79,7 +96,6 @@ const UserListItem = ({ user, handleClick }) => {
 
 UserListItem.propTypes = {
   user: PropTypes.object.isRequired,
-  handleClick: PropTypes.func,
 };
 
 export default UserListItem;

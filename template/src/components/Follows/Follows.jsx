@@ -76,15 +76,6 @@ const Follows = ({ following, followers }) => {
         ) : (
           activeList.map((user, index) => (
             <UserListItem key={index} user={user} />
-            // <div key={index} className={styles['userItem']}>
-            //   <Avatar
-            //     name={`${user.firstName} ${user.lastName}`}
-            //     round={true}
-            //     size="50"
-            //     src={user.avatarUrl}
-            //   />
-            //   <span>{user.username}</span>
-            // </div>
           ))
         )}
       </div>
