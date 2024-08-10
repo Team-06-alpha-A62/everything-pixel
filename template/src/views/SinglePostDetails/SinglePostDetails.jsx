@@ -204,6 +204,7 @@ const SinglePostDetails = () => {
         id={post.id}
         date={createdOn}
         votes={postVotes}
+        comments={commentsObjectsArray.length}
         userVote={userVote}
         isSaved={isSaved}
         handleSavePost={handleSavePost}

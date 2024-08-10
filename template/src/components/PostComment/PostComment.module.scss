@@ -1,67 +1,74 @@
+@import '../../variables';
+
 .comment-container {
   display: flex;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #eaeaea;
-}
+  padding: 10px 0;
+  border-bottom: 1px solid $color-grey-200;
+  .comment-avatar {
+    margin-right: 10px;
+  }
 
-.comment-avatar {
-  margin-right: 10px;
-}
+  .comment-details-container {
+    flex-grow: 1;
+    flex-direction: column;
 
-.comment-details-container {
-  flex-grow: 1;
-  flex-direction: column;
-  font-size: 14px;
-}
+    div {
+      display: flex;
+      align-items: center;
 
-.comment-content {
-  display: block;
-  flex-direction: column;
-  color: #262626;
-  line-height: 18px;
-}
+      .comment-time {
+        margin-left: 10px;
+        font-size: 0.9rem;
+        color: $color-grey-400;
+      }
+    }
+    .comment-content {
+      font-family: 'Oxygen';
+      display: block;
+      flex-direction: column;
+      color: $color-grey-700;
+    }
+  }
 
-.time-created {
-  margin-left: 10px;
-}
+  .comment-actions {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 
-.comment-time {
-  color: #8e8e8e;
-  font-size: 12px;
-  margin-top: 2px;
-}
+  .comment-controllers {
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
 
-.comment-actions {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin-left: 10px;
-  font-size: 18px;
-  color: #262626;
-}
+    .edit-comment {
+      color: $color-brand-500;
+      transition: color 0.2s ease;
 
-.edit-comment {
-  padding-left: 5px;
-  color: rgb(39, 39, 199);
-  cursor: pointer;
-}
+      &:hover {
+        color: $color-brand-700;
+      }
+    }
 
-.delete-comment {
-  display: block;
-  color: red;
-  cursor: pointer;
-}
+    .delete-comment {
+      display: block;
+      color: $color-red-700;
 
-.undo-edit-comment {
-  cursor: pointer;
-}
+      cursor: pointer;
+    }
+  }
 
-.undo-edit-comment:hover {
-  cursor: pointer;
-  color: rgb(219, 63, 28);
-}
+  .undo-edit-comment {
+    cursor: pointer;
 
-.reported-flag {
-  color: red; /* Add any additional styles for reported flag */
+    &:hover {
+      color: $color-brand-700;
+    }
+  }
+
+  .reported-flag {
+    cursor: pointer;
+    color: $color-red-700;
+  }
 }

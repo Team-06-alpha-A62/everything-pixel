@@ -16,15 +16,17 @@ const CommentActions = ({ votes, userVote, handleUserVoteChange }) => {
     <div className={styles['comment-actions']}>
       <div className={styles['action-buttons']}>
         <div onClick={() => handleUserVoteChange('upVote')}>
+          <span>{votes.upVote}</span>
           <FontAwesomeIcon
             icon={userVote === 'upVote' ? fasThumbsUp : farThumbsUp}
+            className={styles['action-icon']}
           />
-          {votes.upVote}
         </div>
         <div onClick={() => handleUserVoteChange('downVote')}>
-          {votes.downVote}
+          <span>{votes.downVote}</span>
           <FontAwesomeIcon
             icon={userVote === 'downVote' ? fasThumbsDown : farThumbsDown}
+            className={styles['action-icon']}
           />
         </div>
       </div>

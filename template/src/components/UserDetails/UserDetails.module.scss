@@ -2,51 +2,47 @@
 
 .user-details-container {
   padding: 20px;
-  background-color: #ffffff;
   border-radius: 10px;
   width: 100%;
   margin: 0 auto;
-}
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-.back-button,
-.suspend-button {
-  background-color: $color-grey-100;
-  border-right: 1px solid $color-grey-100;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  .user-header {
+    display: flex;
+    justify-content: center;
+  }
 
-.stats {
-  display: flex;
-  justify-content: space-around;
-  margin: 70px 0px;
-}
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin: 70px 0;
+  }
 
-.tabs {
-  display: flex;
-  margin-bottom: 10px;
-  font-family: 'Orbitron', sans-serif;
+  .tabs {
+    display: flex;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
 
-  .tab {
-    color: $color-grey-700;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: color 0.3s, border-bottom 0.3s;
-    border-bottom: 2px solid transparent;
+    .tab {
+      color: $color-grey-700;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: color 0.3s, border-bottom 0.3s;
+      border-bottom: 2px solid transparent;
 
-    &.active {
-      color: $color-brand-500;
-      border-bottom-color: $color-brand-500;
+      &.active {
+        color: $color-brand-500;
+        border-bottom-color: $color-brand-500;
+      }
     }
   }
 }

@@ -1,0 +1,18 @@
+@import '../../variables';
+
+.input-section {
+  padding: 10px 0;
+
+  .comment-input {
+    display: flex;
+    gap: 5px;
+    border-radius: $border-radius-md;
+    border: 2px solid $color-grey-100;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    font-family: 'Oxygen';
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+}

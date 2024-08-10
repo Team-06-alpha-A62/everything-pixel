@@ -3,9 +3,9 @@
 .post-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid $color-grey-200;
+  margin: 10px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid $color-grey-200;
 
   .time-created {
     font-size: 0.9rem;
@@ -16,16 +16,16 @@
     display: grid;
     justify-content: end;
     grid-template-columns: repeat(5, 40px);
-    gap: 40px;
+    gap: 30px;
 
     div {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 2px;
+      gap: 3px;
       color: $color-grey-600;
       cursor: pointer;
-      transition: color 0.3s ease;
+      transition: color 0.2s ease;
 
       svg {
         display: flex;

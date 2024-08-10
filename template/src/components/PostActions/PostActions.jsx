@@ -60,10 +60,10 @@ const PostActions = ({
           <FontAwesomeIcon icon={faCopy} />
         </div>
         <div onClick={() => handleUserVoteChange('upVote')}>
+          {votes.upVote}
           <FontAwesomeIcon
             icon={userVote === 'upVote' ? fasThumbsUp : farThumbsUp}
           />
-          {votes.upVote}
         </div>
         <div onClick={() => handleUserVoteChange('downVote')}>
           {votes.downVote}

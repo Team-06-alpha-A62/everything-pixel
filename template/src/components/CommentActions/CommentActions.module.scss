@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .comment-actions {
   display: flex;
   justify-content: space-between;
@@ -5,5 +7,10 @@
 
 .action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  color: $color-grey-700;
+
+  .action-icon {
+    margin-left: 3px;
+  }
 }

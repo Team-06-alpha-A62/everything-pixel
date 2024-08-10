@@ -26,7 +26,7 @@ const PostComments = ({
         setCommentToEdit={setCommentToEdit}
       />
       {comments.length === 0 ? (
-        <p>No comments</p>
+        <p>No comments yet...</p>
       ) : (
         <>
           {sortedComments.map(comment => {
@@ -49,6 +49,8 @@ const PostComments = ({
 PostComments.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object),
   onPublishComment: PropTypes.func,
+  handleEditComment: PropTypes.func,
+  handleDeleteComment: PropTypes.func
 };
 
 export default PostComments;

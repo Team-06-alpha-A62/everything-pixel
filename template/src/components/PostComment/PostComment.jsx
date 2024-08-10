@@ -144,17 +144,18 @@ const PostComment = ({
       <Avatar
         name={`${commentAuthor.firstName} ${commentAuthor.lastName}`}
         round={true}
-        size="32"
+        size="50"
         src={commentAuthor.avatarUrl}
         className={styles['comment-avatar']}
       />
       <div className={styles['comment-details-container']}>
-        <span className={styles['comment-username']}>
-          <strong>{commentAuthor.username}</strong>
-        </span>
-        {comment.edited && <span>edited</span>}
-        <span className={styles['time-created']}>{timeAgo}</span>
-        <span className={styles['comment-content']}>{comment.content}</span>
+        <div>
+          <span className={styles['comment-username']}>
+            <strong>{commentAuthor.username}</strong>
+          </span>
+          <span className={styles['comment-time']}>{timeAgo} {comment.edited && ` • Edited`}</span>
+        </div>
+        <pre className={styles['comment-content']}>{comment.content}</pre>
         <div className={styles['comment-actions']}>
           <CommentActions
             votes={commentVotes}
@@ -164,7 +165,7 @@ const PostComment = ({
         </div>
       </div>
       {comment.isUserComment ? (
-        <div>
+        <div className={styles['comment-controllers']}>
           {isEditMode ? (
             <FontAwesomeIcon
               icon={faCircleXmark}

@@ -149,9 +149,8 @@ const UserDetails = () => {
     <div className={styles['user-details-container']}>
       <div className={styles['header']}>
         <Button style="secondary" handleClick={handleBack}>
-          Back
+          &larr; Back
         </Button>
-        <ProfileHeader user={user} isLoadingAvatar={isLoadingAvatar} />
         {isUserBlocked ? (
           <Button style="alert-secondary" handleClick={handleToggleUserBlock}>
             Unsuspend
@@ -162,7 +161,9 @@ const UserDetails = () => {
           </Button>
         )}
       </div>
-
+      <div className={styles['user-header']}>
+        <ProfileHeader user={user} isLoadingAvatar={isLoadingAvatar} />
+      </div>
       <div className={styles['stats']}>
         <StatItem type="Posts" count={user.posts?.length || 0} />
         <StatItem type="Comments" count={user.comments?.length || 0} />

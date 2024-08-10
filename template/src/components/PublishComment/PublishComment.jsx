@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import styles from './PublishComment.module.scss';
+import Button from '../../hoc/Button/Button.jsx';
 
 const PublishComment = ({
   onPublishComment,
@@ -33,13 +35,29 @@ const PublishComment = ({
     }
   };
 
+  const handlePostComment = () => {
+    onPublishComment(newComment);
+    setNewComment('');
+  };
+
   return (
-    <input
-      type="text"
-      value={newComment}
-      onChange={handleNewCommentChange}
-      onKeyDown={handleKeyDown}
-    />
+    <>
+      <div className={styles['input-section']}>
+        <input
+          placeholder='Post a comment...'
+          className={styles['comment-input']}
+          type="text"
+          name="comment"
+          id="comment"
+          value={newComment}
+          onChange={handleNewCommentChange}
+          onKeyDown={handleKeyDown}
+        />
+        <Button style="primary" handleClick={handlePostComment}>
+          Post &#x2713;
+        </Button>
+      </div>
+    </>
   );
 };
 
