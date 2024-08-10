@@ -80,15 +80,12 @@ const PostDetailsHeader = ({ post }) => {
             </Button>
           </>
         ) : (
-          <button
-            className={`${styles['btn']} ${
-              hasReported ? styles['reported'] : ''
-            }`}
-            onClick={() => !hasReported && setIsReportModalOpen(true)}
-            disabled={hasReported}
+          <Button
+            style="alert"
+            handleClick={() => !hasReported && setIsReportModalOpen(true)}
           >
             {hasReported ? 'Reported' : 'Report'}
-          </button>
+          </Button>
         )}
       </div>
       <Modal

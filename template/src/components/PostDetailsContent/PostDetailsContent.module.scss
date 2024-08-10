@@ -1,5 +1,6 @@
 .image {
   text-align: center;
+  padding: 20px 0;
 }
 
 .content {
@@ -9,6 +10,7 @@
   line-height: 1.6;
 
   pre {
+    font-family: 'Oxygen';
     white-space: pre-wrap; /* Wrap the text, respecting newlines */
     word-wrap: break-word; /* Break words that are too long to fit */
     overflow-wrap: break-word; /* Ensure long words break to prevent overflow */
