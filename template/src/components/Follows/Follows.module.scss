@@ -1,36 +1,35 @@
+@import '../../variables';
+
 .follows-container {
   padding: 20px;
-  background-color: #f4f4f9;
-  border-radius: 10px;
   height: 100%;
 }
 
 .tabs {
   display: flex;
-  justify-content: center;
   margin-bottom: 10px;
+  font-family: 'Orbitron', sans-serif; // Font for headings and links;
 }
 
 .tab {
+  color: $color-grey-700;
   padding: 10px 20px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  color: #555;
   transition: color 0.3s, border-bottom 0.3s;
   border-bottom: 2px solid transparent;
 }
 
 .tab.active {
-  color: #007bff;
-  border-bottom-color: #007bff;
+  color: $color-brand-500;
+  border-bottom-color: $color-brand-500;
 }
 
 .listContainer {
   padding: 10px;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .loading {

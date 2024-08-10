@@ -56,12 +56,9 @@ const PostDetailsHeader = ({ post }) => {
 
   return (
     <div className={styles['post-actions']}>
-            <Button
-              style="secondary"
-              handleClick={handleBackButtonClick}
-            >
-             &larr; Back
-            </Button>
+      <Button style="secondary" handleClick={handleBackButtonClick}>
+        &larr; Back
+      </Button>
       <div className={styles['controls']}>
         {post.isUserPost ? (
           <>
@@ -79,15 +76,12 @@ const PostDetailsHeader = ({ post }) => {
             </Button>
           </>
         ) : (
-          <button
-            className={`${styles['btn']} ${
-              hasReported ? styles['reported'] : ''
-            }`}
-            onClick={() => !hasReported && setIsReportModalOpen(true)}
-            disabled={hasReported}
+          <Button
+            style="alert"
+            handleClick={() => !hasReported && setIsReportModalOpen(true)}
           >
             {hasReported ? 'Reported' : 'Report'}
-          </button>
+          </Button>
         )}
       </div>
       <Modal
