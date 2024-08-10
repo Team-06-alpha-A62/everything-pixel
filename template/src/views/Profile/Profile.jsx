@@ -10,6 +10,9 @@ import {
   faUserGroup,
   faBookmark,
   faGear,
+  faUsers,
+  faTableCellsRowLock,
+  faFlag,
 } from '@fortawesome/free-solid-svg-icons';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo.jsx';
 import MyPosts from '../../components/MyPosts/MyPosts.jsx';
@@ -18,8 +21,11 @@ import SavedPosts from '../../components/SavedPosts/SavedPosts.jsx';
 import Follows from '../../components/Follows/Follows.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import { getUserByHandle } from '../../services/users.service.js';
-import animationData from '../../assets/avatar-loading-animation.json';
-import Lottie from 'lottie-react';
+// import animationData from '../../assets/avatar-loading-animation.json';
+// import Lottie from 'lottie-react';
+import Users from '../../components/Users/Users.jsx';
+import ProfileHeader from '../../components/ProfileHeader/ProfileHeader.jsx';
+import UserDetails from '../../components/UserDetails/UserDetails.jsx';
 
 const Profile = () => {
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
@@ -45,32 +51,14 @@ const Profile = () => {
   }, 1000);
   return (
     <div className={`${styles['profile-container']}`}>
-      <div className={styles['profile-header']}>
-        <div className="profile-avatar">
-          {isLoadingAvatar ? (
-            <Lottie
-              animationData={animationData}
-              className={styles['lottie-animation']}
-            />
-          ) : (
-            <Avatar
-              name={`${user.firstName} ${user.lastName}`}
-              round={true}
-              size="100"
-              src={user.avatarUrl}
-            />
-          )}
-        </div>
-        <div>
-          <h1>
-            {user.firstName} {user.lastName}
-          </h1>
-          <p>{user.email}</p>
-        </div>
-      </div>
+      <ProfileHeader user={user} isLoadingAvatar={isLoadingAvatar} />
 
       <div className={styles['main-content']}>
-        <nav className={styles['profile-side-bar']}>
+        <nav
+          className={`${styles['profile-side-bar']} ${
+            currentUser.userData?.role === 'admin' ? styles['admin'] : ''
+          }`}
+        >
           <ul>
             <li>
               <NavLink
@@ -108,6 +96,37 @@ const Profile = () => {
                 Follows
               </NavLink>
             </li>
+            {currentUser.userData?.role === 'admin' && (
+              <>
+                <li>
+                  <NavLink
+                    to="/profile/users"
+                    className={({ isActive }) => (isActive ? 'active' : '')}
+                  >
+                    <FontAwesomeIcon icon={faUsers} />
+                    Users
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/profile/reports"
+                    className={({ isActive }) => (isActive ? 'active' : '')}
+                  >
+                    <FontAwesomeIcon icon={faFlag} />
+                    Reports
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/profile/suspended"
+                    className={({ isActive }) => (isActive ? 'active' : '')}
+                  >
+                    <FontAwesomeIcon icon={faTableCellsRowLock} />
+                    Suspended
+                  </NavLink>
+                </li>
+              </>
+            )}
             <li>
               <NavLink
                 to="/profile/edit"
@@ -137,7 +156,11 @@ const Profile = () => {
                 />
               }
             />
+            <Route path="users" element={<Users />} />
+            <Route path="reports" element={<SavedPosts />} />
+            <Route path="suspended" element={<SavedPosts />} />
             <Route path="edit" element={<EditProfile user={user} />} />
+            <Route path="users/user/:username" element={<UserDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

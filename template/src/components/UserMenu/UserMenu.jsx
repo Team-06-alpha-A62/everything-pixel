@@ -49,11 +49,6 @@ const UserMenu = () => {
               <FontAwesomeIcon icon={faUser} /> Profile
             </li>
           </Link>
-          {currentUser.userData?.role === 'admin' && (
-            <Link to="/profile/general">
-              <li>{/* <FontAwesomeIcon icon={} /> Admin area */}</li>
-            </Link>
-          )}
           <li onClick={handleLogout}>
             <FontAwesomeIcon icon={faArrowRightFromBracket} /> Log out
           </li>

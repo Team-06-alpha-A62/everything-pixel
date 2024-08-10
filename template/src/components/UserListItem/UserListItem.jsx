@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const UserListItem = ({ user, handleClick }) => {
-  const [hasFollowed, setHasFollowed] = useState(false);
+  const [hasFollowed, setHasFollowed] = useState();
   const { currentUser } = useAuth();
   const { firstName, lastName, avatarUrl, username, isBlocked } = user;
 
