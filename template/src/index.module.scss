@@ -81,6 +81,10 @@ button {
   cursor: pointer;
   font-family: 'Orbitron', sans-serif;
   font-size: 0.9rem;
+
+  &:active {
+    border-radius: $border-radius-sm;
+  }
 }
 
 :global {

@@ -1,0 +1,91 @@
+@import '../../variables';
+.edit-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  margin: 50px auto;
+}
+.edit-container {
+  background-color: $color-grey-0;
+  box-shadow: $shadow-sm;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  padding: 50px 100px;
+  gap: 20px;
+  border-radius: $border-radius-md;
+
+  .input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input,
+  textarea,
+  .edit-tags {
+    display: flex;
+    gap: 5px;
+    border-radius: $border-radius-md;
+    border: 2px solid $color-grey-100;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    font-family: 'Oxygen';
+    font-size: 1.05rem;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
+
+    @media (max-width: 1800px) {
+      grid-template-columns: 1fr; // Stacks the elements vertically
+      grid-template-rows: auto auto; // Optional: Adjust the height of each row
+      justify-items: center;
+      height: auto; // Allow the height to adjust based on content
+    }
+  }
+
+  .edit-textarea {
+    height: 100%;
+    overflow-y: auto;
+
+    @media (max-width: 1800px) {
+      width: 500px;
+    }
+  }
+
+  .edit-tags {
+    display: flex;
+    overflow-x: auto;
+
+    input {
+      border: none;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .tag {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: $border-radius-md;
+      background-color: $color-brand-500;
+      color: $color-grey-0;
+      box-shadow: $shadow-sm;
+
+      .delete-tag {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .controllers {
+    display: flex;
+    gap: 20px;
+  }
+}

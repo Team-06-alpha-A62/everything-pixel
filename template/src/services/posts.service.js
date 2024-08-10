@@ -91,7 +91,7 @@ export const createPost = async (
   imageFile = ''
 ) => {
   try {
-    const imageUrl = imageFile && (await uploadImage(imageFile));
+    const imageUrl = await uploadImage(imageFile);
 
     const post = {
       author,

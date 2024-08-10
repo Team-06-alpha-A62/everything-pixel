@@ -42,6 +42,7 @@ const getRandomInvaderImage = async () => {
   ];
 
   const randomIndex = Math.floor(Math.random() * invaderImages.length);
+  console.log(randomIndex);
   const selectedImage = invaderImages[randomIndex];
 
   const response = await fetch(selectedImage.path);
@@ -58,6 +59,7 @@ const getRandomInvaderImage = async () => {
  * @throws {Error} If no file is selected or the upload fails.
  */
 export const uploadImage = async file => {
+  console.log(file);
   if (!file) {
     file = await getRandomInvaderImage();
   }

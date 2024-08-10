@@ -1,9 +1,10 @@
 @import '../../variables';
 
 .profile-post {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
   align-items: space-between;
-  padding: 1rem 0;
+  padding: 5px;
   gap: 20px;
   height: 220px;
   border-bottom: 1px solid $color-grey-200;
@@ -21,7 +22,8 @@
     align-items: center;
 
     img {
-      width: 100%;
+      border-radius: $border-radius-sm;
+      width: 200px;
       height: auto;
     }
   }
@@ -51,6 +53,7 @@
     .statistics {
       display: flex;
       gap: 10px;
+      color: $color-grey-700;
 
       span {
         padding: 0 2px;
