@@ -64,10 +64,12 @@ const ProfileSinglePost = ({ post }) => {
               </div>
             ))}
         </div>
-        <span className={styles['time-created']}>
-          {edited ? `edited: ${edited}` : createdOn}
-        </span>
         <div className={styles['statistics']}>
+          <div>
+            <span className={styles['time-created']}>
+              {edited ? `edited: ${edited}` : createdOn}
+            </span>
+          </div>
           <div>
             <span>{comments.length}</span>
             <FontAwesomeIcon icon={faComment} />
