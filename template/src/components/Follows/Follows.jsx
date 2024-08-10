@@ -45,9 +45,7 @@ const Follows = ({ following, followers }) => {
       : 'No one is following you yet.';
 
   if (isLoading && currentUser?.userData) {
-    return (
-      <div className={styles['loading']}>Loading...</div>
-    )
+    return <div className={styles['loading']}>Loading...</div>;
   }
 
   return (
@@ -75,7 +73,7 @@ const Follows = ({ following, followers }) => {
           <div className={styles['loading']}>Loading...</div>
         ) : (
           activeList.map((user, index) => (
-            <UserListItem key={index} user={user} />
+            <UserListItem key={index} user={user} showSuspendToggle={false} />
           ))
         )}
       </div>

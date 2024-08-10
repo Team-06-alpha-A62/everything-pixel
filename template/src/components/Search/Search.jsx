@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import styles from './Search.module.scss';
 
-function Search() {
+function Search({ width = '80%' }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') ?? '';
 
@@ -12,7 +12,13 @@ function Search() {
 
   return (
     <div className={styles['search-container']}>
-      <input type="text" value={search} onChange={handleSearchQueryChange} placeholder='Search...'/>
+      <input
+        style={{ width }}
+        type="text"
+        value={search}
+        onChange={handleSearchQueryChange}
+        placeholder="Search..."
+      />
     </div>
   );
 }

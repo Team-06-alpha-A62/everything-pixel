@@ -106,24 +106,38 @@ const UserDetails = () => {
 
   const renderContent = () => {
     if (selectedTab === 'posts') {
-      return posts.map((post, index) => (
-        <ProfileSinglePost key={index} post={post} />
-      ));
+      if (posts.length > 0) {
+        return posts.map((post, index) => (
+          <ProfileSinglePost key={index} post={post} />
+        ));
+      } else {
+        return <p>No posts available.</p>;
+      }
     } else if (selectedTab === 'comments') {
-      return comments.map((comment, index) => (
-        <CommentListItem key={index} comment={comment} />
-      ));
+      if (comments.length > 0) {
+        return comments.map((comment, index) => (
+          <CommentListItem key={index} comment={comment} />
+        ));
+      } else {
+        return <p>No comments available.</p>;
+      }
     } else if (selectedTab === 'reports') {
-      return (
-        <>
-          {postReports.map((report, index) => (
-            <ReportListItem key={index} report={report} type="post" />
-          ))}
-          {commentReports.map((report, index) => (
-            <ReportListItem key={index} report={report} type="comment" />
-          ))}
-        </>
-      );
+      if (postReports.length > 0 || commentReports.length > 0) {
+        return (
+          <>
+            {postReports.length > 0 &&
+              postReports.map((report, index) => (
+                <ReportListItem key={index} report={report} type="post" />
+              ))}
+            {commentReports.length > 0 &&
+              commentReports.map((report, index) => (
+                <ReportListItem key={index} report={report} type="comment" />
+              ))}
+          </>
+        );
+      } else {
+        return <p>No reports available.</p>;
+      }
     }
   };
 

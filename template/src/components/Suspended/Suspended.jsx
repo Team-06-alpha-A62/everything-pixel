@@ -45,7 +45,13 @@ const Suspended = () => {
       ) : (
         <div className={styles['userList']}>
           {users.length > 0 ? (
-            users.map(user => <UserListItem key={user.uid} user={user} />)
+            users.map(user => (
+              <UserListItem
+                key={user.uid}
+                user={user}
+                showFollowToggle={false}
+              />
+            ))
           ) : (
             <p>No users found</p>
           )}

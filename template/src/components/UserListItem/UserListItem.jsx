@@ -14,8 +14,13 @@ import {
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const UserListItem = ({ user }) => {
+const UserListItem = ({
+  user,
+  showFollowToggle = true,
+  showSuspendToggle = true,
+}) => {
   const [hasFollowed, setHasFollowed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useAuth();
   const { firstName, lastName, avatarUrl, username, isBlocked } = user;
   const [isUserBlocked, setIsUserBlocked] = useState(isBlocked);
@@ -32,26 +37,36 @@ const UserListItem = ({ user }) => {
       hasFollowedChecker();
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setTimeout(() => setIsLoading(false), 50);
     }
   }, [currentUser?.userData?.username, username]);
 
   const handleFollowToggle = async () => {
-    if (hasFollowed) {
-      await unfollowUser(currentUser.userData.username, username);
-      setHasFollowed(false);
-    } else {
-      await followUser(currentUser.userData.username, username);
-      setHasFollowed(true);
+    try {
+      if (hasFollowed) {
+        await unfollowUser(currentUser.userData.username, username);
+        setHasFollowed(false);
+      } else {
+        await followUser(currentUser.userData.username, username);
+        setHasFollowed(true);
+      }
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
   const handleToggleUserBlock = async () => {
-    if (isUserBlocked) {
-      setIsUserBlocked(false);
-      await changeUserDetails(username, 'isBlocked', false);
-    } else {
-      setIsUserBlocked(true);
-      await changeUserDetails(username, 'isBlocked', true);
+    try {
+      if (isUserBlocked) {
+        setIsUserBlocked(false);
+        await changeUserDetails(username, 'isBlocked', false);
+      } else {
+        setIsUserBlocked(true);
+        await changeUserDetails(username, 'isBlocked', true);
+      }
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
@@ -67,24 +82,40 @@ const UserListItem = ({ user }) => {
         <span>{username}</span>
       </div>
       <div className={styles['user-controllers']}>
-        {hasFollowed ? (
-          <Button style="secondary" handleClick={handleFollowToggle}>
-            Unfollow
-          </Button>
+        {isLoading ? (
+          <span></span>
         ) : (
-          <Button style="primary" handleClick={handleFollowToggle}>
-            Follow
-          </Button>
-        )}
-
-        {currentUser.userData?.role === 'admin' && isUserBlocked ? (
-          <Button style="alert-secondary" handleClick={handleToggleUserBlock}>
-            Unsuspend
-          </Button>
-        ) : (
-          <Button style="alert" handleClick={handleToggleUserBlock}>
-            Suspend
-          </Button>
+          <>
+            {showFollowToggle && (
+              <>
+                {hasFollowed ? (
+                  <Button style="secondary" handleClick={handleFollowToggle}>
+                    Unfollow
+                  </Button>
+                ) : (
+                  <Button style="primary" handleClick={handleFollowToggle}>
+                    Follow
+                  </Button>
+                )}
+              </>
+            )}
+            {showSuspendToggle && (
+              <>
+                {currentUser.userData?.role === 'admin' && isUserBlocked ? (
+                  <Button
+                    style="alert-secondary"
+                    handleClick={handleToggleUserBlock}
+                  >
+                    Unsuspend
+                  </Button>
+                ) : (
+                  <Button style="alert" handleClick={handleToggleUserBlock}>
+                    Suspend
+                  </Button>
+                )}
+              </>
+            )}
+          </>
         )}
         <Link to={`/profile/users/user/${username}`}>
           <FontAwesomeIcon icon={faEye} className={styles['eye-icon']} />
@@ -96,6 +127,8 @@ const UserListItem = ({ user }) => {
 
 UserListItem.propTypes = {
   user: PropTypes.object.isRequired,
+  showFollowToggle: PropTypes.bool,
+  showSuspendToggle: PropTypes.bool,
 };
 
 export default UserListItem;

@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import styles from './Users.module.scss';
 import { getAllUsers } from '../../services/users.service';
 import UserListItem from '../UserListItem/UserListItem';
+import { useAuth } from '../../providers/AuthProvider';
 
 const Users = () => {
+  const { currentUser } = useAuth();
   const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
@@ -29,20 +31,27 @@ const Users = () => {
             posts: Object.values(user.reports?.posts ?? {}),
           },
         }));
-        setUsers(transformedUsers);
+        const filteredUsers = transformedUsers.filter(user => {
+          if (
+            user.role !== 'amdin' &&
+            user.username !== currentUser?.userData?.username
+          ) {
+            return user;
+          }
+        });
+        setUsers(filteredUsers);
       } catch (error) {
         console.error('Error fetching users:', error.message);
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchUsers();
-  }, [searchQuery]);
+  }, [searchQuery, currentUser?.userData?.username]);
 
   return (
     <div>
-      <Search />
+      <Search width="50%" />
       {isLoading ? (
         <p>Loading...</p>
       ) : (

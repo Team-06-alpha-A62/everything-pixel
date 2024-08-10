@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Search from '../Search/Search';
 import ToggleTheme from '../ToggleTheme/ToggleTheme';
@@ -9,10 +9,11 @@ import { useEffect, useState, useRef } from 'react';
 
 const Navigation = () => {
   const { currentUser } = useAuth();
-  const user = currentUser?.user; // Handle cases where currentUser might be null or undefined
+  const user = currentUser?.user;
 
   const [isScrolling, setIsScrolling] = useState(false);
   const navRef = useRef(null);
+  const location = useLocation();
 
   const handleScrolling = () => {
     setIsScrolling(window.scrollY > 0);
@@ -36,7 +37,7 @@ const Navigation = () => {
         {user ? (
           <>
             <div className={styles['center-section']}>
-              <Search />
+              {location.pathname === '/feed' && <Search />}
             </div>
             <div className={styles['right-section']}>
               <NavLink to="/feed">Feed</NavLink>

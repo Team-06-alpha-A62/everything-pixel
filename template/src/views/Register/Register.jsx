@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
 import Avatar from 'react-avatar'; // Import the Avatar component
 import styles from './Register.module.scss';
+import Button from '../../hoc/Button/Button';
 
 const registerInitialData = {
   username: '',
@@ -190,28 +191,22 @@ const Register = () => {
         <p className={styles.step}>Step {step} / 5</p>
         <div className={styles.controllers}>
           {step === 1 ? (
-            <button
-              className={`${styles.button} ${styles.cancel}`}
-              onClick={() => navigate('/')}
-            >
+            <Button style="secondary" handleClick={() => navigate('/')}>
               &times; Cancel
-            </button>
+            </Button>
           ) : (
-            <button className={styles.button} onClick={handlePrevClick}>
+            <Button style="secondary" handleClick={handlePrevClick}>
               &larr; Back
-            </button>
+            </Button>
           )}
           {step === 5 ? (
-            <button
-              className={`${styles.button} ${styles.registerButton}`}
-              onClick={handleRegister}
-            >
+            <Button style="success" handleClick={handleRegister}>
               Register &#x2713;
-            </button>
+            </Button>
           ) : (
-            <button className={styles.button} onClick={handleNextClick}>
+            <Button style="secondary" handleClick={handleNextClick}>
               Next &rarr;
-            </button>
+            </Button>
           )}
         </div>
         <p className={styles.loginLink}>
