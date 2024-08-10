@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .user-details-container {
   padding: 20px;
   background-color: #ffffff;
@@ -15,8 +17,8 @@
 
 .back-button,
 .suspend-button {
-  background-color: #ffffff;
-  border: 1px solid #ccc;
+  background-color: $color-grey-100; // White background for sidebar
+  border-right: 1px solid $color-grey-100; // Light grey border
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
@@ -24,7 +26,7 @@
 
 .suspend-button {
   background-color: #ff4d4f;
-  color: #fff;
+  color: $color-grey-0;
 }
 
 .stats {
@@ -34,20 +36,21 @@
 }
 
 .tabs {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 
   .tab {
-    background-color: #ffffff;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    transition: color 0.3s, border-bottom 0.3s;
+    border-bottom: 2px solid transparent;
   }
 
-  .tab:hover {
-    background-color: #f1f1f1;
+  .tab.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
   }
 }

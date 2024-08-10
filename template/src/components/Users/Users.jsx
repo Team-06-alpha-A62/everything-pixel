@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
 import Search from '../Search/Search';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from './Users.module.scss';
-import Avatar from 'react-avatar';
 import { getAllUsers } from '../../services/users.service';
 import UserListItem from '../UserListItem/UserListItem';
 
@@ -12,7 +10,6 @@ const Users = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const searchQuery = searchParams.get('search') || '';
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,7 +29,6 @@ const Users = () => {
             posts: Object.values(user.reports?.posts ?? {}),
           },
         }));
-        console.log(transformedUsers);
         setUsers(transformedUsers);
       } catch (error) {
         console.error('Error fetching users:', error.message);
@@ -43,10 +39,6 @@ const Users = () => {
 
     fetchUsers();
   }, [searchQuery]);
-
-  const handleUserClick = username => {
-    navigate(`user/${username}`);
-  };
 
   return (
     <div>

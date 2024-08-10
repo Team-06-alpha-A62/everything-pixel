@@ -133,7 +133,11 @@ const SinglePostDetails = () => {
 
   const handleEditComment = async (commentId, commentNewContent) => {
     try {
-      await editCommentContent(commentId, commentNewContent);
+      await editCommentContent(
+        commentId,
+        commentNewContent,
+        currentUser.userData.username
+      );
       const editedCommentsObjectsArray = commentsObjectsArray.map(comment => {
         if (comment.id === commentId) {
           return { ...comment, content: commentNewContent, edited: Date.now() };

@@ -16,12 +16,12 @@ export const getAllReports = async () => {
     if (!snapshot.exists()) return [];
 
     const reports = snapshot.val();
-    const postReportsArray = Object.entries(reports.postReports || {}).map(
+    const postReportsArray = Object.entries(reports.post || {}).map(
       ([id, type]) => ({ id, type })
     );
-    const commentReportsArray = Object.entries(
-      reports.commentReports || {}
-    ).map(([id, type]) => ({ id, type }));
+    const commentReportsArray = Object.entries(reports.comment | {}).map(
+      ([id, type]) => ({ id, type })
+    );
 
     return [postReportsArray, commentReportsArray];
   } catch (error) {

@@ -21,7 +21,11 @@ const PostDetailsHeader = ({ post }) => {
   const [hasReported, setHasReported] = useState(false);
 
   useEffect(() => {
-    if (post.reports && post.reports.includes(currentUser.userData.username)) {
+    console.log(post.reports);
+    if (
+      post.reports &&
+      Object.keys(post.reports).includes(currentUser.userData.username)
+    ) {
       setHasReported(true);
     }
   }, [post, currentUser?.userData?.username]);
@@ -56,12 +60,9 @@ const PostDetailsHeader = ({ post }) => {
 
   return (
     <div className={styles['post-actions']}>
-            <Button
-              style="secondary"
-              handleClick={handleBackButtonClick}
-            >
-             &larr; Back
-            </Button>
+      <Button style="secondary" handleClick={handleBackButtonClick}>
+        &larr; Back
+      </Button>
       <div className={styles['controls']}>
         {post.isUserPost ? (
           <>

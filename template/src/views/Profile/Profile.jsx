@@ -1,6 +1,5 @@
 import styles from './Profile.module.scss';
 import { useAuth } from '../../providers/AuthProvider.jsx';
-import Avatar from 'react-avatar';
 import { useEffect, useState } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +11,6 @@ import {
   faGear,
   faUsers,
   faTableCellsRowLock,
-  faFlag,
 } from '@fortawesome/free-solid-svg-icons';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo.jsx';
 import MyPosts from '../../components/MyPosts/MyPosts.jsx';
@@ -109,15 +107,6 @@ const Profile = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/profile/reports"
-                    className={({ isActive }) => (isActive ? 'active' : '')}
-                  >
-                    <FontAwesomeIcon icon={faFlag} />
-                    Reports
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
                     to="/profile/suspended"
                     className={({ isActive }) => (isActive ? 'active' : '')}
                   >
@@ -157,7 +146,6 @@ const Profile = () => {
               }
             />
             <Route path="users" element={<Users />} />
-            <Route path="reports" element={<SavedPosts />} />
             <Route path="suspended" element={<SavedPosts />} />
             <Route path="edit" element={<EditProfile user={user} />} />
             <Route path="users/user/:username" element={<UserDetails />} />

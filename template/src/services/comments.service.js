@@ -81,6 +81,7 @@ export const createComment = async (
     await update(ref(db), {
       [`comments/${commentId}/id`]: commentId,
       [`posts/${postId}/comments/${commentId}`]: true,
+      [`users/${author}/comments/${commentId}`]: content,
     });
     return result;
   } catch (error) {
@@ -96,11 +97,12 @@ export const createComment = async (
  * @returns {Promise<void>} A promise that resolves when the comment is updated.
  * @throws {Error} If there is an error updating the comment content.
  */
-export const editCommentContent = async (commentId, newContent) => {
+export const editCommentContent = async (commentId, newContent, userHandle) => {
   try {
     const updateObject = {
       [`comments/${commentId}/content`]: newContent,
       [`comments/${commentId}/edited`]: Date.now(),
+      [`users/${userHandle}/comments/${commentId}`]: newContent,
     };
 
     await update(ref(db), updateObject);

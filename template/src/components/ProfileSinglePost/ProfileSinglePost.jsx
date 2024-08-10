@@ -35,7 +35,6 @@ const ProfileSinglePost = ({ post }) => {
     setPostVotes(updatedPostVotes);
   }, [votes]);
 
-  console.log(post);
   const navigateToSinglePostDetails = () => {
     navigate(`/post/${id}`);
   };

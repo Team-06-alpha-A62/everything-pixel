@@ -65,7 +65,6 @@ export const getPostByHandle = async handle => {
             addSuffix: true,
           })
         : null,
-      reports: postData.reports ? Object.keys(postData.reports) : 'empty',
     };
   } catch (error) {
     throw new Error(`Error fetching post: ${error.message}`);

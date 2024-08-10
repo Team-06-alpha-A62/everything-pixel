@@ -218,7 +218,7 @@ export const userVoteInteractionWithComment = async (
 ) => {
   try {
     const updateObject = {
-      [`users/${userHandle}/comments/${commentId}`]: type,
+      [`users/${userHandle}/votes/${commentId}`]: type,
       [`comments/${commentId}/votes/${userHandle}`]: type,
     };
 
