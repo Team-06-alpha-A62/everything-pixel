@@ -8,7 +8,7 @@
     font-weight: bold;
 
     &.info-heading {
-      border-bottom: 1px solid $color-grey-50; // Subtle border for separation
+      border-bottom: 2px solid $color-grey-100; // Subtle border for separation
       padding-bottom: 10px; // Space between text and border
       margin-bottom: 20px; // Margin to separate from next section
     }
@@ -22,9 +22,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       padding: 20px;
-      background-color: $color-grey-50; // Light background for each info block
       border-radius: 8px; // Rounded corners for each info block
-      box-shadow: $shadow-sm;
       // Subtle shadow for each info block
       h3 {
         margin: 0;

@@ -1,0 +1,61 @@
+@import '../../variables';
+
+.profile-info-container {
+  max-width: 1000px; // Set a max width to keep the content from stretching too wide
+  margin: 0 auto; // Center the container
+  padding: 20px; // Add padding around the container
+
+  .edit-profile-controllers {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h2 {
+    font-weight: bold;
+
+    &.info-heading {
+      border-bottom: 2px solid $color-grey-100; // Subtle border for separation
+      padding-bottom: 10px; // Space between text and border
+      margin-bottom: 20px; // Margin to separate from next section
+    }
+  }
+
+  input,
+  textarea {
+    display: flex;
+    gap: 5px;
+    border-radius: $border-radius-md;
+    border: 2px solid $color-grey-200;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    font-family: 'Oxygen';
+    font-size: 1.05rem;
+  }
+
+  textarea {
+    height: 200px;
+  }
+
+  .info-grid {
+    display: grid;
+    gap: 20px; // Gap between grid items
+
+    .input-section {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      padding: 20px;
+      border-radius: 8px; // Rounded corners for each info block
+      // Subtle shadow for each info block
+      h3 {
+        margin: 0;
+        font-size: 1.125rem;
+      }
+
+      p {
+        margin: 5px 0 0;
+      }
+    }
+  }
+}

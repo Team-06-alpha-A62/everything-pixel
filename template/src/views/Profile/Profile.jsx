@@ -19,8 +19,6 @@ import SavedPosts from '../../components/SavedPosts/SavedPosts.jsx';
 import Follows from '../../components/Follows/Follows.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import { getUserByHandle } from '../../services/users.service.js';
-// import animationData from '../../assets/avatar-loading-animation.json';
-// import Lottie from 'lottie-react';
 import Users from '../../components/Users/Users.jsx';
 import ProfileHeader from '../../components/ProfileHeader/ProfileHeader.jsx';
 import UserDetails from '../../components/UserDetails/UserDetails.jsx';
@@ -28,28 +26,35 @@ import Suspended from '../../components/Suspended/Suspended.jsx';
 
 const Profile = () => {
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    try {
-      const fetchUser = async () => {
-        const user = await getUserByHandle(currentUser.userData?.username);
-        setUser({
-          ...user,
-        });
-      };
-      fetchUser();
-    } catch (error) {
-      console.log(error.message);
-    }
+    const fetchUser = async () => {
+      try {
+        const userData = await getUserByHandle(currentUser.userData?.username);
+        setUser(userData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchUser();
+
+    setTimeout(() => {
+      setIsLoadingAvatar(false);
+    }, 1000);
   }, [currentUser.userData]);
 
-  setTimeout(() => {
-    setIsLoadingAvatar(false);
-  }, 1000);
+  const handleUserUpdate = (updatedUserData) => {
+    setUser(updatedUserData);
+  };
+
+  if (!user) {
+    return <div>Loading...</div>; // or a more sophisticated loading component
+  }
+
   return (
-    <div className={`${styles['profile-container']}`}>
+    <div className={styles['profile-container']}>
       <ProfileHeader user={user} isLoadingAvatar={isLoadingAvatar} />
 
       <div className={styles['main-content']}>
@@ -148,7 +153,10 @@ const Profile = () => {
             />
             <Route path="users" element={<Users />} />
             <Route path="suspended" element={<Suspended />} />
-            <Route path="edit" element={<EditProfile user={user} />} />
+            <Route
+              path="edit"
+              element={<EditProfile user={user} onUserUpdate={handleUserUpdate} />}
+            />
             <Route path="users/user/:username" element={<UserDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

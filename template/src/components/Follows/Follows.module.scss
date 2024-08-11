@@ -3,57 +3,57 @@
 .follows-container {
   padding: 20px;
   height: 100%;
-}
 
-.tabs {
-  display: flex;
-  margin-bottom: 10px;
-  font-family: 'Orbitron', sans-serif; // Font for headings and links;
-}
+  .tabs {
+    display: flex;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif; // Font for headings and links;
 
-.tab {
-  color: $color-grey-700;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: color 0.3s, border-bottom 0.3s;
-  border-bottom: 2px solid transparent;
-}
+    .tab {
+      color: $color-grey-700;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: color 0.3s, border-bottom 0.3s;
+      border-bottom: 2px solid transparent;
 
-.tab.active {
-  color: $color-brand-500;
-  border-bottom-color: $color-brand-500;
-}
+      &.active {
+        color: $color-brand-500;
+        border-bottom-color: $color-brand-500;
+      }
+    }
+  }
 
-.listContainer {
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-}
+  .listContainer {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
 
-.loading {
-  text-align: center;
-  color: #333;
-}
+  .loading {
+    text-align: center;
+    color: #333;
+  }
 
-.userItem {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 14px;
-  color: #333;
-}
+  .userItem {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #333;
 
-.userItem:last-child {
-  border-bottom: none;
-}
+    &:last-child {
+      border-bottom: none;
+    }
 
-.avatar {
-  margin-right: 10px;
-}
+    .avatar {
+      margin-right: 10px;
+    }
 
-.username {
-  font-weight: bold;
+    .username {
+      font-weight: bold;
+    }
+  }
 }

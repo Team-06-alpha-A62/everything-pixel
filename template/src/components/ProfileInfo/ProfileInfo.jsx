@@ -1,7 +1,16 @@
 import PropTypes from 'prop-types';
 import styles from './ProfileInfo.module.scss';
+import { useEffect, useState } from 'react';
 
 const ProfileInfo = ({ user }) => {
+  const [userInfo, setUserInfo] = useState({
+    ...user,
+  });
+
+  useEffect(() => {
+    setUserInfo({ ...user });
+  }, [user]);
+
   return (
     <div className={styles['profile-info-container']}>
       <div className={styles['info-grid']}>
