@@ -11,6 +11,7 @@ import Publish from './views/Publish/Publish.jsx';
 import SinglePostDetails from './views/SinglePostDetails/SinglePostDetails.jsx';
 import EditPost from './views/EditPost/EditPost.jsx';
 import Profile from './views/Profile/Profile.jsx';
+import Authenticated from './hoc/Authenticated/Authenticated.jsx';
 
 function AppContent() {
   const { isLoading } = useAuth();
@@ -26,11 +27,48 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/feed" element={<Feed />} />
-        <Route path="/publish" element={<Publish />} />
-        <Route path="/profile/*" element={<Profile />} />
-        <Route path="/post/:id" element={<SinglePostDetails />} />
-        <Route path="/edit/:id" element={<EditPost />} />
+
+        {/* Routes that require authentication */}
+        <Route
+          path="/feed"
+          element={
+            <Authenticated>
+              <Feed />
+            </Authenticated>
+          }
+        />
+        <Route
+          path="/publish"
+          element={
+            <Authenticated>
+              <Publish />
+            </Authenticated>
+          }
+        />
+        <Route
+          path="/profile/*"
+          element={
+            <Authenticated>
+              <Profile />
+            </Authenticated>
+          }
+        />
+        <Route
+          path="/post/:id"
+          element={
+            <Authenticated>
+              <SinglePostDetails />
+            </Authenticated>
+          }
+        />
+        <Route
+          path="/edit/:id"
+          element={
+            <Authenticated>
+              <EditPost />
+            </Authenticated>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

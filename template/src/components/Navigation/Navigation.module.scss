@@ -4,15 +4,23 @@
   position: fixed;
   left: 50%;
   top: 0;
+  transform: translateX(-50%) translateY(0); /* Start with no vertical movement */
   width: 100%;
-  transform: translate(-50%);
-  transition: background-color 0.3s ease-in-out;
   display: flex;
   justify-content: center;
   z-index: 1000;
   height: 100px;
-  background-color: $color-grey-0; // Optional: Background color to ensure it looks good on all backgrounds
-  box-shadow: $shadow-sm; // Subtle shadow for sidebar
+  background-color: $color-grey-0;
+  box-shadow: $shadow-sm;
+  transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out,
+    background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
+
+  &.scrolling {
+    height: 70px;
+    background-color: $color-grey-100;
+    box-shadow: $shadow-sm;
+    transform: translateX(-50%) translateY(0); /* Ensure it stays centered when scrolling */
+  }
 
   .nav {
     width: 80%;

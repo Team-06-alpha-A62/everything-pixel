@@ -21,7 +21,6 @@ const TrendingTagsMenu = ({ size }) => {
       }
     };
     fetchTags();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getTrendingTags = tags => {
     const sortedTags = [...tags].sort(

@@ -10,20 +10,28 @@ import { useEffect, useState, useRef } from 'react';
 const Navigation = () => {
   const { currentUser } = useAuth();
   const user = currentUser?.user;
+  const location = useLocation();
 
   const [isScrolling, setIsScrolling] = useState(false);
   const navRef = useRef(null);
-  const location = useLocation();
 
   const handleScrolling = () => {
-    setIsScrolling(window.scrollY > 0);
+    if (location.pathname === '/') {
+      setIsScrolling(window.scrollY > 50);
+    } else {
+      setIsScrolling(true);
+    }
   };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScrolling);
-
+    setIsScrolling(false);
     return () => window.removeEventListener('scroll', handleScrolling);
-  }, []);
+  }, [location.pathname]);
+
+  if (location.pathname === '/' && !isScrolling) {
+    return null;
+  }
 
   return (
     <div
