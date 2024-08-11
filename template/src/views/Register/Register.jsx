@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
-import Avatar from 'react-avatar'; // Import the Avatar component
+import Avatar from 'react-avatar';
 import styles from './Register.module.scss';
 import Button from '../../hoc/Button/Button';
 
@@ -19,7 +19,8 @@ const Register = () => {
   const [step, setStep] = useState(1);
   const [registrationData, setRegistrationData] = useState(registerInitialData);
   const [loading, setLoading] = useState(false);
-  const [avatarPreview, setAvatarPreview] = useState(null); // State to hold the avatar preview
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -33,14 +34,47 @@ const Register = () => {
   };
 
   const handleNextClick = () => {
+    if (step === 1 && !username) {
+      setErrors({ username: 'Username is required' });
+      return;
+    }
+    if (step === 2) {
+      const newErrors = {};
+      if (!firstName || firstName.length < 4 || firstName.length > 32) {
+        newErrors.firstName = 'First name must be between 4 and 32 characters';
+      }
+      if (!lastName || lastName.length < 4 || lastName.length > 32) {
+        newErrors.lastName = 'Last name must be between 4 and 32 characters';
+      }
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+    }
+    if (step === 3 && !email) {
+      setErrors({ email: 'Email is required' });
+      return;
+    }
+    if (step === 4 && !password) {
+      setErrors({ password: 'Password is required' });
+      return;
+    }
+    setErrors({});
     if (step === 5) return;
     setStep(s => s + 1);
   };
 
   const handleInputChange = key => e => {
+    const value = e.target.value;
+
     setRegistrationData({
       ...registrationData,
-      [key]: e.target.value,
+      [key]: value,
+    });
+
+    setErrors({
+      ...errors,
+      [key]: '',
     });
   };
 
@@ -50,7 +84,7 @@ const Register = () => {
       ...registrationData,
       avatarUrl: file,
     });
-    setAvatarPreview(URL.createObjectURL(file)); // Set the avatar preview
+    setAvatarPreview(URL.createObjectURL(file));
   };
 
   const handleRegister = async () => {
@@ -63,12 +97,24 @@ const Register = () => {
         !registrationData.firstName ||
         !registrationData.lastName
       ) {
-        throw new Error('No credentials provided!');
+        throw new Error('All fields are required!');
       }
+
+      if (
+        registrationData.firstName.length < 4 ||
+        registrationData.firstName.length > 32 ||
+        registrationData.lastName.length < 4 ||
+        registrationData.lastName.length > 32
+      ) {
+        throw new Error(
+          'First name and last name must be between 4 and 32 characters!'
+        );
+      }
+
       await register(username, firstName, lastName, email, password, avatarUrl);
       navigate('/feed');
     } catch (error) {
-      alert(`registration error ${error.message}`);
+      alert(`Registration error: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -98,6 +144,9 @@ const Register = () => {
               className={styles.input}
               onChange={handleInputChange('username')}
             />
+            {errors.username && (
+              <p className={styles['error-text']}>{errors.username}</p>
+            )}
           </>
         )}
 
@@ -114,8 +163,13 @@ const Register = () => {
               name="firstName"
               id="firstName"
               className={styles.input}
+              minLength="4"
+              maxLength="32"
               onChange={handleInputChange('firstName')}
             />
+            {errors.firstName && (
+              <p className={styles['error-text']}>{errors.firstName}</p>
+            )}
             <label htmlFor="lastName" className={styles.label}>
               Last Name
             </label>
@@ -126,8 +180,13 @@ const Register = () => {
               name="lastName"
               id="lastName"
               className={styles.input}
+              minLength="4"
+              maxLength="32"
               onChange={handleInputChange('lastName')}
             />
+            {errors.lastName && (
+              <p className={styles['error-text']}>{errors.lastName}</p>
+            )}
           </>
         )}
 
@@ -146,6 +205,9 @@ const Register = () => {
               className={styles.input}
               onChange={handleInputChange('email')}
             />
+            {errors.email && (
+              <p className={styles['error-text']}>{errors.email}</p>
+            )}
           </>
         )}
 
@@ -164,6 +226,9 @@ const Register = () => {
               className={styles.input}
               onChange={handleInputChange('password')}
             />
+            {errors.password && (
+              <p className={styles['error-text']}>{errors.password}</p>
+            )}
           </>
         )}
 

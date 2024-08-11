@@ -36,6 +36,9 @@ const PublishComment = ({
   };
 
   const handlePostComment = () => {
+    if (commentToEdit.id) {
+      onEditComment(commentToEdit.id, newComment);
+    }
     onPublishComment(newComment);
     setNewComment('');
   };
@@ -44,7 +47,7 @@ const PublishComment = ({
     <>
       <div className={styles['input-section']}>
         <input
-          placeholder='Post a comment...'
+          placeholder="Post a comment..."
           className={styles['comment-input']}
           type="text"
           name="comment"
@@ -54,7 +57,7 @@ const PublishComment = ({
           onKeyDown={handleKeyDown}
         />
         <Button style="primary" handleClick={handlePostComment}>
-          Post &#x2713;
+          {commentToEdit.id ? 'Edit' : 'Post'} &#x2713;
         </Button>
       </div>
     </>

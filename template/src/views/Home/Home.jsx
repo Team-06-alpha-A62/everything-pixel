@@ -29,11 +29,9 @@ const Home = () => {
 
     fetchPosts();
 
-    // This sets padding top to 0 on the body to remove the initial offset
     document.body.style.paddingTop = '0';
 
     return () => {
-      // Restore the padding top when the component unmounts
       document.body.style.paddingTop = '100px';
     };
   }, []);

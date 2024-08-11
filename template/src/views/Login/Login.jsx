@@ -13,6 +13,7 @@ const Login = () => {
   };
 
   const [loginData, setLoginData] = useState(initialLoginData);
+  const [errors, setErrors] = useState({});
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -25,18 +26,35 @@ const Login = () => {
       ...loginData,
       [key]: e.target.value,
     });
+
+    // Clear errors as user types
+    setErrors({
+      ...errors,
+      [key]: '',
+    });
   };
 
   const handleLogin = async () => {
-    try {
-      if (!loginData.email || !loginData.password) {
-        throw new Error('No credentials provided!');
-      }
+    const newErrors = {};
 
+    if (!loginData.email) {
+      newErrors.email = 'Email is required';
+    }
+
+    if (!loginData.password) {
+      newErrors.password = 'Password is required';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    try {
       await login(loginData.email, loginData.password);
       navigate('/feed');
     } catch (error) {
-      alert(`login error: ${error.message}`);
+      alert(`Login error: ${error.message}`);
     }
   };
 
@@ -55,6 +73,7 @@ const Login = () => {
           value={loginData.email}
           onChange={handleInputChange('email')}
         />
+        {errors.email && <p className={styles['error-text']}>{errors.email}</p>}
         <label htmlFor="password" className={styles['login-label']}>
           Password
         </label>
@@ -66,6 +85,9 @@ const Login = () => {
           value={loginData.password}
           onChange={handleInputChange('password')}
         />
+        {errors.password && (
+          <p className={styles['error-text']}>{errors.password}</p>
+        )}
         <div className={styles['button-container']}>
           <Button style="secondary" handleClick={() => navigate('/')}>
             &times; Cancel
