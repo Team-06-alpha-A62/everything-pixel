@@ -6,10 +6,14 @@ import 'react-phone-number-input/style.css';
 import { useNavigate } from 'react-router-dom';
 import { changeUserDetails } from '../../services/users.service.js';
 import Button from '../../hoc/Button/Button.jsx';
+import { deleteAvatar, uploadAvatar } from '../../services/images.service.js';
+import { updateUserEmail } from '../../services/auth.service.js';
+import DragZone from '../DragZone/DragZone.jsx';
 
 const EditProfile = ({ user, onUserUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [updatedUser, setUpdatedUser] = useState(() => ({ ...user }));
+  const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,6 +49,12 @@ const EditProfile = ({ user, onUserUpdate }) => {
     setIsLoading(true);
 
     try {
+      if (updatedUser.imageUrl !== user.imageUrl) {
+        await deleteAvatar(user.imageUrl);
+        const storageImageUrl = await uploadAvatar(imageFile);
+        await changeUserDetails(user.username, 'avatar', storageImageUrl);
+      }
+
       if (updatedUser.firstName !== user.firstName) {
         await changeUserDetails(
           user.username,
@@ -67,6 +77,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
 
       if (updatedUser.email !== user.email) {
         await changeUserDetails(user.username, 'email', updatedUser.email);
+        await updateUserEmail(updatedUser.email);
       }
 
       if (updatedUser.phoneNumber !== user.phoneNumber) {
@@ -77,7 +88,6 @@ const EditProfile = ({ user, onUserUpdate }) => {
         );
       }
 
-      // Call the onUserUpdate function to update the parent component's user state
       onUserUpdate(updatedUser);
 
       navigate('/profile/general');
@@ -88,40 +98,86 @@ const EditProfile = ({ user, onUserUpdate }) => {
     }
   };
 
+  const getImagePreviewUrl = file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        resolve(event.target.result);
+      };
+      reader.onerror = function (error) {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileChange = async e => {
+    const file = e.target.files[0];
+
+    if (file) {
+      try {
+        const imageUrl = await getImagePreviewUrl(file);
+        setUpdatedUser({
+          ...updatedUser,
+          avatarUrl: imageUrl,
+        });
+        setImageFile(file);
+        console.log(imageFile);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className={styles['profile-info-container']}>
       <div className={styles['info-grid']}>
         <h2 className={styles['info-heading']}>General Info</h2>
         <div className={styles['input-section']}>
-          <label htmlFor="firstName">First name</label>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            value={updatedUser.firstName}
-            onChange={e => setUpdatedUser({ ...updatedUser, firstName: e.target.value })}
-          />
+          <label>Avatar<br/><span className={styles['mute']}>Drag & drop | Click to choose file</span></label>
+          <DragZone handleFileChange={handleFileChange} round={true} imageUrl={updatedUser.avatarUrl}/>
         </div>
-        <div className={styles['input-section']}>
-          <label htmlFor="lastName">Last name</label>
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            value={updatedUser.lastName}
-            onChange={e => setUpdatedUser({ ...updatedUser, lastName: e.target.value })
-            }
-          />
-        </div>
-        <div className={styles['input-section']}>
-          <label htmlFor="bio">Bio</label>
-          <textarea
-            type="text"
-            name="bio"
-            id="bio"
-            value={updatedUser.bio || ''}
-            onChange={e => setUpdatedUser({ ...updatedUser, bio: e.target.value })}
-          />
+        <div>
+          <div className={styles['input-section']}>
+            <label htmlFor="firstName">First name</label>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              value={updatedUser.firstName}
+              onChange={e =>
+                setUpdatedUser({ ...updatedUser, firstName: e.target.value })
+              }
+            />
+          </div>
+          <div className={styles['input-section']}>
+            <label htmlFor="lastName">Last name</label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              value={updatedUser.lastName}
+              onChange={e =>
+                setUpdatedUser({ ...updatedUser, lastName: e.target.value })
+              }
+            />
+          </div>
+          <div className={styles['input-section']}>
+            <label htmlFor="bio">Bio</label>
+            <textarea
+              type="text"
+              name="bio"
+              id="bio"
+              value={updatedUser.bio || ''}
+              onChange={e =>
+                setUpdatedUser({ ...updatedUser, bio: e.target.value })
+              }
+            />
+          </div>
         </div>
         <h2 className={styles['info-heading']}>Contact Info</h2>
         <div className={styles['input-section']}>
@@ -131,13 +187,18 @@ const EditProfile = ({ user, onUserUpdate }) => {
             name="email"
             id="email"
             value={updatedUser.email}
+            onChange={e =>
+              setUpdatedUser({ ...updatedUser, email: e.target.value })
+            }
           />
         </div>
         <div className={styles['input-section']}>
           <label htmlFor="phone">Phone number</label>
           <PhoneInput
-            value={updatedUser.phone || ''}
-            onChange={value => setUpdatedUser({ ...updatedUser, phone: value })}
+            value={updatedUser.phoneNumber || ''}
+            onChange={value =>
+              setUpdatedUser({ ...updatedUser, phoneNumber: value })
+            }
           />
         </div>
       </div>
@@ -145,16 +206,13 @@ const EditProfile = ({ user, onUserUpdate }) => {
         <Button style="primary" handleClick={handleEditProfile}>
           Save Changes
         </Button>
-        <Button style="alert" handleClick={() => console.log('hi')}>
-          Close account
-        </Button>
       </div>
     </div>
   );
 };
 
 EditProfile.propTypes = {
-  user: PropTypes.object.isRequired, // Use object as type
+  user: PropTypes.object.isRequired,
   onUserUpdate: PropTypes.func.isRequired,
 };
 

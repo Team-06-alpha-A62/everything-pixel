@@ -1,4 +1,4 @@
-/* Home.module.scss */
+@import '../../variables';
 
 .home-wrapper {
   display: flex;
@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  color: white;
+  color: $color-grey-0;
   text-align: center;
   background: url('../../assets/641c2b170466977.645e34a7760bf.gif') no-repeat
     center center fixed;
@@ -74,31 +74,43 @@
   }
   .description {
     font-size: 34px;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
+
+    .title {
+      color: $color-grey-0;
+    }
   }
 
   .get-started {
+    padding: 15px 30px;
+    border-radius: $border-radius-md;
+    background-color: $color-brand-500;
+    border: 2px solid $color-brand-500;
+    color: $color-grey-0;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative;
     display: inline-block;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    border: 2px solid white;
-    border-radius: 5px;
-    text-decoration: none;
-    color: white;
-    font-size: 30px;
-    transition: background-color 0.3s ease;
+    box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 1);
+    font-weight: bold;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      border-color: $color-brand-600;
+      background-color: $color-brand-600;
+      box-shadow: 2px 2px 0 0 rgba(255, 255, 255, 1);
+      transform: translate(2px, 2px);
     }
   }
 
   .login-link {
-    font-size: 14px;
+    margin-top: 25px;
+    font-size: 1rem;
 
     a {
-      color: white;
-      text-decoration: underline;
+      color: $color-brand-500;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

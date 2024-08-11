@@ -230,6 +230,8 @@ const EditPost = () => {
               <div className={styles['input-section']}>
                 <label>Image</label>
                 <DragZone
+                  width={500}
+                  height={500}
                   handleFileChange={handleFileChange}
                   imageUrl={postData.imageUrl}
                 />

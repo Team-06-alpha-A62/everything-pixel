@@ -57,8 +57,8 @@ const Navigation = () => {
         ) : (
           <div className={styles['right-section']}>
             <ToggleTheme />
+            <NavLink to="/register">Get Started</NavLink>
             <NavLink to="/login">Login</NavLink>
-            <NavLink to="/register">Register</NavLink>
           </div>
         )}
       </nav>

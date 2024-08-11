@@ -17,28 +17,28 @@ const ProfileInfo = ({ user }) => {
         <h2 className={styles['info-heading']}>General Info</h2>
         <div>
           <h3>Username</h3>
-          <span>{user.username}</span>
+          <span>{userInfo.username}</span>
         </div>
         <div>
           <h3>First name</h3>
-          <span>{user.firstName}</span>
+          <span>{userInfo.firstName}</span>
         </div>
         <div>
           <h3>Last name</h3>
-          <span>{user.lastName}</span>
+          <span>{userInfo.lastName}</span>
         </div>
         <div>
           <h3>Bio</h3>
-          <span>{user.bio || 'N/A'}</span>
+          <span>{userInfo.bio || 'N/A'}</span>
         </div>
         <h2 className={styles['info-heading']}>Contact Info</h2>
         <div>
           <h3>Email address</h3>
-          <span>{user.email}</span>
+          <span>{userInfo.email}</span>
         </div>
         <div>
           <h3>Phone number</h3>
-          <span>{user.number || 'N/A'}</span>
+          <span>{userInfo.phoneNumber || 'N/A'}</span>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@ const ProfileInfo = ({ user }) => {
 };
 
 ProfileInfo.propTypes = {
-  user: PropTypes.object.isRequired, // Use object as type
+  user: PropTypes.object,
 };
 
 export default ProfileInfo;

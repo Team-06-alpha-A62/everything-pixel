@@ -41,13 +41,13 @@ const Home = () => {
       <div className={styles['home-container']}>
         <div className={styles['content']}>
           <div className={styles['description']}>
-            <p>Share everything related to Pixel Art</p>
+            <h3 className={styles['title']}>Share everything related to Pixel Art</h3>
           </div>
           <Link to="/register" className={styles['get-started']}>
             Get Started
           </Link>
           <p className={styles['login-link']}>
-            Already have an account? <Link to="/login">Login instead</Link>
+            Already have an account? <Link to="/login">Login</Link> instead
           </p>
         </div>
         <div className={styles['scroll-indicator']} onClick={scrollToSection}>

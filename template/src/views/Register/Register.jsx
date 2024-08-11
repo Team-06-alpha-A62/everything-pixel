@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
-import Avatar from 'react-avatar';
 import styles from './Register.module.scss';
 import Button from '../../hoc/Button/Button';
+import DragZone from '../../components/DragZone/DragZone.jsx';
 
 const registerInitialData = {
   username: '',
@@ -27,6 +27,11 @@ const Register = () => {
 
   const { username, firstName, lastName, email, password, avatarUrl } =
     registrationData;
+
+  const validateEmail = email => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
 
   const handlePrevClick = () => {
     if (step === 1) return;
@@ -51,9 +56,16 @@ const Register = () => {
         return;
       }
     }
-    if (step === 3 && !email) {
-      setErrors({ email: 'Email is required' });
-      return;
+    if (step === 3) {
+      if (!email) {
+        setErrors({ email: 'Email is required' });
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        setErrors({ email: 'Please enter a valid email address' });
+        return;
+      }
     }
     if (step === 4 && !password) {
       setErrors({ password: 'Password is required' });
@@ -121,14 +133,14 @@ const Register = () => {
   };
 
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return <div className={styles['loading']}>Loading...</div>;
   }
 
   return (
-    <div className={styles.register}>
-      <h1 className={styles.title}>Welcome to ∀ PXL</h1>
-      <p className={styles.subtitle}>Let&apos;s get to meet you</p>
-      <div className={styles.form}>
+    <div className={styles['register']}>
+      <h1 className={styles['title']}>Welcome to <span className={styles['logo']}>∀</span> PXL</h1>
+      <p className={styles['subtitle']}>Let&apos;s get to meet you</p>
+      <div className={styles['form']}>
         {step === 1 && (
           <>
             <label htmlFor="username" className={styles.label}>
@@ -233,28 +245,24 @@ const Register = () => {
         )}
 
         {step === 5 && (
-          <>
-            <label htmlFor="avatar" className={styles.label}>
+          <div className={styles['avatar']}>
+            <label>
               Avatar
+              <br />
+              <span className={styles['mute']}>
+                Drag & drop | Click to choose file
+              </span>
             </label>
-            <input
-              type="file"
-              name="avatar"
-              id="avatar"
-              accept="image/*"
-              className={styles.input}
-              onChange={handleFileChange}
+            <DragZone
+              handleFileChange={handleFileChange}
+              round={true}
+              imageUrl={avatarPreview}
             />
-            {avatarPreview && (
-              <div className={styles.avatarPreview}>
-                <Avatar src={avatarPreview} size="100" round={true} />{' '}
-              </div>
-            )}
-          </>
+          </div>
         )}
 
-        <p className={styles.step}>Step {step} / 5</p>
-        <div className={styles.controllers}>
+        <p className={styles['step']}>Step {step} / 5</p>
+        <div className={styles['controllers']}>
           {step === 1 ? (
             <Button style="secondary" handleClick={() => navigate('/')}>
               &times; Cancel
@@ -274,7 +282,7 @@ const Register = () => {
             </Button>
           )}
         </div>
-        <p className={styles.loginLink}>
+        <p className={styles['login-link']}>
           Already have an account? <Link to="/login">Login</Link> Instead
         </p>
       </div>

@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateEmail,
 } from 'firebase/auth';
 import { auth } from '../config/firebase.config.js';
 
@@ -34,3 +35,13 @@ export const loginUser = (email, password) =>
  * @throws {Error} If there is an error during the logout process.
  */
 export const logoutUser = () => signOut(auth);
+
+export const updateUserEmail = async newEmail => {
+  const user = auth.currentUser;
+
+  try {
+    await updateEmail(user, newEmail);
+  } catch (error) {
+    throw new Error(`Error updating email: ${error.message}`);
+  }
+};

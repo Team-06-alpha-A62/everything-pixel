@@ -2,7 +2,13 @@ import PropTypes from 'prop-types';
 import styles from './DragZone.module.scss';
 import { useState } from 'react';
 
-const DragZone = ({ handleFileChange, imageUrl = '' }) => {
+const DragZone = ({
+  handleFileChange,
+  width = 100,
+  height = 100,
+  round = false,
+  imageUrl = '',
+}) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragOver = e => {
@@ -29,6 +35,7 @@ const DragZone = ({ handleFileChange, imageUrl = '' }) => {
   return (
     <>
       <div
+        style={{ width: `${width}px`, height: `${height}px` }}
         className={styles['drag-zone']}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -45,6 +52,7 @@ const DragZone = ({ handleFileChange, imageUrl = '' }) => {
         <label
           htmlFor="image"
           id="file-label"
+          style={{ borderRadius: `${round ? 50 : 10}px` }}
           className={`${styles['input-element']} ${
             isDragging ? 'dragging' : ''
           }`}
@@ -55,11 +63,12 @@ const DragZone = ({ handleFileChange, imageUrl = '' }) => {
                 backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
                 backgroundSize: 'cover', // Ensure the background image covers the label
                 backgroundPosition: 'center', // Center the background image
+                borderRadius: `${round ? 50 : 10}px`,
               }}
               alt="Image Preview"
             ></div>
           ) : (
-            'Drag & drop | Click to choose file'
+            <span>{round ? '+' : 'Drag & drop | Click to choose file'}</span>
           )}
         </label>
       </div>
@@ -69,6 +78,9 @@ const DragZone = ({ handleFileChange, imageUrl = '' }) => {
 
 DragZone.propTypes = {
   handleFileChange: PropTypes.func,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  round: PropTypes.bool,
   imageUrl: PropTypes.string,
 };
 
