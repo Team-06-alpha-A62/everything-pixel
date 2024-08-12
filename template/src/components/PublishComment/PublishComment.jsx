@@ -25,11 +25,9 @@ const PublishComment = ({
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
       if (commentToEdit.id) {
-        console.log('edit comment');
         onEditComment(commentToEdit.id, newComment);
         setCommentToEdit({ id: null, content: '' });
       } else {
-        console.log('posts comment');
         onPublishComment(newComment);
       }
       setNewComment('');

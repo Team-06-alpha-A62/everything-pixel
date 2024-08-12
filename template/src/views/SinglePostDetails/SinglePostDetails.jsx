@@ -25,6 +25,7 @@ import PostDetailsHeader from '../../components/PostDetailsHeader/PostDetailsHea
 import PostDetailsTitle from '../../components/PostDetailsTitle/PostDetailsTitle';
 import PostDetailsTags from '../../components/PostDetailsTags/PostDetailsTags';
 import PostDetailsContent from '../../components/PostDetailsContent/PostDetailsContent';
+import { createNotification } from '../../services/notification.service.js';
 
 const SinglePostDetails = () => {
   const { currentUser } = useAuth();
@@ -38,7 +39,7 @@ const SinglePostDetails = () => {
     currentUser?.userData?.isBlocked
   );
 
-  const { title, tags, image, content, comments, createdOn, edited } =
+  const { title, tags, image, content, comments, createdOn, edited, author } =
     post || {};
   const tagsArray = Object.values(tags ?? {});
 
@@ -133,6 +134,15 @@ const SinglePostDetails = () => {
         ...prevCommentsObjectsArray,
         newCommentData,
       ]);
+
+      if (post.author !== currentUser.userData.username) {
+        await createNotification(author, {
+          type: 'comment',
+          message: `${currentUser.userData.username} commented on your post: "${content}"`,
+          postId: post.id,
+          commentId: newComment.key,
+        });
+      }
     } catch (error) {
       alert(error.message);
     }

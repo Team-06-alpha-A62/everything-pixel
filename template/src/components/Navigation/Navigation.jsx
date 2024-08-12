@@ -24,6 +24,9 @@ const Navigation = () => {
   };
 
   useEffect(() => {
+    // if (location.pathname === '/profile/general') {
+    //   console.log('hi');
+    // }
     window.addEventListener('scroll', handleScrolling);
     setIsScrolling(false);
     return () => window.removeEventListener('scroll', handleScrolling);
