@@ -24,7 +24,7 @@ const UserDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
   const [selectedTab, setSelectedTab] = useState('posts');
-  const [isUserBlocked, setIsUserBlocked] = useState(user?.isBlocked);
+  const [isUserBlocked, setIsUserBlocked] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const UserDetails = () => {
       try {
         const userData = await getUserByHandle(username);
         setUser(userData);
-
+        setIsUserBlocked(user?.isBlocked);
         if (userData.posts?.length) {
           const postDetails = await Promise.all(
             userData.posts.map(postId => getPostByHandle(postId))
@@ -81,7 +81,7 @@ const UserDetails = () => {
     };
 
     fetchUser();
-  }, [username]);
+  }, [username, user]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

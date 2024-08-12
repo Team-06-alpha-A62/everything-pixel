@@ -15,6 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const PostActions = ({
+  isBlocked,
   openPostDetails,
   id,
   date,
@@ -35,37 +36,46 @@ const PostActions = ({
     }
   };
 
+  const handleClick = action => {
+    if (isBlocked) return;
+    action();
+  };
+
   return (
     <div className={styles['post-actions']}>
       <span className={styles['time-created']}>
         {edited ? `edited: ${edited}` : date}
       </span>
       <div className={styles['action-buttons']}>
-        <div onClick={handleSavePost}>
+        <div onClick={() => handleClick(handleSavePost)}>
           {isSaved ? (
             <FontAwesomeIcon icon={faBookmarkSolid} />
           ) : (
             <FontAwesomeIcon icon={faBookmarkRegular} />
           )}
         </div>
-        <div>
+        <div onClick={() => handleClick(openPostDetails)}>
           {comments}
-          <FontAwesomeIcon icon={faComment} onClick={openPostDetails} />
+          <FontAwesomeIcon icon={faComment} />
         </div>
         <div
           onClick={() =>
-            copyToClipboard(`${window.location.origin}/post/${id}`)
+            handleClick(() =>
+              copyToClipboard(`${window.location.origin}/post/${id}`)
+            )
           }
         >
           <FontAwesomeIcon icon={faCopy} />
         </div>
-        <div onClick={() => handleUserVoteChange('upVote')}>
+        <div onClick={() => handleClick(() => handleUserVoteChange('upVote'))}>
           {votes.upVote}
           <FontAwesomeIcon
             icon={userVote === 'upVote' ? fasThumbsUp : farThumbsUp}
           />
         </div>
-        <div onClick={() => handleUserVoteChange('downVote')}>
+        <div
+          onClick={() => handleClick(() => handleUserVoteChange('downVote'))}
+        >
           {votes.downVote}
           <FontAwesomeIcon
             icon={userVote === 'downVote' ? fasThumbsDown : farThumbsDown}
@@ -77,6 +87,7 @@ const PostActions = ({
 };
 
 PostActions.propTypes = {
+  isBlocked: PropTypes.bool.isRequired,
   openPostDetails: PropTypes.func,
   id: PropTypes.string,
   date: PropTypes.string,
@@ -91,4 +102,5 @@ PostActions.propTypes = {
   isSaved: PropTypes.bool.isRequired,
   handleSavePost: PropTypes.func.isRequired,
 };
+
 export default PostActions;

@@ -4,13 +4,14 @@ import styles from './PublishComment.module.scss';
 import Button from '../../hoc/Button/Button.jsx';
 
 const PublishComment = ({
+  isBlocked,
   onPublishComment,
   commentToEdit,
   onEditComment,
   setCommentToEdit,
 }) => {
   const [newComment, setNewComment] = useState('');
-
+  //console.log(isBlocked);
   useEffect(() => {
     if (commentToEdit) {
       setNewComment(commentToEdit.content);
@@ -55,10 +56,13 @@ const PublishComment = ({
           value={newComment}
           onChange={handleNewCommentChange}
           onKeyDown={handleKeyDown}
+          disabled={isBlocked}
         />
-        <Button style="primary" handleClick={handlePostComment}>
-          {commentToEdit.id ? 'Edit' : 'Post'} &#x2713;
-        </Button>
+        {!isBlocked && (
+          <Button style="primary" handleClick={handlePostComment}>
+            {commentToEdit.id ? 'Edit' : 'Post'} &#x2713;
+          </Button>
+        )}
       </div>
     </>
   );

@@ -20,13 +20,14 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { faFlag as faFlagSolid } from '@fortawesome/free-solid-svg-icons'; // Import solid flag icon
+import { faFlag as faFlagSolid } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../Modal/Modal';
 import ReportMenu from '../ReportMenu/ReportMenu';
 import commentReportEnum from '../../enums/commentReportEnum';
 import { createCommentReport } from '../../services/reports.services';
 
 const PostComment = ({
+  isBlocked,
   comment,
   setCommentToEdit,
   onDeleteComment,
@@ -66,7 +67,7 @@ const PostComment = ({
   }, [currentUser, comment.id]);
 
   useEffect(() => {
-    const updatedcommentVotes = {
+    const updatedCommentVotes = {
       upVote: Object.values(comment.votes || {}).filter(
         vote => vote === 'upVote'
       ).length,
@@ -74,10 +75,12 @@ const PostComment = ({
         vote => vote === 'downVote'
       ).length,
     };
-    setCommentVotes(updatedcommentVotes);
+    setCommentVotes(updatedCommentVotes);
   }, [comment.votes]);
 
   const handleUserVoteChange = async type => {
+    if (isBlocked) return;
+
     try {
       let updatedVotes = { ...commentVotes };
       if (userVote === type) {
@@ -107,6 +110,8 @@ const PostComment = ({
   };
 
   const handleEditModeChange = async () => {
+    if (isBlocked) return;
+
     if (!isEditMode) {
       const { id, content } = await getCommentById(comment.id);
       setCommentToEdit({
@@ -122,6 +127,8 @@ const PostComment = ({
   };
 
   const handleReportClick = async reportType => {
+    if (isBlocked) return; // Disable reporting if isBlocked is true
+
     try {
       await createCommentReport(
         comment.id,
@@ -153,7 +160,9 @@ const PostComment = ({
           <span className={styles['comment-username']}>
             <strong>{commentAuthor.username}</strong>
           </span>
-          <span className={styles['comment-time']}>{timeAgo} {comment.edited && ` • Edited`}</span>
+          <span className={styles['comment-time']}>
+            {timeAgo} {comment.edited && ` • Edited`}
+          </span>
         </div>
         <pre className={styles['comment-content']}>{comment.content}</pre>
         <div className={styles['comment-actions']}>
@@ -181,7 +190,7 @@ const PostComment = ({
           )}
 
           <FontAwesomeIcon
-            onClick={() => onDeleteComment(comment.id)}
+            onClick={() => !isBlocked && onDeleteComment(comment.id)} // Disable deleting if isBlocked is true
             icon={faTrashCan}
             className={styles['delete-comment']}
           />
@@ -194,7 +203,7 @@ const PostComment = ({
       ) : (
         <FontAwesomeIcon
           icon={faFlag}
-          onClick={() => setIsReportModalOpen(true)}
+          onClick={() => !isBlocked && setIsReportModalOpen(true)}
         />
       )}
       <Modal
@@ -211,6 +220,7 @@ const PostComment = ({
 };
 
 PostComment.propTypes = {
+  isBlocked: PropTypes.bool.isRequired,
   comment: PropTypes.object.isRequired,
   setCommentToEdit: PropTypes.func.isRequired,
   onDeleteComment: PropTypes.func.isRequired,

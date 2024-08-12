@@ -23,7 +23,7 @@ function Post({ post }) {
   const [userVote, setUserVote] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
-
+  const isBlocked = currentUser?.userData?.isBlocked;
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
 
   const { author, title, content, tags, createdOn, comments, image } = post;
@@ -136,6 +136,7 @@ function Post({ post }) {
           openPostDetails={openPostDetails}
         />
         <PostActions
+          isBlocked={isBlocked}
           openPostDetails={openPostDetails}
           id={post.id}
           date={timeAgo}

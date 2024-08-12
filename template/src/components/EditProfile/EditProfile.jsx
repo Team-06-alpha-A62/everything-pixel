@@ -21,6 +21,10 @@ const EditProfile = ({ user, onUserUpdate }) => {
   }, [user]);
 
   const handleEditProfile = async () => {
+    if (user.isBlocked) {
+      return;
+    }
+
     if (!updatedUser.firstName) {
       alert('First name is required');
       return;
@@ -42,7 +46,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
       return;
     }
     if (!updatedUser.email) {
-      alert('email is required');
+      alert('Email is required');
       return;
     }
 
@@ -130,16 +134,29 @@ const EditProfile = ({ user, onUserUpdate }) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
+
+  const isBlocked = user.isBlocked;
 
   return (
     <div className={styles['profile-info-container']}>
       <div className={styles['info-grid']}>
         <h2 className={styles['info-heading']}>General Info</h2>
         <div className={styles['input-section']}>
-          <label>Avatar<br/><span className={styles['mute']}>Drag & drop | Click to choose file</span></label>
-          <DragZone handleFileChange={handleFileChange} round={true} imageUrl={updatedUser.avatarUrl}/>
+          <label>
+            Avatar
+            <br />
+            <span className={styles['mute']}>
+              Drag & drop | Click to choose file
+            </span>
+          </label>
+          <DragZone
+            handleFileChange={handleFileChange}
+            round={true}
+            imageUrl={updatedUser.avatarUrl}
+            disabled={isBlocked}
+          />
         </div>
         <div>
           <div className={styles['input-section']}>
@@ -152,6 +169,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
               onChange={e =>
                 setUpdatedUser({ ...updatedUser, firstName: e.target.value })
               }
+              disabled={isBlocked}
             />
           </div>
           <div className={styles['input-section']}>
@@ -164,6 +182,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
               onChange={e =>
                 setUpdatedUser({ ...updatedUser, lastName: e.target.value })
               }
+              disabled={isBlocked}
             />
           </div>
           <div className={styles['input-section']}>
@@ -176,6 +195,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
               onChange={e =>
                 setUpdatedUser({ ...updatedUser, bio: e.target.value })
               }
+              disabled={isBlocked}
             />
           </div>
         </div>
@@ -190,6 +210,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
             onChange={e =>
               setUpdatedUser({ ...updatedUser, email: e.target.value })
             }
+            disabled={isBlocked}
           />
         </div>
         <div className={styles['input-section']}>
@@ -199,13 +220,16 @@ const EditProfile = ({ user, onUserUpdate }) => {
             onChange={value =>
               setUpdatedUser({ ...updatedUser, phoneNumber: value })
             }
+            disabled={isBlocked}
           />
         </div>
       </div>
       <div className={styles['edit-profile-controllers']}>
-        <Button style="primary" handleClick={handleEditProfile}>
-          Save Changes
-        </Button>
+        {!isBlocked && (
+          <Button style="primary" handleClick={handleEditProfile}>
+            Save Changes
+          </Button>
+        )}
       </div>
     </div>
   );

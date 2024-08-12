@@ -11,19 +11,24 @@ import Button from '../../hoc/Button/Button.jsx';
 
 const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
   const [hasFollowed, setHasFollowed] = useState(false);
+  const isBlocked = currentUser?.userData?.isBlocked;
 
   useEffect(() => {
     const hasFollowedChecker = async () => {
-      const hasFollowedResult = await isUserFollowed(
-        currentUser.userData.username,
-        author.username
-      );
-      setHasFollowed(hasFollowedResult);
+      if (!isBlocked) {
+        const hasFollowedResult = await isUserFollowed(
+          currentUser.userData.username,
+          author.username
+        );
+        setHasFollowed(hasFollowedResult);
+      }
     };
     hasFollowedChecker();
-  }, [currentUser?.userData?.username, author.username]);
+  }, [currentUser?.userData?.username, author.username, isBlocked]);
 
   const handleFollowToggle = async () => {
+    if (isBlocked) return;
+
     if (hasFollowed) {
       await unfollowUser(currentUser.userData.username, author.username);
       setHasFollowed(false);
@@ -48,10 +53,11 @@ const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
       <div className={styles['user-info']}>
         <span className={styles['username']}>{author.username}</span>
         <Button
-          style={hasFollowed ? 'secondary' : 'primary'}
+          style={isBlocked ? 'alert' : hasFollowed ? 'secondary' : 'primary'}
           handleClick={handleFollowToggle}
+          disabled={isBlocked}
         >
-          {hasFollowed ? 'Unfollow' : 'Follow'}
+          {isBlocked ? 'Suspended' : hasFollowed ? 'Unfollow' : 'Follow'}
         </Button>
       </div>
     </div>

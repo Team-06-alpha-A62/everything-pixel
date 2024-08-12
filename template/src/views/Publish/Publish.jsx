@@ -30,6 +30,8 @@ const Publish = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const isBlocked = currentUser?.userData?.isBlocked;
+
   const getImagePreviewUrl = file => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -93,8 +95,12 @@ const Publish = () => {
   };
 
   const handlePublish = async () => {
+    if (isBlocked) {
+      return;
+    }
+
     if (!postData.titleInput || !postData.contentInput) {
-      alert('');
+      alert('Title and content are required');
       return;
     }
 
@@ -142,6 +148,7 @@ const Publish = () => {
                 autoFocus
                 value={postData.titleInput}
                 onChange={handleInputChange('titleInput')}
+                disabled={isBlocked}
                 required
               />
             </div>
@@ -168,6 +175,7 @@ const Publish = () => {
                   value={postData.tagsInput}
                   onChange={handleInputChange('tagsInput')}
                   onKeyDown={handleKeyDown}
+                  disabled={isBlocked}
                 />
               </div>
             </div>
@@ -179,6 +187,7 @@ const Publish = () => {
                   height={500}
                   handleFileChange={handleFileChange}
                   imageUrl={postData.imageUrl}
+                  disabled={isBlocked}
                 />
               </div>
               <div className={styles['input-section']}>
@@ -189,6 +198,7 @@ const Publish = () => {
                   id="content"
                   value={postData.contentInput}
                   onChange={handleInputChange('contentInput')}
+                  disabled={isBlocked}
                   required
                 />
               </div>
@@ -198,9 +208,11 @@ const Publish = () => {
               <Button style="secondary" handleClick={() => navigate(-1)}>
                 &times; Cancel
               </Button>
-              <Button style="primary" handleClick={handlePublish}>
-                Publish &#x2713;
-              </Button>
+              {!isBlocked && (
+                <Button style="primary" handleClick={handlePublish}>
+                  Publish &#x2713;
+                </Button>
+              )}
             </div>
           </>
         )}

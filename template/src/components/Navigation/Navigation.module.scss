@@ -53,5 +53,10 @@
       transition: color 0.3s;
       color: $color-brand-500;
     }
+    .suspended-text {
+      margin-right: 30px;
+      color: $color-red-700;
+      font-size: 0.8rem;
+    }
   }
 }

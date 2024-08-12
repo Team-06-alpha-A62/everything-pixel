@@ -27,7 +27,15 @@ const ProfileHeader = ({ user, isLoadingAvatar }) => {
           {user.firstName} {user.lastName}
         </h1>
         <p>{user.email}</p>
+        <p className={styles['suspended-text']}>
+          {user.isBlocked ? 'Suspended' : ''}
+        </p>
       </div>
+      {/* <div>
+        {user.isBlocked && (
+          <p className={styles['suspended-text']}>Suspended</p>
+        )}
+      </div> */}
     </div>
   );
 };

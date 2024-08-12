@@ -13,7 +13,7 @@ import { useAuth } from '../../providers/useAuth.js';
 import { deleteImage } from '../../services/images.service';
 import Button from '../../hoc/Button/Button.jsx';
 
-const PostDetailsHeader = ({ post }) => {
+const PostDetailsHeader = ({ isBlocked, post }) => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -21,7 +21,6 @@ const PostDetailsHeader = ({ post }) => {
   const [hasReported, setHasReported] = useState(false);
 
   useEffect(() => {
-    console.log(post.reports);
     if (
       post.reports &&
       Object.keys(post.reports).includes(currentUser.userData.username)
@@ -60,7 +59,11 @@ const PostDetailsHeader = ({ post }) => {
 
   return (
     <div className={styles['post-actions']}>
-      <Button style="secondary" handleClick={handleBackButtonClick}>
+      <Button
+        style="secondary"
+        handleClick={handleBackButtonClick}
+        disabled={isBlocked}
+      >
         &larr; Back
       </Button>
       <div className={styles['controls']}>
@@ -69,12 +72,14 @@ const PostDetailsHeader = ({ post }) => {
             <Button
               style="primary"
               handleClick={() => navigate(`/edit/${post.id}`)}
+              disabled={isBlocked}
             >
               Edit
             </Button>
             <Button
               style="alert"
               handleClick={() => setIsDeleteModalOpen(true)}
+              disabled={isBlocked}
             >
               Delete
             </Button>
@@ -83,6 +88,7 @@ const PostDetailsHeader = ({ post }) => {
           <Button
             style="alert"
             handleClick={() => !hasReported && setIsReportModalOpen(true)}
+            disabled={isBlocked || hasReported}
           >
             {hasReported ? 'Reported' : 'Report'}
           </Button>
@@ -111,6 +117,7 @@ const PostDetailsHeader = ({ post }) => {
 };
 
 PostDetailsHeader.propTypes = {
+  isBlocked: PropTypes.bool.isRequired,
   post: PropTypes.object.isRequired,
 };
 

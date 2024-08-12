@@ -33,6 +33,8 @@ const SinglePostDetails = () => {
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
   const [userVote, setUserVote] = useState(null);
 
+  const isBlocked = currentUser?.userData?.isBlocked;
+
   const { title, tags, image, content, comments, createdOn, edited } =
     post || {};
   const tagsArray = Object.values(tags ?? {});
@@ -195,12 +197,13 @@ const SinglePostDetails = () => {
   return (
     <div className={styles['post-details']}>
       <div className={styles['headers']}>
-        <PostDetailsHeader post={post} />
+        <PostDetailsHeader isBlocked={isBlocked} post={post} />
       </div>
       <PostDetailsTitle title={title} />
       <PostDetailsTags tagsArray={tagsArray} />
       <PostDetailsContent image={image} content={content} />
       <PostActions
+        isBlocked={isBlocked}
         id={post.id}
         date={createdOn}
         votes={postVotes}
@@ -214,6 +217,7 @@ const SinglePostDetails = () => {
       />
       <div>
         <PostComments
+          isBlocked={isBlocked}
           comments={commentsObjectsArray}
           onPublishComment={handlePublishComment}
           handleEditComment={handleEditComment}

@@ -14,6 +14,7 @@ const Navigation = () => {
 
   const [isScrolling, setIsScrolling] = useState(false);
   const navRef = useRef(null);
+  const isBlocked = currentUser?.userData?.isBlocked;
 
   const handleScrolling = () => {
     if (location.pathname === '/') {
@@ -48,6 +49,9 @@ const Navigation = () => {
               {location.pathname === '/feed' && <Search />}
             </div>
             <div className={styles['right-section']}>
+              {isBlocked && (
+                <p className={styles['suspended-text']}>Suspended</p>
+              )}
               <NavLink to="/feed">Feed</NavLink>
               <NavLink to="/publish">Publish</NavLink>
               <ToggleTheme />
