@@ -12,9 +12,9 @@ import SinglePostDetails from './views/SinglePostDetails/SinglePostDetails.jsx';
 import EditPost from './views/EditPost/EditPost.jsx';
 import Profile from './views/Profile/Profile.jsx';
 import Authenticated from './hoc/Authenticated/Authenticated.jsx';
+import { DarkModeProvider } from './providers/DarkModeProvider.jsx';
 
 function AppContent() {
-
   return (
     <>
       <Navigation />
@@ -72,11 +72,13 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
-    </BrowserRouter>
+    <DarkModeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </BrowserRouter>
+    </DarkModeProvider>
   );
 }
 

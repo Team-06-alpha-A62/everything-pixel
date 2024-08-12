@@ -71,15 +71,7 @@ const Home = () => {
       <div className={styles['trending-tags-section']}>
         <div className={styles['text-content']}>
           <p>
-            Stay connected with what's buzzing in the world of pixel art. Our
-            trending tags reveal the most talked-about topics, creative ideas,
-            and popular themes within the community. Dive into these tags to
-            explore a rich collection of posts, discover new inspirations, and
-            join the conversation with fellow pixel art enthusiasts. Whether
-            you're here to share your latest creation or to find inspiration
-            from others, these tags are your gateway to the heart of our
-            community's creativity. Explore, engage, and contribute to the
-            trends that are shaping the pixel art universe today.
+          Stay connected with what&apos;s buzzing in the world of pixel art. Our trending tags reveal the most talked-about topics, creative ideas, and popular themes within the community.
           </p>
         </div>
         <div className={styles['trending-tags-container']}>

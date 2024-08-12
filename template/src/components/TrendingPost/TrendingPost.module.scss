@@ -1,20 +1,18 @@
-@import '../../variables';
-
 .trending-post {
-  width: 350px;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  border-bottom: 2px solid $color-grey-100;
+  border-bottom: 2px solid var(--color-grey-100);
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: $color-grey-100;
+    background-color: var(--color-grey-100);
   }
 
   .post-title {
     font-weight: bold;
-    color: $color-grey-700;
+    color: var(--color-grey-700);
   }
 }

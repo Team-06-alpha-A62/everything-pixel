@@ -1,5 +1,3 @@
-@import '../../variables';
-
 .sort-by {
   display: flex;
   flex-direction: column;
@@ -24,7 +22,7 @@
 
 .sort-by-icon {
   transition: transform 0.3s;
-  color: $color-grey-700;
+  color: var(--color-grey-700);
 
   &.open {
     transform: rotate(180deg);
@@ -42,14 +40,14 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  color: $color-grey-700;
+  color: var(--color-grey-700);
 
   &:hover {
-    background-color: $color-grey-100;
+    background-color: var(--color-grey-100);
   }
 
   &.active {
-    background-color: $color-brand-700;
-    color: $color-grey-0;
+    background-color: var(--color-brand-700);
+    color: var(--color-grey-0);
   }
 }

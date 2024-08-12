@@ -1,32 +1,30 @@
-@import '../../variables';
-
 .trending-tag {
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  border-bottom: 2px solid $color-grey-100;
+  border-bottom: 2px solid var(--color-grey-100);
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: $color-grey-100;
+    background-color: var(--color-grey-100);
   }
 
   .tag-title {
     font-weight: bold;
-    color: $color-brand-500;
+    color: var(--color-brand-500);
     margin-right: 10px;
     flex-grow: 1;
   }
 
   .hashtag {
     font-weight: bold;
-    color: $color-brand-500;
+    color: var(--color-brand-500);
     margin-right: 2px;
   }
 
   .posts-count {
-    color: $color-grey-400;
+    color: var(--color-grey-400);
     font-size: 0.9rem;
   }
 }

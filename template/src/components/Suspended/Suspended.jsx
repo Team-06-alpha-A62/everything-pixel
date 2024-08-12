@@ -53,7 +53,7 @@ const Suspended = () => {
               />
             ))
           ) : (
-            <p>No users found</p>
+            <p className={styles['no-items-message']}>No users found</p>
           )}
         </div>
       )}

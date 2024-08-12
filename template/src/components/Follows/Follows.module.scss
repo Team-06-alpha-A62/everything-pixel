@@ -1,5 +1,3 @@
-@import '../../variables';
-
 .follows-container {
   padding: 20px;
   height: 100%;
@@ -7,10 +5,10 @@
   .tabs {
     display: flex;
     margin-bottom: 10px;
-    font-family: 'Orbitron', sans-serif; // Font for headings and links;
+    font-family: 'Orbitron', sans-serif;
 
     .tab {
-      color: $color-grey-700;
+      color: var(--color-grey-700);
       padding: 10px 20px;
       cursor: pointer;
       font-size: 16px;
@@ -19,30 +17,30 @@
       border-bottom: 2px solid transparent;
 
       &.active {
-        color: $color-brand-500;
-        border-bottom-color: $color-brand-500;
+        color: var(--color-brand-500);
+        border-bottom-color: var(--color-brand-500);
       }
     }
   }
 
   .listContainer {
     padding: 10px;
-    background-color: #fff;
+    background-color: var(--color-grey-0);
     border-radius: 5px;
   }
 
   .loading {
     text-align: center;
-    color: #333;
+    color: var(--color-grey-700);
   }
 
   .userItem {
     display: flex;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 2px solid var(--color-grey-100);
     font-size: 14px;
-    color: #333;
+    color: var(--color-grey-700);
 
     &:last-child {
       border-bottom: none;

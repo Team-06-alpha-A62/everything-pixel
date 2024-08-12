@@ -111,7 +111,7 @@ const UserDetails = () => {
           <ProfileSinglePost key={index} post={post} />
         ));
       } else {
-        return <p>No posts available.</p>;
+        return <p className={styles['no-items-message']}>No posts yet</p>;
       }
     } else if (selectedTab === 'comments') {
       if (comments.length > 0) {
@@ -119,7 +119,7 @@ const UserDetails = () => {
           <CommentListItem key={index} comment={comment} />
         ));
       } else {
-        return <p>No comments available.</p>;
+        return <p className={styles['no-items-message']}>No comments yet</p>;
       }
     } else if (selectedTab === 'reports') {
       if (postReports.length > 0 || commentReports.length > 0) {
@@ -136,7 +136,7 @@ const UserDetails = () => {
           </>
         );
       } else {
-        return <p>No reports available.</p>;
+        return <p className={styles['no-items-message']}>No reports for this user</p>;
       }
     }
   };

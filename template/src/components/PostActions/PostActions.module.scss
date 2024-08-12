@@ -1,15 +1,13 @@
-@import '../../variables';
-
 .post-actions {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
   padding: 10px 0;
-  border-bottom: 1px solid $color-grey-200;
+  border-bottom: 1px solid var(--color-grey-200);
 
   .time-created {
     font-size: 0.9rem;
-    color: $color-grey-400;
+    color: var(--color-grey-400);
   }
 
   .action-buttons {
@@ -23,7 +21,7 @@
       align-items: center;
       justify-content: center;
       gap: 3px;
-      color: $color-grey-600;
+      color: var(--color-grey-600);
       cursor: pointer;
       transition: color 0.2s ease;
 
@@ -34,7 +32,7 @@
       }
 
       &:hover {
-        color: $color-brand-500;
+        color: var(--color-brand-500);
       }
     }
   }

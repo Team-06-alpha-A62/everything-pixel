@@ -1,15 +1,12 @@
-@import '../../variables';
-
 .report-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $color-grey-0;
+  background-color: var(--color-grey-0);
   padding: 15px;
-  border-radius: 10px;
   margin-bottom: 10px;
-  box-shadow: $shadow-sm;
-
+  border-bottom: 2px solid var(--color-grey-200);
+  color: var(--color-grey-700);
   .report-content {
     flex: 1;
   }
@@ -17,11 +14,11 @@
   .eye-icon {
     margin-left: 5px;
     font-size: 1.1rem;
-    color: $color-grey-700;
+    color: var(--color-grey-700);
     transition: color 0.2s;
 
     &:hover {
-      color: $color-brand-600;
+      color: var(--color-brand-600);
     }
   }
 }

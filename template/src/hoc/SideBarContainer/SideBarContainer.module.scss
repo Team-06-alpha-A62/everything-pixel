@@ -1,8 +1,6 @@
-@import '../../variables';
-
 .sideBarContainer {
-  background-color: $color-grey-0;
-  border-radius: $border-radius-md;
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-md);
   padding: 20px;
-  box-shadow: $shadow-sm;
+  box-shadow: var(--shadow-sm);
 }

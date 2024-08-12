@@ -1,4 +1,7 @@
-@import '../../variables.scss';
+.no-items-message {
+  margin-top: 20px;
+  color: var(--color-grey-700);
+}
 
 .user-details-container {
   padding: 20px;
@@ -31,7 +34,7 @@
     font-family: 'Orbitron', sans-serif;
 
     .tab {
-      color: $color-grey-700;
+      color: var(--color-grey-700);
       padding: 10px 20px;
       cursor: pointer;
       font-size: 16px;
@@ -40,8 +43,8 @@
       border-bottom: 2px solid transparent;
 
       &.active {
-        color: $color-brand-500;
-        border-bottom-color: $color-brand-500;
+        color: var(--color-brand-500);
+        border-bottom-color: var(--color-brand-500);
       }
     }
   }
