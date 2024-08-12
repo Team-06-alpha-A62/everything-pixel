@@ -15,6 +15,7 @@ import PostComments from '../../components/PostComments/PostComments';
 import { useAuth } from '../../providers/useAuth.js';
 import {
   isPostSaved,
+  listenToUserBlockedStatus,
   savePost,
   unSavePost,
   userVoteInteractionWithPost,
@@ -33,13 +34,25 @@ const SinglePostDetails = () => {
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
   const [userVote, setUserVote] = useState(null);
 
-  const isBlocked = currentUser?.userData?.isBlocked;
+  const [isCurrentUserBlocked, setIsCurrentUserBlocked] = useState(
+    currentUser?.userData?.isBlocked
+  );
 
   const { title, tags, image, content, comments, createdOn, edited } =
     post || {};
   const tagsArray = Object.values(tags ?? {});
 
   const { id } = useParams();
+
+  useEffect(() => {
+    if (currentUser?.userData?.username) {
+      const unsubscribe = listenToUserBlockedStatus(
+        currentUser.userData.username,
+        setIsCurrentUserBlocked
+      );
+      return () => unsubscribe();
+    }
+  }, [currentUser?.userData?.username]);
 
   useEffect(() => {
     if (
@@ -197,13 +210,16 @@ const SinglePostDetails = () => {
   return (
     <div className={styles['post-details']}>
       <div className={styles['headers']}>
-        <PostDetailsHeader isBlocked={isBlocked} post={post} />
+        <PostDetailsHeader
+          isCurrentUserBlocked={isCurrentUserBlocked}
+          post={post}
+        />
       </div>
       <PostDetailsTitle title={title} />
       <PostDetailsTags tagsArray={tagsArray} />
       <PostDetailsContent image={image} content={content} />
       <PostActions
-        isBlocked={isBlocked}
+        isCurrentUserBlocked={isCurrentUserBlocked}
         id={post.id}
         date={createdOn}
         votes={postVotes}
@@ -217,7 +233,7 @@ const SinglePostDetails = () => {
       />
       <div>
         <PostComments
-          isBlocked={isBlocked}
+          isCurrentUserBlocked={isCurrentUserBlocked}
           comments={commentsObjectsArray}
           onPublishComment={handlePublishComment}
           handleEditComment={handleEditComment}

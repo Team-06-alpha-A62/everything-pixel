@@ -1,43 +1,38 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   getUserByHandle,
   isPostSaved,
   savePost,
   unSavePost,
   userVoteInteractionWithPost,
+  listenToUserBlockedStatus,
 } from '../../services/users.service';
-import PropTypes from 'prop-types';
 import PostContainer from '../../hoc/PostContainer/PostContainer.jsx';
 import PostAuthorDetails from '../PostAuthorDetails/PostAuthorDetails.jsx';
 import PostBody from '../PostBody/PostBody.jsx';
 import PostActions from '../PostActions/PostActions.jsx';
-import { hasUserVotedPost } from '../../services/posts.service.js';
 import { useAuth } from '../../providers/useAuth.js';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import styles from './Post.module.scss';
+import { hasUserVotedPost } from '../../services/posts.service.js';
 
 function Post({ post }) {
   const { currentUser } = useAuth();
   const [postAuthor, setPostAuthor] = useState({});
   const [userVote, setUserVote] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [isCurrentUserBlocked, setIsCurrentUserBlocked] = useState(
+    currentUser?.userData?.isBlocked
+  );
   const navigate = useNavigate();
-  const isBlocked = currentUser?.userData?.isBlocked;
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
 
   const { author, title, content, tags, createdOn, comments, image } = post;
-
   const tagsArray = Object.keys(tags ?? {});
   const numberOfComments = Object.keys(comments ?? {}).length;
-
-  const timeAgo = formatDistanceToNow(new Date(createdOn), {
-    addSuffix: true,
-  });
-
-  const openPostDetails = () => {
-    navigate(`/post/${post.id}`);
-  };
+  const timeAgo = formatDistanceToNow(new Date(createdOn), { addSuffix: true });
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -46,6 +41,16 @@ function Post({ post }) {
     };
     fetchUser();
   }, [author, post.id, currentUser.userData]);
+
+  useEffect(() => {
+    if (currentUser?.userData?.username) {
+      const unsubscribe = listenToUserBlockedStatus(
+        currentUser.userData.username,
+        setIsCurrentUserBlocked
+      );
+      return () => unsubscribe();
+    }
+  }, [currentUser?.userData?.username]);
 
   useEffect(() => {
     if (!currentUser?.userData) return;
@@ -127,17 +132,21 @@ function Post({ post }) {
   return (
     <div className={styles['post-container']}>
       <PostContainer>
-        <PostAuthorDetails author={postAuthor} currentUser={currentUser} />
+        <PostAuthorDetails
+          author={postAuthor}
+          currentUser={currentUser}
+          isCurrentUserBlocked={isCurrentUserBlocked}
+        />
         <PostBody
           title={title}
           content={content}
           tags={tagsArray}
           image={image}
-          openPostDetails={openPostDetails}
+          openPostDetails={() => navigate(`/post/${post.id}`)}
         />
         <PostActions
-          isBlocked={isBlocked}
-          openPostDetails={openPostDetails}
+          isCurrentUserBlocked={isCurrentUserBlocked}
+          openPostDetails={() => navigate(`/post/${post.id}`)}
           id={post.id}
           date={timeAgo}
           votes={postVotes}
@@ -153,7 +162,7 @@ function Post({ post }) {
 }
 
 Post.propTypes = {
-  post: PropTypes.any,
+  post: PropTypes.object.isRequired,
 };
 
 export default Post;

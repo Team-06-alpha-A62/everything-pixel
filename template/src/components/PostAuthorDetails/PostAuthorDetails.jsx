@@ -4,7 +4,7 @@ import Avatar from 'react-avatar';
 import { useState, useEffect } from 'react';
 import UserHoverCard from '../UserHoverCard/UserHoverCard';
 
-const PostAuthorDetails = ({ author, currentUser }) => {
+const PostAuthorDetails = ({ author, currentUser, isCurrentUserBlocked }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowHoverCard, setShouldShowHoverCard] = useState(false);
   const [isUserPost, setIsUserPost] = useState(false);
@@ -48,6 +48,7 @@ const PostAuthorDetails = ({ author, currentUser }) => {
       </span>
       {!isUserPost && shouldShowHoverCard && (
         <UserHoverCard
+          isCurrentUserBlocked={isCurrentUserBlocked}
           author={author}
           currentUser={currentUser}
           onMouseEnter={handleMouseEnter}
@@ -59,6 +60,7 @@ const PostAuthorDetails = ({ author, currentUser }) => {
 };
 
 PostAuthorDetails.propTypes = {
+  isCurrentUserBlocked: PropTypes.bool,
   author: PropTypes.objectOf(PropTypes.any).isRequired,
   currentUser: PropTypes.objectOf(PropTypes.any).isRequired,
 };

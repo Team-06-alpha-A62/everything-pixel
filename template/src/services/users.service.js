@@ -6,6 +6,8 @@ import {
   equalTo,
   query,
   set,
+  off,
+  onValue,
 } from 'firebase/database';
 import { db } from '../config/firebase.config';
 import { uploadAvatar } from './images.service.js';
@@ -403,4 +405,21 @@ export const getAllSavedPosts = async userHandle => {
       `Error fetching saved posts for ${userHandle}: ${error.message}`
     );
   }
+};
+
+/**
+ * Listens for changes in the user's 'isBlocked' status.
+ * @param {string} username The username of the user to listen to.
+ * @param {function} onStatusChange Callback to execute on status change.
+ * @returns {function} A function to unsubscribe from the listener.
+ */
+export const listenToUserBlockedStatus = (username, onStatusChange) => {
+  const statusRef = ref(db, `/users/${username}/isBlocked`);
+  const listener = onValue(statusRef, snapshot => {
+    const isBlocked = snapshot.val();
+    onStatusChange(isBlocked);
+  });
+
+  // Return the unsubscribe function
+  return () => off(statusRef, 'value', listener);
 };

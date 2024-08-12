@@ -4,7 +4,7 @@ import PostComment from '../PostComment/PostComment';
 import { useState } from 'react';
 
 const PostComments = ({
-  isBlocked,
+  isCurrentUserBlocked,
   comments,
   onPublishComment,
   handleEditComment,
@@ -21,7 +21,7 @@ const PostComments = ({
   return (
     <>
       <PublishComment
-        isBlocked={isBlocked}
+        isBlocked={isCurrentUserBlocked}
         onPublishComment={onPublishComment}
         onEditComment={handleEditComment}
         commentToEdit={commentToEdit}
@@ -34,7 +34,7 @@ const PostComments = ({
           {sortedComments.map(comment => {
             return (
               <PostComment
-                isBlocked={isBlocked}
+                isCurrentUserBlocked={isCurrentUserBlocked}
                 key={comment.id}
                 comment={comment}
                 setCommentToEdit={setCommentToEdit}
@@ -50,7 +50,7 @@ const PostComments = ({
 };
 
 PostComments.propTypes = {
-  isBlocked: PropTypes.bool,
+  isCurrentUserBlocked: PropTypes.bool,
   comments: PropTypes.arrayOf(PropTypes.object),
   onPublishComment: PropTypes.func,
   handleEditComment: PropTypes.func,

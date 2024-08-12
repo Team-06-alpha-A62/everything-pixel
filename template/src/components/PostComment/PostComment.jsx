@@ -27,7 +27,7 @@ import commentReportEnum from '../../enums/commentReportEnum';
 import { createCommentReport } from '../../services/reports.services';
 
 const PostComment = ({
-  isBlocked,
+  isCurrentUserBlocked,
   comment,
   setCommentToEdit,
   onDeleteComment,
@@ -79,7 +79,7 @@ const PostComment = ({
   }, [comment.votes]);
 
   const handleUserVoteChange = async type => {
-    if (isBlocked) return;
+    if (isCurrentUserBlocked) return;
 
     try {
       let updatedVotes = { ...commentVotes };
@@ -110,7 +110,7 @@ const PostComment = ({
   };
 
   const handleEditModeChange = async () => {
-    if (isBlocked) return;
+    if (isCurrentUserBlocked) return;
 
     if (!isEditMode) {
       const { id, content } = await getCommentById(comment.id);
@@ -127,7 +127,7 @@ const PostComment = ({
   };
 
   const handleReportClick = async reportType => {
-    if (isBlocked) return; // Disable reporting if isBlocked is true
+    if (isCurrentUserBlocked) return;
 
     try {
       await createCommentReport(
@@ -190,7 +190,7 @@ const PostComment = ({
           )}
 
           <FontAwesomeIcon
-            onClick={() => !isBlocked && onDeleteComment(comment.id)} // Disable deleting if isBlocked is true
+            onClick={() => !isCurrentUserBlocked && onDeleteComment(comment.id)}
             icon={faTrashCan}
             className={styles['delete-comment']}
           />
@@ -203,7 +203,7 @@ const PostComment = ({
       ) : (
         <FontAwesomeIcon
           icon={faFlag}
-          onClick={() => !isBlocked && setIsReportModalOpen(true)}
+          onClick={() => !isCurrentUserBlocked && setIsReportModalOpen(true)}
         />
       )}
       <Modal
@@ -220,7 +220,7 @@ const PostComment = ({
 };
 
 PostComment.propTypes = {
-  isBlocked: PropTypes.bool.isRequired,
+  isCurrentUserBlocked: PropTypes.bool.isRequired,
   comment: PropTypes.object.isRequired,
   setCommentToEdit: PropTypes.func.isRequired,
   onDeleteComment: PropTypes.func.isRequired,

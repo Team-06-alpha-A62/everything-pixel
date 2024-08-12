@@ -15,7 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const PostActions = ({
-  isBlocked,
+  isCurrentUserBlocked,
   openPostDetails,
   id,
   date,
@@ -37,7 +37,7 @@ const PostActions = ({
   };
 
   const handleClick = action => {
-    if (isBlocked) return;
+    if (isCurrentUserBlocked) return;
     action();
   };
 
@@ -87,7 +87,7 @@ const PostActions = ({
 };
 
 PostActions.propTypes = {
-  isBlocked: PropTypes.bool.isRequired,
+  isCurrentUserBlocked: PropTypes.bool.isRequired,
   openPostDetails: PropTypes.func,
   id: PropTypes.string,
   date: PropTypes.string,

@@ -9,13 +9,18 @@ import {
 import { useEffect, useState } from 'react';
 import Button from '../../hoc/Button/Button.jsx';
 
-const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
+const UserHoverCard = ({
+  isCurrentUserBlocked,
+  author,
+  onMouseEnter,
+  onMouseLeave,
+  currentUser,
+}) => {
   const [hasFollowed, setHasFollowed] = useState(false);
-  const isBlocked = currentUser?.userData?.isBlocked;
 
   useEffect(() => {
     const hasFollowedChecker = async () => {
-      if (!isBlocked) {
+      if (!isCurrentUserBlocked) {
         const hasFollowedResult = await isUserFollowed(
           currentUser.userData.username,
           author.username
@@ -24,10 +29,10 @@ const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
       }
     };
     hasFollowedChecker();
-  }, [currentUser?.userData?.username, author.username, isBlocked]);
+  }, [currentUser?.userData?.username, author.username, isCurrentUserBlocked]);
 
   const handleFollowToggle = async () => {
-    if (isBlocked) return;
+    if (isCurrentUserBlocked) return;
 
     if (hasFollowed) {
       await unfollowUser(currentUser.userData.username, author.username);
@@ -53,11 +58,21 @@ const UserHoverCard = ({ author, onMouseEnter, onMouseLeave, currentUser }) => {
       <div className={styles['user-info']}>
         <span className={styles['username']}>{author.username}</span>
         <Button
-          style={isBlocked ? 'alert' : hasFollowed ? 'secondary' : 'primary'}
+          style={
+            isCurrentUserBlocked
+              ? 'alert'
+              : hasFollowed
+              ? 'secondary'
+              : 'primary'
+          }
           handleClick={handleFollowToggle}
-          disabled={isBlocked}
+          disabled={isCurrentUserBlocked}
         >
-          {isBlocked ? 'Suspended' : hasFollowed ? 'Unfollow' : 'Follow'}
+          {isCurrentUserBlocked
+            ? 'Suspended'
+            : hasFollowed
+            ? 'Unfollow'
+            : 'Follow'}
         </Button>
       </div>
     </div>
@@ -69,6 +84,7 @@ UserHoverCard.propTypes = {
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   currentUser: PropTypes.any,
+  isCurrentUserBlocked: PropTypes.bool,
 };
 
 export default UserHoverCard;
