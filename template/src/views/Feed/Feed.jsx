@@ -5,6 +5,9 @@ import RightSideBar from '../../components/RightSideBar/RightSideBar';
 import { getAllPosts } from '../../services/posts.service';
 import styles from './Feed.module.scss';
 import { useSearchParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAnglesUp } from '@fortawesome/free-solid-svg-icons';
+
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -16,10 +19,14 @@ const Feed = () => {
   const sortByPopularity = searchParams.get('sortByPopularity') || '';
   const filterByDate = searchParams.get('filterByDate') || '';
   const filterByTags = searchParams.get('filterByTags') || '';
+  const filterByUser = searchParams.get('filterByUser') || '';
+  const [isScrolling, setIsScrolling] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const postsData = (await getAllPosts(searchQuery)).sort((a, b) => b.createdOn - a.createdOn);
+      const postsData = (await getAllPosts(searchQuery)).sort(
+        (a, b) => b.createdOn - a.createdOn
+      );
       setPosts(postsData);
       setUpdatedPosts(postsData);
     };
@@ -34,11 +41,12 @@ const Feed = () => {
   }, [sortByDate, sortByTitle, sortByPopularity, posts]);
 
   useEffect(() => {
-    if (posts.length > 0) handleFilterBy(filterByDate, filterByTags);
+    if (posts.length > 0) handleFilterBy(filterByDate, filterByTags, filterByUser);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterByDate, filterByTags]);
+  }, [filterByDate, filterByTags, filterByUser]);
 
   const handleSortBy = (sortDate, sortPopularity, sortTitle) => {
+
     let sortedPosts = [...posts];
     switch (sortDate) {
       case 'newest':
@@ -88,7 +96,7 @@ const Feed = () => {
     setUpdatedPosts(sortedPosts);
   };
 
-  const handleFilterBy = (filterByDate, filterByTags) => {
+  const handleFilterBy = (filterByDate, filterByTags, filterByUser) => {
     let filteredPosts = [...posts];
     if (filterByDate) {
       const timeStamp = new Date(filterByDate).getTime();
@@ -102,8 +110,34 @@ const Feed = () => {
         return tagsArray.every(tag => postTags.includes(tag));
       });
     }
+
+    if (filterByUser) {
+      filteredPosts = filteredPosts.filter(post => post.author === filterByUser);
+    }
+
     setUpdatedPosts(filteredPosts);
   };
+
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const toggleVisibility = () => {
+    if (window.scrollY > 300) {
+      setIsScrolling(true);
+    } else {
+      setIsScrolling(false);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', toggleVisibility);
+
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
 
   return (
     <div className={styles['feed']}>
@@ -112,7 +146,14 @@ const Feed = () => {
       <Posts posts={updatedPosts} />
 
       <RightSideBar posts={posts} />
+      {isScrolling && (
+        <div className={styles['to-top']} onClick={handleScrollToTop}>
+          <FontAwesomeIcon icon={faAnglesUp} />
+        </div>
+      )}
     </div>
+
+
   );
 };
 

@@ -11,3 +11,30 @@
     grid-template-columns: 1fr;
   }
 }
+
+.to-top {
+  position: fixed;
+  right: 10%;
+  bottom: 100px;
+  font-size: 40px;
+  animation: bounce-up 2s infinite;
+  z-index: 1000;
+  cursor: pointer;
+  color: var(--color-grey-700);
+
+  @keyframes bounce-up {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(10px);
+    }
+    60% {
+      transform: translateY(5px);
+    }
+  }
+}

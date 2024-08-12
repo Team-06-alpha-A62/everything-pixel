@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react';
 import { getAllTags } from '../../services/tags.service.js';
 import TrendingTag from '../TrendingTag/TrendingTag.jsx';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../../providers/useAuth.js';
 
 const TrendingTagsMenu = ({ size }) => {
+  const { currentUser } = useAuth();
   const [trendingTags, setTrendingTags] = useState([]);
   const [searchParams] = useSearchParams();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +35,11 @@ const TrendingTagsMenu = ({ size }) => {
   };
 
   const handleTagClick = tag => {
+    if (!currentUser.user) {
+      navigate('/login');
+      return
+    }
+
     searchParams.set(`filterByTags`, tag);
     navigate({ search: searchParams.toString() });
   };
