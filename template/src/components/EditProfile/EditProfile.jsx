@@ -4,18 +4,35 @@ import { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import { useNavigate } from 'react-router-dom';
-import { changeUserDetails } from '../../services/users.service.js';
+import {
+  changeUserDetails,
+  listenToUserBlockedStatus,
+} from '../../services/users.service.js';
 import Button from '../../hoc/Button/Button.jsx';
 import { deleteAvatar, uploadAvatar } from '../../services/images.service.js';
 import { updateUserEmail } from '../../services/auth.service.js';
 import DragZone from '../DragZone/DragZone.jsx';
+import { useAuth } from '../../providers/useAuth.js';
 
 const EditProfile = ({ user, onUserUpdate }) => {
+  const { currentUser } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [updatedUser, setUpdatedUser] = useState(() => ({ ...user }));
   const [imageFile, setImageFile] = useState(null);
-  const navigate = useNavigate();
+  const [isCurrentUserBlocked, setIsCurrentUserBlocked] = useState(
+    currentUser?.userData?.isBlocked
+  );
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (currentUser?.userData?.username) {
+      const unsubscribe = listenToUserBlockedStatus(
+        currentUser.userData.username,
+        setIsCurrentUserBlocked
+      );
+      return () => unsubscribe();
+    }
+  }, [currentUser?.userData?.username]);
   useEffect(() => {
     setUpdatedUser({ ...user });
   }, [user]);
@@ -137,8 +154,6 @@ const EditProfile = ({ user, onUserUpdate }) => {
     return <div>Loading...</div>;
   }
 
-  const isBlocked = user.isBlocked;
-
   return (
     <div className={styles['profile-info-container']}>
       <div className={styles['info-grid']}>
@@ -155,20 +170,20 @@ const EditProfile = ({ user, onUserUpdate }) => {
             handleFileChange={handleFileChange}
             round={true}
             imageUrl={updatedUser.avatarUrl}
-            disabled={isBlocked}
+            disabled={isCurrentUserBlocked}
           />
         </div>
         <div>
-        <div className={styles['input-section']}>
-          <label htmlFor="email">Username</label>
-          <input
-            type="username"
-            name="username"
-            id="username"
-            value={updatedUser.username}
-            disabled={true}
-          />
-        </div>
+          <div className={styles['input-section']}>
+            <label htmlFor="email">Username</label>
+            <input
+              type="username"
+              name="username"
+              id="username"
+              value={updatedUser.username}
+              disabled={true}
+            />
+          </div>
           <div className={styles['input-section']}>
             <label htmlFor="firstName">First name</label>
             <input
@@ -179,7 +194,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
               onChange={e =>
                 setUpdatedUser({ ...updatedUser, firstName: e.target.value })
               }
-              disabled={isBlocked}
+              disabled={isCurrentUserBlocked}
             />
           </div>
           <div className={styles['input-section']}>
@@ -192,7 +207,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
               onChange={e =>
                 setUpdatedUser({ ...updatedUser, lastName: e.target.value })
               }
-              disabled={isBlocked}
+              disabled={isCurrentUserBlocked}
             />
           </div>
           <div className={styles['input-section']}>
@@ -205,7 +220,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
               onChange={e =>
                 setUpdatedUser({ ...updatedUser, bio: e.target.value })
               }
-              disabled={isBlocked}
+              disabled={isCurrentUserBlocked}
             />
           </div>
         </div>
@@ -227,12 +242,12 @@ const EditProfile = ({ user, onUserUpdate }) => {
             onChange={value =>
               setUpdatedUser({ ...updatedUser, phoneNumber: value })
             }
-            disabled={isBlocked}
+            disabled={isCurrentUserBlocked}
           />
         </div>
       </div>
       <div className={styles['edit-profile-controllers']}>
-        {!isBlocked && (
+        {!isCurrentUserBlocked && (
           <Button style="primary" handleClick={handleEditProfile}>
             Save Changes
           </Button>

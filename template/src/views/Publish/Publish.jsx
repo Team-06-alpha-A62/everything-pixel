@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/useAuth.js';
 
@@ -8,7 +8,10 @@ import {
   addPostToTag,
   tagExists,
 } from '../../services/tags.service.js';
-import { addUserPost } from '../../services/users.service.js';
+import {
+  addUserPost,
+  listenToUserBlockedStatus,
+} from '../../services/users.service.js';
 import styles from './Publish.module.scss';
 import DragZone from '../../components/DragZone/DragZone.jsx';
 import Button from '../../hoc/Button/Button.jsx';
@@ -29,8 +32,19 @@ const Publish = () => {
   const [postData, setPostData] = useState(initialPostData);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isCurrentUserBlocked, setIsCurrentUserBlocked] = useState(
+    currentUser?.userData?.isBlocked
+  );
 
-  const isBlocked = currentUser?.userData?.isBlocked;
+  useEffect(() => {
+    if (currentUser?.userData?.username) {
+      const unsubscribe = listenToUserBlockedStatus(
+        currentUser.userData.username,
+        setIsCurrentUserBlocked
+      );
+      return () => unsubscribe();
+    }
+  }, [currentUser?.userData?.username]);
 
   const getImagePreviewUrl = file => {
     return new Promise((resolve, reject) => {
@@ -95,7 +109,7 @@ const Publish = () => {
   };
 
   const handlePublish = async () => {
-    if (isBlocked) {
+    if (isCurrentUserBlocked) {
       return;
     }
 
@@ -148,7 +162,7 @@ const Publish = () => {
                 autoFocus
                 value={postData.titleInput}
                 onChange={handleInputChange('titleInput')}
-                disabled={isBlocked}
+                disabled={isCurrentUserBlocked}
                 required
               />
             </div>
@@ -175,7 +189,7 @@ const Publish = () => {
                   value={postData.tagsInput}
                   onChange={handleInputChange('tagsInput')}
                   onKeyDown={handleKeyDown}
-                  disabled={isBlocked}
+                  disabled={isCurrentUserBlocked}
                 />
               </div>
             </div>
@@ -187,7 +201,7 @@ const Publish = () => {
                   height={500}
                   handleFileChange={handleFileChange}
                   imageUrl={postData.imageUrl}
-                  disabled={isBlocked}
+                  disabled={isCurrentUserBlocked}
                 />
               </div>
               <div className={styles['input-section']}>
@@ -198,7 +212,7 @@ const Publish = () => {
                   id="content"
                   value={postData.contentInput}
                   onChange={handleInputChange('contentInput')}
-                  disabled={isBlocked}
+                  disabled={isCurrentUserBlocked}
                   required
                 />
               </div>
@@ -208,7 +222,7 @@ const Publish = () => {
               <Button style="secondary" handleClick={() => navigate(-1)}>
                 &times; Cancel
               </Button>
-              {!isBlocked && (
+              {!isCurrentUserBlocked && (
                 <Button style="primary" handleClick={handlePublish}>
                   Publish &#x2713;
                 </Button>
