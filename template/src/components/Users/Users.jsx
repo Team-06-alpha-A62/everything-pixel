@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from './Users.module.scss';
 import { getAllUsers } from '../../services/users.service';
 import UserListItem from '../UserListItem/UserListItem';
-import { useAuth } from '../../providers/AuthProvider';
+import { useAuth } from '../../providers/useAuth.js';
 
 const Users = () => {
   const { currentUser } = useAuth();

@@ -7,7 +7,7 @@ import {
   userVoteInteractionWithComment,
 } from '../../services/users.service';
 import Avatar from 'react-avatar';
-import { useAuth } from '../../providers/AuthProvider';
+import { useAuth } from '../../providers/useAuth.js';
 import CommentActions from '../CommentActions/CommentActions';
 import {
   getCommentById,

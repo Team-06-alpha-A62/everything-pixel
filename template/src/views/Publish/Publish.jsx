@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../providers/AuthProvider.jsx';
+import { useAuth } from '../../providers/useAuth.js';
+
 import { createPost } from '../../services/posts.service.js';
 import {
   createTag,

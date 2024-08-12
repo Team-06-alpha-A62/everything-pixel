@@ -12,7 +12,7 @@ import PostAuthorDetails from '../PostAuthorDetails/PostAuthorDetails.jsx';
 import PostBody from '../PostBody/PostBody.jsx';
 import PostActions from '../PostActions/PostActions.jsx';
 import { hasUserVotedPost } from '../../services/posts.service.js';
-import { useAuth } from '../../providers/AuthProvider.jsx';
+import { useAuth } from '../../providers/useAuth.js';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import styles from './Post.module.scss';

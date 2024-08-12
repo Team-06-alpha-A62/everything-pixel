@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../providers/AuthProvider';
+import { useAuth } from '../../providers/useAuth.js';
+
 import styles from './Register.module.scss';
 import Button from '../../hoc/Button/Button';
 import DragZone from '../../components/DragZone/DragZone.jsx';
@@ -100,7 +101,6 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    setLoading(true);
     try {
       if (
         !registrationData.email ||
@@ -127,14 +127,8 @@ const Register = () => {
       navigate('/feed');
     } catch (error) {
       alert(`Registration error: ${error.message}`);
-    } finally {
-      setLoading(false);
     }
   };
-
-  if (loading) {
-    return <div className={styles['loading']}>Loading...</div>;
-  }
 
   return (
     <div className={styles['register']}>

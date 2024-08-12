@@ -3,7 +3,7 @@ import Logo from '../Logo/Logo';
 import Search from '../Search/Search';
 import ToggleTheme from '../ToggleTheme/ToggleTheme';
 import UserMenu from '../UserMenu/UserMenu';
-import { useAuth } from '../../providers/AuthProvider';
+import { useAuth } from '../../providers/useAuth.js';
 import styles from './Navigation.module.scss';
 import { useEffect, useState, useRef } from 'react';
 

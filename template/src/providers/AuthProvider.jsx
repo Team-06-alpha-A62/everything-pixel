@@ -15,7 +15,7 @@ const initialState = {
   userData: null,
 };
 
-const AuthContext = createContext({
+export const AuthContext = createContext({
   currentUser: initialState,
   login: async () => {},
   register: async () => {},
@@ -25,7 +25,7 @@ const AuthContext = createContext({
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(initialState);
   const [isLoading, setIsLoading] = useState(true);
-  const [user] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   if (currentUser.user !== user) {
     setCurrentUser({ ...currentUser, user });
@@ -33,18 +33,16 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!user) {
-      setTimeout(() => setIsLoading(false), 1500);
-      return;
+      return
     }
 
-    setIsLoading(true);
     setTimeout(() => {
-      getUserData(currentUser.user.uid).then(data => {
+      getUserData(currentUser?.user.uid).then(data => {
         const userData = data[Object.keys(data)[0]];
         setCurrentUser({ ...currentUser, userData });
       });
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
   }, [user]);
 
   const login = async (email, password) => {
@@ -106,11 +104,10 @@ export function AuthProvider({ children }) {
     isLoading,
   };
 
+  if (loading) {
+    return <div>loading.....</div>
+  }
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
 }
 
 AuthProvider.propTypes = {

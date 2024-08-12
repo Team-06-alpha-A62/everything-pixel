@@ -4,7 +4,7 @@ import Avatar from 'react-avatar';
 import Button from '../../hoc/Button/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../../providers/AuthProvider.jsx';
+import { useAuth } from '../../providers/useAuth.js';
 import {
   changeUserDetails,
   followUser,

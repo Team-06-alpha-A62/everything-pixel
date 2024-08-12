@@ -12,7 +12,7 @@ import {
   getCommentById,
 } from '../../services/comments.service';
 import PostComments from '../../components/PostComments/PostComments';
-import { useAuth } from '../../providers/AuthProvider';
+import { useAuth } from '../../providers/useAuth.js';
 import {
   isPostSaved,
   savePost,

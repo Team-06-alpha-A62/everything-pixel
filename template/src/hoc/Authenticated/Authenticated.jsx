@@ -1,17 +1,14 @@
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../providers/AuthProvider';
-import { useEffect } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../providers/useAuth.js';
 
 const Authenticated = ({ children }) => {
   const { currentUser } = useAuth();
-  const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    if (!currentUser?.userData) {
-      navigate('/login');
-    }
-  }, [currentUser?.userData]);
+  if (!currentUser) {
+    return <Navigate replace to="/login" state={{ from: location }} />
+  }
 
   return <>{children}</>;
 };

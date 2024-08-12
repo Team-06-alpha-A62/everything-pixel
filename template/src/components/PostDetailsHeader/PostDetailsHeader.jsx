@@ -9,7 +9,7 @@ import { deletePost } from '../../services/posts.service';
 import Modal from '../Modal/Modal';
 import ReportMenu from '../ReportMenu/ReportMenu';
 import DeletePostConfirm from '../DeletePostConfirm/DeletePostConfirm';
-import { useAuth } from '../../providers/AuthProvider';
+import { useAuth } from '../../providers/useAuth.js';
 import { deleteImage } from '../../services/images.service';
 import Button from '../../hoc/Button/Button.jsx';
 

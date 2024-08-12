@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '../../providers/AuthProvider.jsx';
+import { useAuth } from '../../providers/useAuth.js';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss'; // Import the SCSS file
 import Button from '../../hoc/Button/Button.jsx';
@@ -16,6 +16,7 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const { login } = useAuth();
   const navigate = useNavigate();
+
 
   if (currentUser.user) {
     navigate('/feed');

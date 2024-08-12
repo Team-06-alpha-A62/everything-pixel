@@ -1,5 +1,5 @@
 import styles from './Profile.module.scss';
-import { useAuth } from '../../providers/AuthProvider.jsx';
+import { useAuth } from '../../providers/useAuth.js';
 import { useEffect, useState } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

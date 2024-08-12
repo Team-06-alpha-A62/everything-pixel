@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getUserByHandle } from '../../services/users.service';
 import styles from './Follows.module.scss';
 
-import { useAuth } from '../../providers/AuthProvider.jsx';
+import { useAuth } from '../../providers/useAuth.js';
 import UserListItem from '../UserListItem/UserListItem.jsx';
 
 const Follows = ({ following, followers }) => {
