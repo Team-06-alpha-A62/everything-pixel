@@ -5,7 +5,6 @@ import Navigation from './components/Navigation/Navigation.jsx';
 import Register from './views/Register/Register.jsx';
 import Login from './views/Login/Login.jsx';
 import { AuthProvider } from './providers/AuthProvider.jsx';
-import { useAuth } from './providers/useAuth.js';
 import NotFound from './views/NotFound/NotFound.jsx';
 import Feed from './views/Feed/Feed.jsx';
 import Publish from './views/Publish/Publish.jsx';
@@ -15,11 +14,6 @@ import Profile from './views/Profile/Profile.jsx';
 import Authenticated from './hoc/Authenticated/Authenticated.jsx';
 
 function AppContent() {
-  const { isLoading } = useAuth();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <>

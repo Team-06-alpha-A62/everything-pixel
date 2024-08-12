@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
         setCurrentUser({ ...currentUser, userData });
       });
       setIsLoading(false);
-    }, 1000);
+    }, 100);
   }, [user]);
 
   const login = async (email, password) => {
@@ -104,9 +104,6 @@ export function AuthProvider({ children }) {
     isLoading,
   };
 
-  if (loading) {
-    return <div>loading.....</div>
-  }
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
 
