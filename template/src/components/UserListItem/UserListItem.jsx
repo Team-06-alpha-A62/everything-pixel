@@ -79,7 +79,7 @@ const UserListItem = ({
           size="50"
           src={avatarUrl}
         />
-        <span>{username}</span>
+        <span className={styles['username']}>{username}</span>
       </div>
       <div className={styles['user-controllers']}>
         {isLoading ? (

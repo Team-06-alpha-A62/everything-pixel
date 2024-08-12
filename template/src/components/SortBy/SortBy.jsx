@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './SortBy.module.scss';
 
-function SortBy({ sort, values }) {
-  const [showOptions, setShowOptions] = useState(false);
-  const [activeSort, setActiveSort] = useState('');
+function SortBy({ sort, values, activeSort, onSortChange }) {
+  const [showOptions, setShowOptions] = useState(true);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -16,36 +15,39 @@ function SortBy({ sort, values }) {
   };
 
   const handleClickedValueChange = value => {
-    let newActiveSort = activeSort === value ? '' : value;
-    setActiveSort(newActiveSort);
-    if (newActiveSort) {
+    const newSortValue = activeSort.value === value ? '' : value;
+    onSortChange(sort, newSortValue);
+
+    // Update URL params
+    searchParams.delete('sortByDate');
+    searchParams.delete('sortByPopularity');
+    searchParams.delete('sortByTitle');
+
+    if (newSortValue) {
       searchParams.set(
         `sortBy${sort.slice(0, 1).toUpperCase() + sort.slice(1)}`,
-        newActiveSort
-      );
-    } else {
-      searchParams.delete(
-        `sortBy${sort.slice(0, 1).toUpperCase() + sort.slice(1)}`
+        newSortValue
       );
     }
+
     navigate({ search: searchParams.toString() });
   };
 
   return (
-    <div className={styles.sortBy}>
-      <div className={styles.sortByHeader} onClick={toggleShowOptions}>
-        <span className={styles.sortByTitle}>{sort}</span>
+    <div className={styles['sort-by']}>
+      <div className={styles['sort-by-header']} onClick={toggleShowOptions}>
+        <h4 className={styles['sort-by-title']}>{sort}</h4>
         <FontAwesomeIcon
           icon={showOptions ? faSortUp : faSortDown}
-          className={styles.sortByIcon}
+          className={styles['sort-by-icon']}
         />
       </div>
       {showOptions && (
-        <div className={styles.sortByItems}>
+        <div className={styles['sort-by-items']}>
           {values.map(value => (
             <div
-              className={`${styles.sortByItem} ${
-                activeSort === value ? styles.active : ''
+              className={`${styles['sort-by-item']} ${
+                activeSort.sortType === sort && activeSort.value === value ? styles.active : ''
               }`}
               key={value}
               onClickCapture={() => {
@@ -64,7 +66,8 @@ function SortBy({ sort, values }) {
 SortBy.propTypes = {
   sort: PropTypes.string.isRequired,
   values: PropTypes.array,
-  handleSortBy: PropTypes.func,
+  activeSort: PropTypes.object.isRequired,
+  onSortChange: PropTypes.func.isRequired,
 };
 
 export default SortBy;

@@ -1,21 +1,23 @@
-@import '../../variables';
-
 .user-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid $color-grey-100;
+  border-bottom: 2px solid var(--color-grey-100);
   padding: 10px;
   cursor: default;
 
   &:hover {
-    background-color: $color-grey-50;
+    background-color: var(--color-grey-50);
   }
 
   .user-info {
     display: flex;
     gap: 10px;
     align-items: center;
+  }
+
+  .username {
+    color: var(--color-grey-700);
   }
 
   .user-controllers {
@@ -31,11 +33,11 @@
     .eye-icon {
       margin-left: 5px;
       font-size: 1.1rem;
-      color: $color-grey-700;
+      color: var(--color-grey-700);
       transition: color 0.2s;
 
       &:hover {
-        color: $color-brand-600;
+        color: var(--color-brand-600);
       }
     }
   }

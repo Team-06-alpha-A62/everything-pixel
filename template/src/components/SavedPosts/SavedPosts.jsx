@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { getPostByHandle } from '../../services/posts.service.js';
 import ProfileSinglePost from '../ProfileSinglePost/ProfileSinglePost.jsx';
+import styles from './SavedPosts.module.scss';
 
 const SavedPosts = ({ posts }) => {
   const [savedPosts, setSavedPosts] = useState([]);
@@ -22,7 +23,7 @@ const SavedPosts = ({ posts }) => {
   }, [posts]);
 
   return (
-    <>
+    <div className={styles['saved-posts-container']}>
       {savedPosts.length ? (
         savedPosts.map(post => {
           return <ProfileSinglePost key={post.id} post={post} />;
@@ -30,7 +31,7 @@ const SavedPosts = ({ posts }) => {
       ) : (
         <p>No Posts Yet</p>
       )}
-    </>
+    </div>
   );
 };
 

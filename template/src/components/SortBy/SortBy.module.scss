@@ -1,4 +1,4 @@
-.sortBy {
+.sort-by {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -6,47 +6,48 @@
   width: 100%;
 }
 
-.sortByHeader {
+.sort-by-header {
   display: flex;
   align-items: center;
+  gap: 10px;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
-.sortByTitle {
+.sort-by-title {
+  display: flex;
   font-size: 1.2rem;
   font-weight: bold;
-  margin-right: 5px;
 }
 
-.sortByIcon {
+.sort-by-icon {
   transition: transform 0.3s;
+  color: var(--color-grey-700);
 
   &.open {
     transform: rotate(180deg);
   }
 }
 
-.sortByItems {
+.sort-by-items {
   display: flex;
   flex-direction: column;
-  gap: 5px;
   width: 100%;
 }
 
-.sortByItem {
+.sort-by-item {
   padding: 10px 15px;
-  background-color: #f0f0f0;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  color: var(--color-grey-700);
 
   &:hover {
-    background-color: #e0e0e0;
+    background-color: var(--color-grey-100);
   }
 
   &.active {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--color-brand-700);
+    color: var(--color-grey-0);
   }
 }

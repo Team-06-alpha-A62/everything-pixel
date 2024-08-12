@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import PublishComment from '../PublishComment/PublishComment';
 import PostComment from '../PostComment/PostComment';
 import { useState } from 'react';
+import styles from './PostComments.module.scss';
 
 const PostComments = ({
   isCurrentUserBlocked,
@@ -28,7 +29,7 @@ const PostComments = ({
         setCommentToEdit={setCommentToEdit}
       />
       {comments.length === 0 ? (
-        <p>No comments yet...</p>
+        <p className={styles['no-items-message']}>No comments yet...</p>
       ) : (
         <>
           {sortedComments.map(comment => {

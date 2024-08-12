@@ -1,5 +1,3 @@
-@import '../../variables';
-
 .drag-zone {
   .input-element {
     display: flex;
@@ -10,19 +8,19 @@
     cursor: pointer;
     transition: ease-in-out 0.1s;
     // border-radius: $border-radius-md;
-    box-shadow: $shadow-sm;
+    box-shadow: var(--shadow-sm);
 
     div {
       width: 100%;
       height: 100%;
-      border-radius: $border-radius-md;
-      box-shadow: $shadow-sm;
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-sm);
     }
 
     &:hover {
       background-image: none;
-      background-color: $color-brand-500;
-      color: $color-grey-0;
+      background-color: var(--color-brand-500);
+      color: var(--color-grey-0);
     }
   }
 }

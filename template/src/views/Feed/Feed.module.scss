@@ -1,6 +1,6 @@
 .feed {
   display: grid;
-  grid-template-columns: auto minmax(auto, 3fr) auto;
+  grid-template-columns: auto minmax(auto, 3fr) 400px;
   justify-items: center;
   max-width: 70%;
   margin: 50px auto;

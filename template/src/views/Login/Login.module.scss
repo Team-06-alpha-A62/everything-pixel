@@ -1,23 +1,21 @@
-@import '../../variables';
-
 .login-page {
   display: flex;
   justify-content: center;
   align-items: center;
 
   .login-container {
-    background-color: $color-grey-0;
+    background-color: var(--color-grey-0);
     padding: 40px;
     margin-top: 70px;
     border-radius: 10px;
-    box-shadow: $shadow-sm;
+    box-shadow: var(--shadow-sm);
     width: 450px;
     text-align: center;
 
     .login-title {
       font-size: 2rem;
       margin-bottom: 20px;
-      color: $color-grey-700;
+      color: var(--color-grey-700);
     }
 
     .login-label {
@@ -25,21 +23,21 @@
       text-align: left;
       margin: 10px 0 5px;
       font-size: 1rem;
-      color: $color-grey-700;
+      color: var(--color-grey-700);
     }
 
     .login-input {
       width: 100%;
       padding: 10px;
       margin-bottom: 20px;
-      border: 1px solid $color-grey-700;
+      border: 1px solid var(--color-grey-700);
       border-radius: 4px;
-      background-color: $color-grey-0;
-      color: $color-grey-700;
+      background-color: var(--color-grey-0);
+      color: var(--color-grey-700);
     }
 
     .error-text {
-      color: $color-red-700;
+      color: var(--color-red-700);
       font-size: 0.875rem;
       margin-top: 0.25rem;
     }
@@ -66,10 +64,10 @@
     .login-register-text {
       margin-top: 20px;
       font-size: 0.9rem;
-      color: $color-grey-500;
+      color: var(--color-grey-500);
 
       .login-register-link {
-        color: $color-brand-500;
+        color: var(--color-brand-500);
         text-decoration: none;
 
         &:hover {

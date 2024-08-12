@@ -159,6 +159,16 @@ const EditProfile = ({ user, onUserUpdate }) => {
           />
         </div>
         <div>
+        <div className={styles['input-section']}>
+          <label htmlFor="email">Username</label>
+          <input
+            type="username"
+            name="username"
+            id="username"
+            value={updatedUser.username}
+            disabled={true}
+          />
+        </div>
           <div className={styles['input-section']}>
             <label htmlFor="firstName">First name</label>
             <input
@@ -207,10 +217,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
             name="email"
             id="email"
             value={updatedUser.email}
-            onChange={e =>
-              setUpdatedUser({ ...updatedUser, email: e.target.value })
-            }
-            disabled={isBlocked}
+            disabled={true}
           />
         </div>
         <div className={styles['input-section']}>

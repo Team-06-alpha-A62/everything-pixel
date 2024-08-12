@@ -1,5 +1,3 @@
-@import '../../variables';
-
 .profile-info-container {
   max-width: 1000px; // Set a max width to keep the content from stretching too wide
   margin: 0 auto; // Center the container
@@ -8,7 +6,7 @@
     font-weight: bold;
 
     &.info-heading {
-      border-bottom: 2px solid $color-grey-100; // Subtle border for separation
+      border-bottom: 2px solid var(--color-grey-100); // Subtle border for separation
       padding-bottom: 10px; // Space between text and border
       margin-bottom: 20px; // Margin to separate from next section
     }
@@ -34,7 +32,7 @@
       }
 
       span {
-        color: $color-grey-500;
+        color: var(--color-grey-500);
       }
     }
   }

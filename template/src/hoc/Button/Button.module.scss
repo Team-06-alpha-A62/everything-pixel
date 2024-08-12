@@ -1,70 +1,68 @@
-@import '../../variables';
-
 .primary {
-  border-radius: $border-radius-md;
-  background-color: $color-brand-500;
-  border: 2px solid $color-brand-500;
-  color: $color-grey-0;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-brand-500);
+  border: 2px solid var(--color-brand-500);
+  color: #fff;
   transition: background-color 0.2s;
 
   &:hover {
-    border-color: $color-brand-600;
-    background-color: $color-brand-600;
+    border-color: var(--color-brand-600);
+    background-color: var(--color-brand-600);
   }
 }
 
 .secondary {
-  border: 2px solid $color-grey-700;
-  color: $color-grey-700;
-  border-radius: $border-radius-md;
+  border: 2px solid var(--color-grey-700);
+  color: var(--color-grey-700);
+  border-radius: var(--border-radius-md);
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: $color-grey-100;
-    border-color: $color-brand-600;
-    color: $color-brand-600;
+    background-color: var(--color-grey-100);
+    border-color: var(--color-brand-600);
+    color: var(--color-brand-600);
   }
 }
 
 .tertiary {
-  color: $color-brand-500;
+  color: var(--color-brand-500);
   transition: background-color 0.2s;
 
   &:hover {
     font-weight: bold;
-    color: $color-brand-600;
+    color: var(--color-brand-600);
   }
 }
 
 .success {
-  border-radius: $border-radius-md;
-  background-color: $color-green-700;
-  border: 2px solid $color-green-700;
-  color: $color-grey-0;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-green-700);
+  border: 2px solid var(--color-green-700);
+  color: #fff;
 }
 
 .alert {
-  border-radius: $border-radius-md;
-  background-color: $color-red-700;
-  border: 2px solid $color-red-700;
-  color: $color-grey-0;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-red-700);
+  border: 2px solid var(--color-red-700);
+  color: #fff;
   transition: background-color 0.2s;
 
   &:hover {
-    border-color: $color-red-800;
-    background-color: $color-red-800;
+    border-color: var(--color-red-800);
+    background-color: var(--color-red-800);
   }
 }
 
 .alert-secondary {
-  border: 2px solid $color-red-700;
-  color: $color-red-700;
-  border-radius: $border-radius-md;
+  border: 2px solid var(--color-red-700);
+  color: var(--color-red-700);
+  border-radius: var(--border-radius-md);
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: $color-grey-100;
-    border-color: $color-red-800;
-    color: $color-red-800;
+    background-color: var(--color-grey-100);
+    border-color: var(--color-red-800);
+    color: var(--color-red-800);
   }
 }

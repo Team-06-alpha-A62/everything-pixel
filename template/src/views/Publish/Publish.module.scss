@@ -1,4 +1,3 @@
-@import '../../variables';
 .publish-wrapper {
   display: flex;
   justify-content: center;
@@ -6,14 +5,14 @@
   margin: 50px auto;
 }
 .publish-container {
-  background-color: $color-grey-0;
-  box-shadow: $shadow-sm;
+  background-color: var(--color-grey-0);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   width: 60%;
   padding: 50px 100px;
   gap: 20px;
-  border-radius: $border-radius-md;
+  border-radius: var(--border-radius-md);
 
   .input-section {
     display: flex;
@@ -26,8 +25,8 @@
   .publish-tags {
     display: flex;
     gap: 5px;
-    border-radius: $border-radius-md;
-    border: 2px solid $color-grey-100;
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--color-grey-100);
     width: 100%;
     padding: 10px;
     resize: none;
@@ -73,10 +72,10 @@
       gap: 5px;
       align-items: center;
       padding: 0 10px;
-      border-radius: $border-radius-md;
-      background-color: $color-brand-500;
-      color: $color-grey-0;
-      box-shadow: $shadow-sm;
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-brand-500);
+      color: var(--color-grey-0);
+      box-shadow: var(--shadow-sm);
 
       .delete-tag {
         cursor: pointer;

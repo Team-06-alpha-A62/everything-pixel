@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './Modal.module.scss';
+import Button from '../../hoc/Button/Button.jsx';
 
 const Modal = ({ children, isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -10,9 +11,12 @@ const Modal = ({ children, isOpen, onClose }) => {
         className={styles['modal-content']}
         onClick={e => e.stopPropagation()}
       >
-        <button className={styles['close-button']} onClick={onClose}>
+        <div className={styles['close']} onClick={onClose}>
+        <span>&times;</span>
+        </div>
+        {/* <button className={styles['close-button']} onClick={onClose}>
           &times;
-        </button>
+        </button> */}
         {children}
       </div>
     </div>

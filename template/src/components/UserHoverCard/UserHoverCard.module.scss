@@ -1,12 +1,10 @@
-@import '../../variables';
-
 .user-hover-card {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: $color-grey-0;
-  border-radius: $border-radius-md;
-  box-shadow: $shadow-sm;
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
   padding: 10px;
   display: flex;
   align-items: center;
@@ -32,19 +30,5 @@
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-  }
-
-  .follow-button {
-    background-color: #1da1f2;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #0c85d0;
-    }
   }
 }

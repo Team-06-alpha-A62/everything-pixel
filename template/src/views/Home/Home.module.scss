@@ -1,5 +1,3 @@
-@import '../../variables';
-
 .home-wrapper {
   display: flex;
   flex-direction: column;
@@ -12,7 +10,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  color: $color-grey-0;
+  color: #fff;
   text-align: center;
   background: url('../../assets/641c2b170466977.645e34a7760bf.gif') no-repeat
     center center fixed;
@@ -77,16 +75,16 @@
     margin-bottom: 35px;
 
     .title {
-      color: $color-grey-0;
+      color: #fff;
     }
   }
 
   .get-started {
     padding: 15px 30px;
-    border-radius: $border-radius-md;
-    background-color: $color-brand-500;
-    border: 2px solid $color-brand-500;
-    color: $color-grey-0;
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-brand-500);
+    border: 2px solid var(--color-brand-500);
+    color: #fff;
     transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
     position: relative;
     display: inline-block;
@@ -94,8 +92,8 @@
     font-weight: bold;
 
     &:hover {
-      border-color: $color-brand-600;
-      background-color: $color-brand-600;
+      border-color: var(--color-brand-600);
+      background-color: var(--color-brand-600);
       box-shadow: 2px 2px 0 0 rgba(255, 255, 255, 1);
       transform: translate(2px, 2px);
     }
@@ -106,7 +104,7 @@
     font-size: 1rem;
 
     a {
-      color: $color-brand-500;
+      color: var(--color-brand-500);
 
       &:hover {
         text-decoration: underline;
@@ -115,29 +113,44 @@
   }
 }
 
-.trending-posts-section,
 .trending-tags-section {
   padding: 80px 180px;
-  background-color: #f9f9f9; /* Light background for contrast */
-  display: flex;
-  justify-content: space-around;
+  background-color: var(--color-grey-50);
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-gap: 100px;
   align-items: center;
-  flex-wrap: wrap;
 
-  .trending-posts-container,
   .trending-tags-container {
-    width: 40%;
-    background-color: white;
-    border: 1px solid #e0e0e0;
+    width: 100%;
+    background-color: var(--color-grey-0);
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: var(--shadow-sm);
   }
 
   .text-content {
-    width: 35%;
-    color: #333;
+    color: var(--color-grey-700);
+    font-size: 26px;
+  }
+}
+
+.trending-posts-section {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  padding: 80px 180px;
+  background-color: var(--color-grey-50);
+  grid-gap: 100px;
+  align-items: center;
+  .trending-posts-container {
+    width: 100%;
+    background-color: var(--color-grey-0);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .text-content {
+    color: var(--color-grey-700);
     font-size: 26px;
   }
 }

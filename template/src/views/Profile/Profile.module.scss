@@ -20,9 +20,9 @@
   border-radius: 10px;
   width: 300px;
   height: 350px;
-  background-color: $color-grey-0; // White background for sidebar
-  border-right: 1px solid $color-grey-100; // Light grey border
-  box-shadow: $shadow-sm; // Subtle shadow for sidebar
+  background-color: var(--color-grey-0); // White background for sidebar
+  border-right: 1px solid var(--color-grey-100); // Light grey border
+  box-shadow: var(--shadow-sm);
   padding: 0 20px;
   flex-shrink: 0; // Prevent shrinking
 
@@ -38,7 +38,7 @@
         transition: color 0.3s;
 
         &:hover {
-          background-color: $color-grey-50;
+          background-color: var(--color-grey-50);
         }
 
         svg {
@@ -58,7 +58,7 @@
   border-radius: 10px;
   padding: 20px;
   overflow-y: auto; // Allow scrolling if content is large
-  background-color: $color-grey-0; // White background for sidebar
-  box-shadow: $shadow-sm; // Subtle shadow for sidebar
-  border-left: 1px solid $color-grey-100; // Light grey border
+  background-color: var(--color-grey-0); // White background for sidebar
+  box-shadow: var(--shadow-sm); // Subtle shadow for sidebar
+  border-left: 1px solid var(--color-grey-100); // Light grey border
 }

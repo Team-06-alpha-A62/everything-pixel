@@ -19,7 +19,7 @@ const Feed = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const postsData = await getAllPosts(searchQuery);
+      const postsData = (await getAllPosts(searchQuery)).sort((a, b) => b.createdOn - a.createdOn);
       setPosts(postsData);
       setUpdatedPosts(postsData);
     };

@@ -6,7 +6,7 @@ import styles from './FilterPostsMenu.module.scss';
 const FilterPostsMenu = () => {
   return (
     <div>
-      <h1>Filter By</h1>
+      <h2 className={styles['filter-posts-menu-header']}>Filter By</h2>
       <div>
         <FilterByDate filterCriteria={'date'} value={'date'} />
         <FilterByTags filterCriteria={'tags'} />

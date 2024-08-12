@@ -1,17 +1,14 @@
 import PropTypes from 'prop-types';
 import styles from './DeletePostConfirm.module.scss';
+import Button from '../../hoc/Button/Button.jsx';
 
 const DeletePostConfirm = ({ onConfirm, onCancel }) => {
   return (
     <div className={styles['modal-content']}>
-      <p>Are you sure you want to delete this post?</p>
+      <p>Are you sure you want to delete this post? <br/> You can&apos;t undo this action </p>
       <div className={styles['modal-actions']}>
-        <button className={styles['btn']} onClick={onConfirm}>
-          Yes
-        </button>
-        <button className={styles['btn']} onClick={onCancel}>
-          No
-        </button>
+        <Button handleClick={onConfirm} style='alert'>Confirm</Button>
+        <Button handleClick={onCancel} style='alert-secondary'>Cancel</Button>
       </div>
     </div>
   );

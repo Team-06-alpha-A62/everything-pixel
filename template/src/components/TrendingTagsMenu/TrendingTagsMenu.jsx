@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import styles from './TrendingTagsMenu.module.scss';
 import { useEffect, useState } from 'react';
 import { getAllTags } from '../../services/tags.service.js';
 import TrendingTag from '../TrendingTag/TrendingTag.jsx';
@@ -21,6 +20,7 @@ const TrendingTagsMenu = ({ size }) => {
       }
     };
     fetchTags();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getTrendingTags = tags => {
     const sortedTags = [...tags].sort(
@@ -38,7 +38,7 @@ const TrendingTagsMenu = ({ size }) => {
 
   return (
     <>
-      <h2>Trending Tags:</h2>
+      <h2>Trending Tags</h2>
       {trendingTags.map(tag => (
         <TrendingTag
           key={tag.name}
