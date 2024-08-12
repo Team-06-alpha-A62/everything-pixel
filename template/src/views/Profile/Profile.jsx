@@ -23,6 +23,7 @@ import Users from '../../components/Users/Users.jsx';
 import ProfileHeader from '../../components/ProfileHeader/ProfileHeader.jsx';
 import UserDetails from '../../components/UserDetails/UserDetails.jsx';
 import Suspended from '../../components/Suspended/Suspended.jsx';
+import Notifications from '../../components/Notifications/Notifications.jsx';
 
 const Profile = () => {
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
@@ -45,7 +46,7 @@ const Profile = () => {
     }, 1000);
   }, [currentUser.userData]);
 
-  const handleUserUpdate = (updatedUserData) => {
+  const handleUserUpdate = updatedUserData => {
     setUser(updatedUserData);
   };
 
@@ -71,6 +72,15 @@ const Profile = () => {
               >
                 <FontAwesomeIcon icon={faUser} />
                 General
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/profile/notifications"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
+                <FontAwesomeIcon icon={faUser} />
+                Notifications
               </NavLink>
             </li>
             <li>
@@ -137,6 +147,10 @@ const Profile = () => {
           <Routes>
             <Route element={<ProfileInfo />} />
             <Route path="general" element={<ProfileInfo user={user} />} />
+            <Route
+              path="notifications"
+              element={<Notifications user={user} />}
+            />
             <Route path="my-posts" element={<MyPosts posts={user.posts} />} />
             <Route
               path="saved-posts"
@@ -155,7 +169,9 @@ const Profile = () => {
             <Route path="suspended" element={<Suspended />} />
             <Route
               path="edit"
-              element={<EditProfile user={user} onUserUpdate={handleUserUpdate} />}
+              element={
+                <EditProfile user={user} onUserUpdate={handleUserUpdate} />
+              }
             />
             <Route path="users/user/:username" element={<UserDetails />} />
             <Route path="*" element={<NotFound />} />

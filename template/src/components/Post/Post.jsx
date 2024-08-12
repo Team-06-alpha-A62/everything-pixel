@@ -17,6 +17,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import styles from './Post.module.scss';
 import { hasUserVotedPost } from '../../services/posts.service.js';
+import { createNotification } from '../../services/notification.service.js';
 
 function Post({ post }) {
   const { currentUser } = useAuth();
@@ -109,6 +110,13 @@ function Post({ post }) {
         );
         setUserVote(type);
         updatedVotes[type] += 1;
+        if (post.author !== currentUser.userData.username) {
+          await createNotification(author, {
+            type: 'comment',
+            message: `${currentUser.userData.username} ${type}d on your post`,
+            postId: post.id,
+          });
+        }
       }
       setPostVotes(updatedVotes);
     } catch (error) {
@@ -122,6 +130,13 @@ function Post({ post }) {
         await unSavePost(currentUser.userData.username, post.id);
       } else {
         await savePost(currentUser.userData.username, post.id);
+        if (post.author !== currentUser.userData.username) {
+          await createNotification(author, {
+            type: 'save',
+            message: `${currentUser.userData.username} saved your post`,
+            postId: post.id,
+          });
+        }
       }
       setIsSaved(isSaved => !isSaved);
     } catch (error) {

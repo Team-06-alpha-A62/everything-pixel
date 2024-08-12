@@ -1,0 +1,50 @@
+.notification-item {
+  display: flex;
+  padding: 10px 5px;
+  gap: 20px;
+  height: auto;
+  border-bottom: 1px solid var(--color-grey-200);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.post-image {
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+  margin-right: 15px;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-message {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--color-grey-800);
+}
+
+.post-title {
+  font-size: 14px;
+  color: var(--color-grey-700);
+  margin-bottom: 8px;
+}
+
+.notification-date {
+  font-size: 12px;
+  color: var(--color-grey-600);
+}
+.eye-icon {
+  margin-left: 5px;
+  font-size: 1.1rem;
+
+  color: var(--color-grey-700);
+  transition: color 0.2s;
+  align-self: center;
+  &:hover {
+    color: var(--color-brand-600);
+  }
+}

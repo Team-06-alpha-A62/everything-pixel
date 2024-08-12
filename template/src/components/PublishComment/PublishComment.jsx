@@ -11,7 +11,6 @@ const PublishComment = ({
   setCommentToEdit,
 }) => {
   const [newComment, setNewComment] = useState('');
-  //console.log(isBlocked);
   useEffect(() => {
     if (commentToEdit) {
       setNewComment(commentToEdit.content);
@@ -71,6 +70,7 @@ PublishComment.propTypes = {
   commentToEdit: PropTypes.any,
   onEditComment: PropTypes.any,
   setCommentToEdit: PropTypes.any,
+  isBlocked: PropTypes.bool,
 };
 
 export default PublishComment;

@@ -21,7 +21,7 @@ export const createNotification = async (userHandle, notificationData) => {
     const id = result.key;
 
     const updateObject = {
-      [`notification/${id}/id`]: id,
+      [`notifications/${userHandle}/${id}/id`]: id,
     };
 
     await update(ref(db), updateObject);

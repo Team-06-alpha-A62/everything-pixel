@@ -66,7 +66,9 @@ const UserMenu = () => {
                 size="50"
                 src={currentUser.userData?.avatarUrl}
               />
-              <span className={styles['badge']}>{unreadCount}</span>
+              {unreadCount > 0 && (
+                <span className={styles['badge']}>{unreadCount}</span>
+              )}
             </>
           )}
         </div>
