@@ -39,7 +39,7 @@ const Suspended = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles['suspended-container']}>
       {isLoading ? (
         <p>Loading...</p>
       ) : (

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import TrendingPost from '../TrendingPost/TrendingPost';
-//import { getAllPosts } from '../../services/posts.service';
 
 const TrendingPostsMenu = ({ size, posts }) => {
   const [trendingPosts, setTrendingPosts] = useState([]);
@@ -28,7 +27,7 @@ const TrendingPostsMenu = ({ size, posts }) => {
 
   return (
     <>
-      <h2>Trending Posts:</h2>
+      <h2>Trending Posts</h2>
       {trendingPosts.map(post => (
         <TrendingPost trendingPost={post} key={post.id} />
       ))}

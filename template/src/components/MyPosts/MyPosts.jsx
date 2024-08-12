@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { getPostByHandle } from '../../services/posts.service.js';
 import ProfileSinglePost from '../ProfileSinglePost/ProfileSinglePost.jsx';
+import styles from './MyPosts.module.scss';
 
 const MyPosts = ({ posts }) => {
   const [myPosts, setMyPosts] = useState([]);
@@ -21,7 +22,7 @@ const MyPosts = ({ posts }) => {
   }, [posts]);
 
   return (
-    <>
+    <div className={styles['my-posts-container']}>
       {myPosts.length ? (
         myPosts.map(post => {
           return <ProfileSinglePost key={post.id} post={post} />;
@@ -29,7 +30,7 @@ const MyPosts = ({ posts }) => {
       ) : (
         <p>No Posts Yet</p>
       )}
-    </>
+    </div>
   );
 };
 

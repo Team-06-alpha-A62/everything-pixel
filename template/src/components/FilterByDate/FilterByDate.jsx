@@ -3,9 +3,10 @@ import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import styles from './FilterByDate.module.scss';
 
 const FilterByDate = ({ filterCriteria, value }) => {
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
   const [filterDate, setFilterDate] = useState('');
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -34,15 +35,17 @@ const FilterByDate = ({ filterCriteria, value }) => {
   };
 
   return (
-    <div>
-      <label htmlFor={value}>{filterCriteria}</label>
-      <FontAwesomeIcon
-        onClick={toggleShowMore}
-        icon={showMore ? faSortUp : faSortDown}
-      />
+    <div className={styles['filter-by']}>
+      <div className={styles['filter-by-header']} onClick={toggleShowMore}>
+        <h4 htmlFor={value}>{filterCriteria}</h4>
+        <FontAwesomeIcon
+          className={styles['filter-by-icon']}
+          onClick={toggleShowMore}
+          icon={showMore ? faSortUp : faSortDown}
+        />
+      </div>
       {showMore && (
         <>
-          <br />
           <input
             value={filterDate}
             type={value}

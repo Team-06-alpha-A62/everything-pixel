@@ -33,7 +33,7 @@ const Users = () => {
         }));
         const filteredUsers = transformedUsers.filter(user => {
           if (
-            user.role !== 'amdin' &&
+            user.role !== 'admin' &&
             user.username !== currentUser?.userData?.username
           ) {
             return user;
@@ -50,7 +50,7 @@ const Users = () => {
   }, [searchQuery, currentUser?.userData?.username]);
 
   return (
-    <div>
+    <div className={styles['users-container']}>
       <Search width="50%" />
       {isLoading ? (
         <p>Loading...</p>
