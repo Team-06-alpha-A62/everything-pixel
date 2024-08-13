@@ -150,8 +150,10 @@ export const deletePost = async (userHandle, postId) => {
       throw new Error('Post not found!');
     }
 
-    const tags = Object.keys(postSnapshot.val().tags ?? {});
-    const comments = Object.keys(postSnapshot.val().comments ?? {});
+    const postData = postSnapshot.val();
+
+    const tags = Object.keys(postData.tags ?? {});
+    const comments = Object.keys(postData.comments ?? {});
 
     const tagsUpdateObject = tags.reduce((acc, tag) => {
       acc[`tags/${tag}/posts/${postId}`] = null;
@@ -176,7 +178,6 @@ export const deletePost = async (userHandle, postId) => {
     throw new Error(`Error deleting post: ${error.message}`);
   }
 };
-
 /**
  * Checks if a user has voted on a post.
  *

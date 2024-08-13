@@ -55,6 +55,7 @@ const UserDetails = () => {
         if (userData.comments?.length) {
           const commentDetails = await Promise.all(
             userData.comments.map(async commentId => {
+              console.log(commentId);
               const comment = await getCommentById(commentId);
               const post = await getPostByHandle(comment.postId);
               return { ...comment, post };
@@ -81,7 +82,7 @@ const UserDetails = () => {
     };
 
     fetchUser();
-  }, [username, user]);
+  }, [username]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
