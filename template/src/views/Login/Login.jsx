@@ -17,7 +17,7 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  if (currentUser.user) {
+  if (currentUser?.user) {
     navigate('/feed');
   }
 

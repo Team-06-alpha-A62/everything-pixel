@@ -8,14 +8,12 @@ import UserListItem from '../UserListItem/UserListItem.jsx';
 
 const Follows = ({ following, followers }) => {
   const { currentUser } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('following');
   const [followingData, setFollowingData] = useState([]);
   const [followersData, setFollowersData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       try {
         const followingData = await Promise.all(
           following.map(f => getUserByHandle(f))
@@ -27,8 +25,6 @@ const Follows = ({ following, followers }) => {
         setFollowersData(followersData);
       } catch (error) {
         console.error('Error fetching user data:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchData();
@@ -39,14 +35,6 @@ const Follows = ({ following, followers }) => {
   };
 
   const activeList = activeTab === 'following' ? followingData : followersData;
-  const noDataMessage =
-    activeTab === 'following'
-      ? 'You are not following anyone yet.'
-      : 'No one is following you yet.';
-
-  if (isLoading && currentUser?.userData) {
-    return <div className={styles['loading']}>Loading...</div>;
-  }
 
   return (
     <div className={styles['follows-container']}>
@@ -69,13 +57,9 @@ const Follows = ({ following, followers }) => {
         </span>
       </div>
       <div className={styles['listContainer']}>
-        {isLoading ? (
-          <div className={styles['loading']}>Loading...</div>
-        ) : (
-          activeList.map((user, index) => (
-            <UserListItem key={index} user={user} showSuspendToggle={false} />
-          ))
-        )}
+        {activeList.map((user, index) => (
+          <UserListItem key={index} user={user} showSuspendToggle={false} />
+        ))}
       </div>
     </div>
   );

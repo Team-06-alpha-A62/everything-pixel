@@ -9,14 +9,12 @@ import { useAuth } from '../../providers/useAuth.js';
 const Users = () => {
   const { currentUser } = useAuth();
   const [searchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        setIsLoading(true);
         const fetchedUsers = await getAllUsers(searchQuery);
         const transformedUsers = fetchedUsers.map(user => ({
           ...user,
@@ -42,8 +40,6 @@ const Users = () => {
         setUsers(filteredUsers);
       } catch (error) {
         console.error('Error fetching users:', error.message);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchUsers();
@@ -52,17 +48,14 @@ const Users = () => {
   return (
     <div className={styles['users-container']}>
       <Search width="50%" />
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className={styles['userList']}>
-          {users.length > 0 ? (
-            users.map(user => <UserListItem key={user.uid} user={user} />)
-          ) : (
-            <p>No users found</p>
-          )}
-        </div>
-      )}
+
+      <div className={styles['userList']}>
+        {users.length > 0 ? (
+          users.map(user => <UserListItem key={user.uid} user={user} />)
+        ) : (
+          <p>No users found</p>
+        )}
+      </div>
     </div>
   );
 };

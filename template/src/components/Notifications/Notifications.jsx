@@ -46,9 +46,9 @@ const Notifications = () => {
 
   return (
     <div className={styles['notifications-list']}>
-      <h2>Your Notifications</h2>
+      <h2>My Notifications</h2>
       {notifications.length === 0 ? (
-        <p>No notifications available</p>
+        <p className={styles['no-data-message']}>No new notifications</p>
       ) : (
         notifications.map(notification => (
           <Notification key={notification.id} notification={notification} />

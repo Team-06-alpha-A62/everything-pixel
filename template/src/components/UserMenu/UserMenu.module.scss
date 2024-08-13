@@ -11,10 +11,15 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background-color: red;
-  color: white;
+  background-color: var(--color-red-700);
+  color: var(--color-grey-0);
   border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 2px 6px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
 }
