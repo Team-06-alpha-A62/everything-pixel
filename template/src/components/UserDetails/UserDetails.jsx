@@ -13,6 +13,8 @@ import CommentListItem from '../CommentListItem/CommentListItem';
 import StatItem from '../StatItem/StatItem';
 import Button from '../../hoc/Button/Button';
 import ReportListItem from '../ReportListItem/ReportListItem';
+import Lottie from 'lottie-react';
+import animationData from '../../assets/pacman-loading-animation.json';
 
 const UserDetails = () => {
   const { username } = useParams();
@@ -21,6 +23,7 @@ const UserDetails = () => {
   const [comments, setComments] = useState([]);
   const [postReports, setPostReports] = useState([]);
   const [commentReports, setCommentReports] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
   const [selectedTab, setSelectedTab] = useState('posts');
   const [isUserBlocked, setIsUserBlocked] = useState(false);
@@ -34,7 +37,7 @@ const UserDetails = () => {
         setIsUserBlocked(user?.isBlocked);
         if (userData.posts?.length) {
           const postDetails = await Promise.all(
-            userData.posts?.map(postId => getPostByHandle(postId))
+            userData.posts.map(postId => getPostByHandle(postId))
           );
           setPosts(postDetails);
 
@@ -74,11 +77,13 @@ const UserDetails = () => {
         }
       } catch (error) {
         console.error('Error fetching user details:', error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchUser();
-  }, [username]);
+  }, [username, user]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -103,8 +108,8 @@ const UserDetails = () => {
 
   const renderContent = () => {
     if (selectedTab === 'posts') {
-      if (posts?.length > 0) {
-        return posts?.map((post, index) => (
+      if (posts.length > 0) {
+        return posts.map((post, index) => (
           <ProfileSinglePost key={index} post={post} />
         ));
       } else {
@@ -133,10 +138,16 @@ const UserDetails = () => {
           </>
         );
       } else {
-        return <p className={styles['no-items-message']}>No reports for this user</p>;
+        return (
+          <p className={styles['no-items-message']}>No reports for this user</p>
+        );
       }
     }
   };
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   return (
     <div className={styles['user-details-container']}>

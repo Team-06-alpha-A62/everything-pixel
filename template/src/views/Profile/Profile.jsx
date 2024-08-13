@@ -60,7 +60,7 @@ const Profile = () => {
           className={styles['lottie-animation']}
         />
       </div>
-    ); // or a more sophisticated loading component
+    );
   }
 
   return (
