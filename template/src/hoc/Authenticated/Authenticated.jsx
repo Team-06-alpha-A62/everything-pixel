@@ -6,9 +6,11 @@ const Authenticated = ({ children }) => {
   const { currentUser } = useAuth();
   const location = useLocation();
 
-  if (!currentUser.user) {
-    return <Navigate replace to="/login" state={{ from: location }} />
-  }
+  setTimeout(() => {
+    if (!currentUser.user) {
+      return <Navigate replace to="/login" state={{ from: location }} />;
+    }
+  }, 200);
 
   return <>{children}</>;
 };

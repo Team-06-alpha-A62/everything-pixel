@@ -24,6 +24,8 @@ import ProfileHeader from '../../components/ProfileHeader/ProfileHeader.jsx';
 import UserDetails from '../../components/UserDetails/UserDetails.jsx';
 import Suspended from '../../components/Suspended/Suspended.jsx';
 import Notifications from '../../components/Notifications/Notifications.jsx';
+import Lottie from 'lottie-react';
+import animationData from '../../assets/pacman-loading-animation.json';
 
 const Profile = () => {
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
@@ -51,7 +53,14 @@ const Profile = () => {
   };
 
   if (!user) {
-    return <div>Loading...</div>; // or a more sophisticated loading component
+    return (
+      <div className={styles['animation-container']}>
+        <Lottie
+          animationData={animationData}
+          className={styles['lottie-animation']}
+        />
+      </div>
+    ); // or a more sophisticated loading component
   }
 
   return (

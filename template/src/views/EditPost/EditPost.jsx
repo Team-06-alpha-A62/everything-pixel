@@ -172,10 +172,6 @@ const EditPost = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className={styles['edit-wrapper']}>
       <div className={styles['edit-container']}>

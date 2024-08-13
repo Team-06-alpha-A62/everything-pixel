@@ -19,22 +19,21 @@
   justify-content: center;
   border-radius: 10px;
   width: 300px;
-  height: 350px;
+  height: 400px;
   background-color: var(--color-grey-0); // White background for sidebar
   border-right: 1px solid var(--color-grey-100); // Light grey border
   box-shadow: var(--shadow-sm);
-  padding: 0 20px;
+  padding: 30px;
   flex-shrink: 0; // Prevent shrinking
 
   ul {
     list-style-type: none;
-
     li {
       a {
         display: flex;
         align-items: center;
         text-decoration: none;
-        padding: 1.1rem;
+        padding: 1rem;
         transition: color 0.3s;
 
         &:hover {
@@ -61,4 +60,12 @@
   background-color: var(--color-grey-0); // White background for sidebar
   box-shadow: var(--shadow-sm); // Subtle shadow for sidebar
   border-left: 1px solid var(--color-grey-100); // Light grey border
+}
+
+.animation-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

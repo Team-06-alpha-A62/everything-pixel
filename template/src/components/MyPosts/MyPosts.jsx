@@ -28,7 +28,7 @@ const MyPosts = ({ posts }) => {
           return <ProfileSinglePost key={post.id} post={post} />;
         })
       ) : (
-        <p>No Posts Yet</p>
+        <p className={styles['no-data-message']}>No Posts Yet</p>
       )}
     </div>
   );

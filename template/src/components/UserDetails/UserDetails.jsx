@@ -22,7 +22,6 @@ const UserDetails = () => {
   const [comments, setComments] = useState([]);
   const [postReports, setPostReports] = useState([]);
   const [commentReports, setCommentReports] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
   const [selectedTab, setSelectedTab] = useState('posts');
   const [isUserBlocked, setIsUserBlocked] = useState(false);
@@ -36,7 +35,7 @@ const UserDetails = () => {
         setIsUserBlocked(userData?.isBlocked);
         if (userData.posts?.length) {
           const postDetails = await Promise.all(
-            userData.posts.map(postId => getPostByHandle(postId))
+            userData.posts?.map(postId => getPostByHandle(postId))
           );
           setPosts(postDetails);
 
@@ -75,8 +74,6 @@ const UserDetails = () => {
         }
       } catch (error) {
         console.error('Error fetching user details:', error.message);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -115,8 +112,8 @@ const UserDetails = () => {
 
   const renderContent = () => {
     if (selectedTab === 'posts') {
-      if (posts.length > 0) {
-        return posts.map((post, index) => (
+      if (posts?.length > 0) {
+        return posts?.map((post, index) => (
           <ProfileSinglePost key={index} post={post} />
         ));
       } else {
@@ -151,10 +148,6 @@ const UserDetails = () => {
       }
     }
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className={styles['user-details-container']}>

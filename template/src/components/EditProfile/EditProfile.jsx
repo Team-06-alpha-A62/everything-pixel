@@ -16,7 +16,6 @@ import { useAuth } from '../../providers/useAuth.js';
 
 const EditProfile = ({ user, onUserUpdate }) => {
   const { currentUser } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
   const [updatedUser, setUpdatedUser] = useState(() => ({ ...user }));
   const [imageFile, setImageFile] = useState(null);
   const [isCurrentUserBlocked, setIsCurrentUserBlocked] = useState(
@@ -67,8 +66,6 @@ const EditProfile = ({ user, onUserUpdate }) => {
       return;
     }
 
-    setIsLoading(true);
-
     try {
       if (updatedUser.imageUrl !== user.imageUrl) {
         await deleteAvatar(user.imageUrl);
@@ -114,8 +111,6 @@ const EditProfile = ({ user, onUserUpdate }) => {
       navigate('/profile/general');
     } catch (error) {
       console.log(error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -149,10 +144,6 @@ const EditProfile = ({ user, onUserUpdate }) => {
       }
     }
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className={styles['profile-info-container']}>
