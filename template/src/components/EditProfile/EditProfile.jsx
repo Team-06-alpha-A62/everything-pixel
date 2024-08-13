@@ -67,10 +67,10 @@ const EditProfile = ({ user, onUserUpdate }) => {
     }
 
     try {
-      if (updatedUser.imageUrl !== user.imageUrl) {
-        await deleteAvatar(user.imageUrl);
+      if (updatedUser.avatarUrl !== user.avatarUrl) {
+        await deleteAvatar(user?.avatarUrl);
         const storageImageUrl = await uploadAvatar(imageFile);
-        await changeUserDetails(user.username, 'avatar', storageImageUrl);
+        await changeUserDetails(user.username, 'avatarUrl', storageImageUrl);
       }
 
       if (updatedUser.firstName !== user.firstName) {
@@ -129,7 +129,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
 
   const handleFileChange = async e => {
     const file = e.target.files[0];
-
+    console.log(file);
     if (file) {
       try {
         const imageUrl = await getImagePreviewUrl(file);
@@ -138,7 +138,7 @@ const EditProfile = ({ user, onUserUpdate }) => {
           avatarUrl: imageUrl,
         });
         setImageFile(file);
-        console.log(imageFile);
+        //await uploadAvatar(file);
       } catch (error) {
         console.log(error.message);
       }

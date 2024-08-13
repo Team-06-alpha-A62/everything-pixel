@@ -121,7 +121,7 @@ const PostDetailsHeader = ({ isCurrentUserBlocked, post }) => {
 };
 
 PostDetailsHeader.propTypes = {
-  isCurrentUserBlocked: PropTypes.bool.isRequired,
+  isCurrentUserBlocked: PropTypes.bool,
   post: PropTypes.object.isRequired,
 };
 

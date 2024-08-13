@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!user) {
-      return
+      return;
     }
 
     setTimeout(() => {
@@ -42,8 +42,8 @@ export function AuthProvider({ children }) {
         setCurrentUser({ ...currentUser, userData });
       });
       setIsLoading(false);
-    }, 100);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const login = async (email, password) => {

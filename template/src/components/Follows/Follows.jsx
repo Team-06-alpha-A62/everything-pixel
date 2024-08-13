@@ -3,11 +3,9 @@ import { useEffect, useState } from 'react';
 import { getUserByHandle } from '../../services/users.service';
 import styles from './Follows.module.scss';
 
-import { useAuth } from '../../providers/useAuth.js';
 import UserListItem from '../UserListItem/UserListItem.jsx';
 
 const Follows = ({ following, followers }) => {
-  const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('following');
   const [followingData, setFollowingData] = useState([]);
   const [followersData, setFollowersData] = useState([]);
@@ -66,8 +64,8 @@ const Follows = ({ following, followers }) => {
 };
 
 Follows.propTypes = {
-  following: PropTypes.arrayOf(PropTypes.string).isRequired,
-  followers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  following: PropTypes.arrayOf(PropTypes.string),
+  followers: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Follows;

@@ -29,7 +29,7 @@ const UserListItem = ({
     try {
       const hasFollowedChecker = async () => {
         const hasFollowedResult = await isUserFollowed(
-          currentUser.userData.username,
+          currentUser?.userData?.username,
           username
         );
         setHasFollowed(hasFollowedResult);
@@ -117,9 +117,11 @@ const UserListItem = ({
             )}
           </>
         )}
-        <Link to={`/profile/users/user/${username}`}>
-          <FontAwesomeIcon icon={faEye} className={styles['eye-icon']} />
-        </Link>
+        {currentUser?.userData?.role === 'admin' && (
+          <Link to={`/profile/users/user/${username}`}>
+            <FontAwesomeIcon icon={faEye} className={styles['eye-icon']} />
+          </Link>
+        )}
       </div>
     </div>
   );

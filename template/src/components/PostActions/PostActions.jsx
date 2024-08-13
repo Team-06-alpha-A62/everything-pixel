@@ -87,7 +87,7 @@ const PostActions = ({
 };
 
 PostActions.propTypes = {
-  isCurrentUserBlocked: PropTypes.bool.isRequired,
+  isCurrentUserBlocked: PropTypes.bool,
   openPostDetails: PropTypes.func,
   id: PropTypes.string,
   date: PropTypes.string,

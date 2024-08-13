@@ -6,7 +6,6 @@ import styles from './SavedPosts.module.scss';
 
 const SavedPosts = ({ posts }) => {
   const [savedPosts, setSavedPosts] = useState([]);
-  console.log(posts);
 
   useEffect(() => {
     try {

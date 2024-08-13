@@ -11,7 +11,6 @@ import invader1 from '../assets/invader-1.png';
 import invader2 from '../assets/invader-2.png';
 import invader3 from '../assets/invader-3.png';
 
-
 /**
  * Extracts the filename from a Firebase Storage URL.
  *
@@ -19,7 +18,7 @@ import invader3 from '../assets/invader-3.png';
  * @returns {string} The extracted filename.
  * @throws {Error} If the URL format is invalid or extraction fails.
  */
-const extractFilenameFromURL = url => {
+export const extractFilenameFromURL = url => {
   try {
     const parts = url.split('/o/');
     if (parts.length > 1) {
@@ -59,7 +58,6 @@ const getRandomInvaderImage = async () => {
  * @throws {Error} If no file is selected or the upload fails.
  */
 export const uploadImage = async file => {
-  console.log(file);
   if (!file) {
     file = await getRandomInvaderImage();
   }
@@ -127,11 +125,11 @@ export const deleteImage = async url => {
  */
 export const deleteAvatar = async url => {
   try {
+    if (!url) return;
     const fileName = extractFilenameFromURL(url);
     const desertRef = storageRef(storage, `avatars/${fileName}`);
     await deleteObject(desertRef);
   } catch (error) {
-    console.log(error.message);
     throw new Error(`Error deleting avatar: ${error.message}`);
   }
 };

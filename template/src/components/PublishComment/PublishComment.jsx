@@ -36,8 +36,9 @@ const PublishComment = ({
   const handlePostComment = () => {
     if (commentToEdit.id) {
       onEditComment(commentToEdit.id, newComment);
+    } else {
+      onPublishComment(newComment);
     }
-    onPublishComment(newComment);
     setNewComment('');
   };
 

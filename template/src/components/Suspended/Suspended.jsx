@@ -24,9 +24,7 @@ const Suspended = () => {
             posts: Object.values(user.reports?.posts ?? {}),
           },
         }));
-        console.log(transformedUsers);
         const filteredUsers = transformedUsers.filter(user => user.isBlocked);
-        console.log(filteredUsers);
         setUsers(filteredUsers);
       } catch (error) {
         console.error('Error fetching users:', error.message);
