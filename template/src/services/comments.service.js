@@ -119,12 +119,14 @@ export const editCommentContent = async (commentId, newContent, userHandle) => {
  * @returns {Promise<void>} A promise that resolves when the comment is deleted.
  * @throws {Error} If there is an error deleting the comment from the database.
  */
-export const deleteComment = async (commentId, postId) => {
+export const deleteComment = async (commentId, postId, userHandle) => {
   try {
     const commentRef = ref(db, `comments/${commentId}`);
     const postCommentRef = ref(db, `posts/${postId}/comments/${commentId}`);
+    const userCommentRef = ref(db, `users/${userHandle}/comments/${commentId}`);
     await remove(commentRef);
     await remove(postCommentRef);
+    await remove(userCommentRef);
   } catch (error) {
     console.error('Error deleting comment:', error);
   }

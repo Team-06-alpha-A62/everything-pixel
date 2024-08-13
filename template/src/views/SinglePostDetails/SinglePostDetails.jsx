@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   getPostByHandle,
   hasUserVotedPost,
@@ -34,7 +34,7 @@ const SinglePostDetails = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [postVotes, setPostVotes] = useState({ upVote: 0, downVote: 0 });
   const [userVote, setUserVote] = useState(null);
-
+  const navigate = useNavigate();
   const [isCurrentUserBlocked, setIsCurrentUserBlocked] = useState(
     currentUser?.userData?.isBlocked
   );
@@ -46,6 +46,10 @@ const SinglePostDetails = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    if (!currentUser.user) {
+      navigate('/login');
+      return;
+    }
     if (currentUser?.userData?.username) {
       const unsubscribe = listenToUserBlockedStatus(
         currentUser.userData.username,
@@ -149,7 +153,7 @@ const SinglePostDetails = () => {
   };
 
   const handleDeleteComment = async commentId => {
-    await deleteComment(commentId, post.id);
+    await deleteComment(commentId, post.id, currentUser?.userData?.username);
     const updatedCommentsObjectsArray = commentsObjectsArray.filter(
       comment => comment.id !== commentId
     );
