@@ -202,6 +202,13 @@ const SinglePostDetails = () => {
     } catch (error) {
       alert(error.message);
     }
+    if (post.author !== currentUser.userData.username) {
+      await createNotification(author, {
+        type: 'comment',
+        message: `${currentUser.userData.username} ${type}d on your post`,
+        postId: post.id,
+      });
+    }
   };
 
   const handleSavePost = async () => {

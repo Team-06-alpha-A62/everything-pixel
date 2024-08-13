@@ -25,6 +25,7 @@ import Modal from '../Modal/Modal';
 import ReportMenu from '../ReportMenu/ReportMenu';
 import commentReportEnum from '../../enums/commentReportEnum';
 import { createCommentReport } from '../../services/reports.services';
+import { createNotification } from '../../services/notification.service.js';
 
 const PostComment = ({
   isCurrentUserBlocked,
@@ -140,6 +141,14 @@ const PostComment = ({
     } catch (error) {
       alert(`Failed to report: ${error.message}`);
     }
+
+    if (currentUser?.userData?.username) {
+      await createNotification(comment.author, {
+        type: 'report',
+        message: `${currentUser?.userData?.username} reported your comment: ${reportType}`,
+        postId: comment.postId,
+      });
+    }
   };
 
   const timeAgo = formatDistanceToNow(new Date(comment.createdOn), {
@@ -203,6 +212,7 @@ const PostComment = ({
       ) : (
         <FontAwesomeIcon
           icon={faFlag}
+          className={styles['reported-flag']}
           onClick={() => !isCurrentUserBlocked && setIsReportModalOpen(true)}
         />
       )}

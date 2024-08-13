@@ -12,6 +12,7 @@ import DeletePostConfirm from '../DeletePostConfirm/DeletePostConfirm';
 import { useAuth } from '../../providers/useAuth.js';
 import { deleteImage } from '../../services/images.service';
 import Button from '../../hoc/Button/Button.jsx';
+import { createNotification } from '../../services/notification.service.js';
 
 const PostDetailsHeader = ({ isCurrentUserBlocked, post }) => {
   const { currentUser } = useAuth();
@@ -40,6 +41,13 @@ const PostDetailsHeader = ({ isCurrentUserBlocked, post }) => {
       setIsReportModalOpen(false);
     } catch (error) {
       alert(`Failed to report: ${error.message}`);
+    }
+    if (post.author !== currentUser.userData.username) {
+      await createNotification(post.author, {
+        type: 'report',
+        message: `${currentUser.userData.username} reported on your post: ${reportType}`,
+        postId: post.id,
+      });
     }
   };
 
