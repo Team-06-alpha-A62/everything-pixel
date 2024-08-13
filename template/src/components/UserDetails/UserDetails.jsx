@@ -13,6 +13,7 @@ import CommentListItem from '../CommentListItem/CommentListItem';
 import StatItem from '../StatItem/StatItem';
 import Button from '../../hoc/Button/Button';
 import ReportListItem from '../ReportListItem/ReportListItem';
+import { createNotification } from '../../services/notification.service';
 
 const UserDetails = () => {
   const { username } = useParams();
@@ -32,7 +33,7 @@ const UserDetails = () => {
       try {
         const userData = await getUserByHandle(username);
         setUser(userData);
-        setIsUserBlocked(user?.isBlocked);
+        setIsUserBlocked(userData?.isBlocked);
         if (userData.posts?.length) {
           const postDetails = await Promise.all(
             userData.posts.map(postId => getPostByHandle(postId))
@@ -51,7 +52,6 @@ const UserDetails = () => {
           });
           setPostReports(postReportDetails);
         }
-
         if (userData.comments?.length) {
           const commentDetails = await Promise.all(
             userData.comments.map(async commentId => {
@@ -81,7 +81,7 @@ const UserDetails = () => {
     };
 
     fetchUser();
-  }, [username, user]);
+  }, [username]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -101,6 +101,15 @@ const UserDetails = () => {
     } else {
       setIsUserBlocked(true);
       await changeUserDetails(username, 'isBlocked', true);
+    }
+    if (user.username) {
+      await createNotification(user.username, {
+        type: 'comment',
+        message: `${user.username} ${
+          isUserBlocked ? 'unblocked you' : 'blocked you'
+        }`,
+        postId: null,
+      });
     }
   };
 
@@ -136,7 +145,9 @@ const UserDetails = () => {
           </>
         );
       } else {
-        return <p className={styles['no-items-message']}>No reports for this user</p>;
+        return (
+          <p className={styles['no-items-message']}>No reports for this user</p>
+        );
       }
     }
   };

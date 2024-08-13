@@ -37,9 +37,14 @@ const Notification = ({ notification }) => {
           {new Date(notification.createdAt).toLocaleString()}
         </small>
       </div>
-      <Link to={`/post/${notification.postId}`} className={styles['eye-icon']}>
-        <FontAwesomeIcon icon={faEye} />
-      </Link>
+      {notification.postId && (
+        <Link
+          to={`/post/${notification.postId}`}
+          className={styles['eye-icon']}
+        >
+          <FontAwesomeIcon icon={faEye} />
+        </Link>
+      )}
     </div>
   );
 };
