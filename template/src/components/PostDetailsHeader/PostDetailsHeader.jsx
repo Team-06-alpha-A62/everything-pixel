@@ -71,7 +71,7 @@ const PostDetailsHeader = ({ isCurrentUserBlocked, post }) => {
         &larr; Back
       </Button>
       <div className={styles['controls']}>
-        {post.isUserPost ? (
+        {post.isUserPost || currentUser.userData?.role === 'admin' ? (
           <>
             <Button
               style="primary"
