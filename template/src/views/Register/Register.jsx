@@ -19,7 +19,6 @@ const registerInitialData = {
 const Register = () => {
   const [step, setStep] = useState(1);
   const [registrationData, setRegistrationData] = useState(registerInitialData);
-  const [loading, setLoading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [errors, setErrors] = useState({});
 
@@ -124,7 +123,9 @@ const Register = () => {
       }
 
       await register(username, firstName, lastName, email, password, avatarUrl);
-      navigate('/feed');
+      setTimeout(() => {
+        navigate('/feed');
+      }, 300);
     } catch (error) {
       alert(`Registration error: ${error.message}`);
     }
@@ -132,7 +133,9 @@ const Register = () => {
 
   return (
     <div className={styles['register']}>
-      <h1 className={styles['title']}>Welcome to <span className={styles['logo']}>∀</span> PXL</h1>
+      <h1 className={styles['title']}>
+        Welcome to <span className={styles['logo']}>∀</span> PXL
+      </h1>
       <p className={styles['subtitle']}>Let&apos;s get to meet you</p>
       <div className={styles['form']}>
         {step === 1 && (

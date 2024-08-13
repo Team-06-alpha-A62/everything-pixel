@@ -40,6 +40,7 @@ const PostAuthorDetails = ({ author, currentUser, isCurrentUserBlocked }) => {
       <Avatar
         name={`${author.firstName} ${author.lastName}`}
         round={true}
+        className={styles['avatar-style']}
         size="50"
         src={author.avatarUrl}
       />
