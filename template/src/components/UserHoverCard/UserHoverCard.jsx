@@ -49,12 +49,15 @@ const UserHoverCard = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <Avatar
-        name={`${author.firstName} ${author.lastName}`}
-        round={true}
-        size="60"
-        src={author.avatarUrl}
-      />
+      <div style={{ width: '50px' }}>
+        <Avatar
+          name={`${author.firstName} ${author.lastName}`}
+          round={true}
+          size="60"
+          src={author.avatarUrl}
+        />
+      </div>
+
       <div className={styles['user-info']}>
         <span className={styles['username']}>{author.username}</span>
         <Button

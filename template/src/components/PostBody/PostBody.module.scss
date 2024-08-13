@@ -18,7 +18,8 @@
   }
 
   .tags {
-    // font-size: 0.9rem;
+    display: flex; /* Enables flexbox layout */
+    flex-wrap: wrap; /* Allows wrapping of items onto multiple lines */
     font-weight: bold;
     color: var(--color-brand-500);
     margin-bottom: 10px;
