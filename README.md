@@ -1,4 +1,4 @@
-# Project Name
+# Everything Pixel
 
 ## Setup Instructions
 
