@@ -1,5 +1,3 @@
-@import '../../variables.scss';
-
 .dropdown-button {
   border: none;
   background: none;
@@ -13,5 +11,30 @@
   border-radius: 50%;
   &:focus {
     border-radius: 50%; // Ensure the outline is circular
+  }
+}
+
+.dropdown-content {
+  position: fixed;
+  top: 90px;
+  right: 10%;
+  padding: 1rem;
+  background-color: var(--color-grey-0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  li {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-grey-50);
+    }
   }
 }
