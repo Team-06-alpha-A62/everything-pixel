@@ -1,4 +1,56 @@
-# Everything Pixel
+## Table of Contents
+
+- [Overview](#everything-pixel)
+- [Key Features](#key-features)
+- [Setup Instructions](#setup-instructions)
+
+<!-- End of Section -->
+
+## Everything Pixel
+
+A forum single-page application about pixel art, done with React, Firebase and SCSS.
+
+### [Live demo](https://everything-pixel.web.app)
+
+<!-- End of Section -->
+
+## Key Features
+
+- **User Authentication**  
+  Secure user authentication powered by Firebase, allowing users to easily sign up and sign in to the platform.
+
+- **Post Creation & Interaction**  
+  Users can create posts and engage with content by upvoting, downvoting, commenting, and reporting posts for moderation.  
+  ![Creating New Post](https://nikola-nenovski.info/everything-pixel/everything-pixel-new.png)  
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-post.png)  
+
+- **Search & Filter Posts**  
+  Efficiently search for posts and filter results based on various criteria to quickly find relevant discussions.  
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-dashboard.png)
+
+- **User Dashboards**  
+  Each user has a personal dashboard to view their followers, manage their profile, and see real-time notifications about interactions.  
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-dashboard.png)  
+
+- **Following System**  
+  Users can follow others to stay updated with their activities and posts, fostering community engagement.
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/follow.gif)  
+
+- **Admin Controls**  
+  Admin users have special permissions to ban or unban users, with changes reflected in real-time across the platform.
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-user-details.png)  
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-users.png)  
+  
+- **Real-Time Notifications**  
+  Stay informed with instant notifications for replies, upvotes, and other interactions to enhance user engagement.
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/notifications.png)  
+
+- **User Profile Management**  
+  Users can easily update their profiles, including personal information and preferences, to customize their experience.
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-profile.png)
+
+
+<!-- End of Section -->
 
 ## Setup Instructions
 
