@@ -186,7 +186,6 @@ const EditPost = () => {
             <div className={styles['input-section']}>
               <label htmlFor="title">Title</label>
               <input
-                className={styles['post-title']}
                 type="text"
                 name="title"
                 id="title"
