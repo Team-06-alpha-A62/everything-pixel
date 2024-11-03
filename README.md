@@ -30,7 +30,7 @@ A forum single-page application about pixel art, done with React, Firebase and S
 
 - **User Dashboards**  
   Each user has a personal dashboard to view their followers, manage their profile, and see real-time notifications about interactions.  
-  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-dashboard.png)  
+  ![Viewing Post Details](https://nikola-nenovski.info/everything-pixel/everything-pixel-profile.png)  
 
 - **Following System**  
   Users can follow others to stay updated with their activities and posts, fostering community engagement.
